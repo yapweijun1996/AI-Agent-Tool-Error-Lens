@@ -163,8 +163,9 @@ function parseVitest(view: NormalizedArtifact, root: string | undefined, budget:
   for (const line of lines) {
     const fail = failPattern.exec(line.text);
     if (fail?.[1]) {
+      const file = fail[1].split(/\s+>\s+/u, 1)[0]?.trim();
       const evidence = evidenceFor(view, line.start, line.end, budget, "log-span");
-      if (evidence) failures.push({ file: fail[1].trim(), start: line.start, end: line.end, evidence });
+      if (file && evidence) failures.push({ file, start: line.start, end: line.end, evidence });
       continue;
     }
     const message = messagePattern.exec(line.text);

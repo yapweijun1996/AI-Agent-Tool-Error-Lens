@@ -159,7 +159,7 @@
           {
             "id": "stderr",
             "stream": "stderr",
-            "content": " FAIL  src/first.test.ts\nAssertionError: first failure\n FAIL  src/second.test.ts\nError: second failure\n"
+            "content": " FAIL  src/first.test.ts > suite > first failure\nAssertionError: first failure\n FAIL  src/second.test.ts > suite > second failure\nError: second failure\n"
           }
         ]
       },
