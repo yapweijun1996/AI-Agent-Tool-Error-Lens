@@ -145,6 +145,7 @@ Work completed:
 11. Fix Vitest multi-failure fallback attribution so each locationless message uses the nearest preceding failed test file.
 12. Fix ESLint file-header detection so slash-containing rule names cannot replace the current file path.
 13. Preserve malformed CLI request options when applying `--root` so library validation remains authoritative.
+14. Strip Vitest suite/test title suffixes from `FAIL` headers before locationless fallback attribution.
 
 Verification:
 
@@ -160,6 +161,7 @@ Verification:
 - Vitest messages without location lines are attributed to the nearest preceding `FAIL` block, with a two-failure regression fixture;
 - ESLint rule names containing `/` do not replace the current file header, with a slash-rule regression fixture;
 - CLI `--root` injection does not overwrite malformed `options` values, and the shared library returns the expected request error;
+- Vitest `FAIL file > suite > test` headers retain only the file path for locationless fallback diagnostics;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 
