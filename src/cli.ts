@@ -3,6 +3,7 @@
 import { parse, capabilities } from "./index.js";
 import { serializeCapabilities, serializeResult } from "./core/serialize.js";
 import { readUtf8Stream } from "./core/cli-input.js";
+import { isWellFormedUnicode, stringLength } from "./core/validation.js";
 
 const usage = "Usage: agent-error-lens <parse|capabilities> --format json [--stdin] [--root <path>]";
 
@@ -103,11 +104,16 @@ async function main(): Promise<void> {
     const requestOptions = requestRecord?.options;
     if (requestRecord && (requestOptions === undefined || isRecord(requestOptions))) {
       const validOptions = isRecord(requestOptions) ? requestOptions : null;
-      if (typeof validOptions?.root === "string" && validOptions.root !== rootValue) {
-        writeUsage("--root conflicts with options.root");
-        return;
+      if (validOptions && Object.hasOwn(validOptions, "root")) {
+        if (typeof validOptions.root === "string" && isWellFormedUnicode(validOptions.root) && stringLength(validOptions.root) > 0 && stringLength(validOptions.root) <= 4096) {
+          if (validOptions.root !== rootValue) {
+            writeUsage("--root conflicts with options.root");
+            return;
+          }
+        }
+      } else {
+        request = { ...requestRecord, options: { ...validOptions, root: rootValue } };
       }
-      request = { ...requestRecord, options: { ...validOptions, root: rootValue } };
     }
   }
 

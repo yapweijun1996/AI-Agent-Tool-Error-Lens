@@ -94,7 +94,7 @@ test("CLI usage errors exit 2 and capabilities use the same serializer", () => {
 });
 
 test("CLI root injection does not hide malformed request options", () => {
-  for (const options of [null, 5]) {
+  for (const options of [null, 5, { root: "" }, { root: 5 }]) {
     const run = spawnSync(process.execPath, ["dist/src/cli.js", "parse", "--stdin", "--format", "json", "--root", "/workspace/project"], {
       encoding: "utf8",
       input: JSON.stringify({ schemaVersion: "1", artifacts: [], options }),
