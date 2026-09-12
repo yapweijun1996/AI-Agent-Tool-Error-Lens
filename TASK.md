@@ -156,11 +156,13 @@ Work completed:
 22. Mark incomplete terminal sequences as fail-closed mapping truncation.
 23. Cover prefixed environment credential keys inside quoted JSON-style diagnostic messages.
 24. Make quoted-key redaction idempotent without consuming JSON structural delimiters.
+25. Pin the ESLint parser toolchain to a Node 20.11-compatible version after clean-install verification exposed a transitive engine mismatch.
 
 Verification:
 
 - `npm test` passes 29 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
-- the exact HEAD also passes `npm ci --ignore-scripts --no-audit --no-fund --offline` followed by the full suite in network-isolated `node:22-alpine` and `node:24-alpine` Linux containers; the archived workspaces use the host npm cache only for offline package acquisition and a container-local writable cache for package smoke, so this still does not replace GitHub Windows/macOS/Node20 runners;
+- the exact HEAD also passes `npm ci --ignore-scripts --no-audit --no-fund --offline` followed by the full suite in network-isolated `node:20.11.0-alpine`, `node:22-alpine`, and `node:24-alpine` Linux containers; the archived workspaces use the host npm cache only for offline package acquisition and a container-local writable cache for package smoke, so this still does not replace the GitHub Windows/macOS runners or the full approved matrix;
+- after pinning `@typescript-eslint/parser` to `8.40.0`, the same Node 20.11.0/22/24 clean-install matrix resolves `eslint-visitor-keys@4.2.1` without the prior Node 20.11 engine warning; npm still reports the non-blocking deprecation notice for `eslint@9.39.5`;
 - `check-package` creates a real tarball in a temporary directory, installs it into a temporary consumer with scripts/audit disabled, imports the public package, runs the packed CLI, and cleans up on success or failure;
 - the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
@@ -188,7 +190,7 @@ Verification:
 ## Known gaps and defects
 
 - README, CHANGELOG, ADR, release workflow, corrected remote CI execution, and released artifact remain absent or unverified; local source/package gates and agent-facing CLI E2E are implemented and passing.
-- The historical company status dated 2026-09-07 remains evidence of its prior state, while the canonical company status item was synchronized in place on 2026-09-13 with `roadmap_state=queued`, `design_status=draft`, `development_status=in_progress`, `verification_status=partial`, `release_status=unreleased`, and `evidence_status=partial`. The update references repository commit `ab028cb5ef66762fa472d366d9e784fe3d5af319`; the ecosystem SSOT remains queued and no release claim was made.
+- The historical company status dated 2026-09-07 remains evidence of its prior state, while the canonical company status item was synchronized in place on 2026-09-13 with `roadmap_state=queued`, `design_status=draft`, `development_status=in_progress`, `verification_status=partial`, `release_status=unreleased`, and `evidence_status=partial`. The current update references repository commit `fcc0725288246fb59c2ba4bb09d9e98f9d02a120`; the ecosystem SSOT remains queued and no release claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.
 - Node.js compatibility and module format are selected as a target but remain unverified until the corrected package CI matrix passes; package allowlist, license, and npm registry ownership remain release gates.
