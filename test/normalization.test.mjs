@@ -70,6 +70,20 @@ test("malformed structured input fails closed with partial status", () => {
   assert.deepEqual(result.truncation.reasons, ["unsupported-format"]);
 });
 
+test("structured records reject malformed Unicode and unsafe coordinates", () => {
+  const malformedUnicode = parse(request(String.raw`{"diagnostics":[{"message":"\ud800","severity":"error"}]}`));
+  assert.equal(malformedUnicode.status, "partial");
+  assert.equal(malformedUnicode.data.diagnostics.length, 0);
+  assert.equal(malformedUnicode.toolIssues[0]?.code, "STRUCTURED_DIAGNOSTIC_INVALID");
+
+  const unsafeCoordinate = parse(request(JSON.stringify({
+    diagnostics: [{ message: "unsafe line", severity: "error", line: Number.MAX_SAFE_INTEGER + 1 }],
+  })));
+  assert.equal(unsafeCoordinate.status, "partial");
+  assert.equal(unsafeCoordinate.data.diagnostics.length, 0);
+  assert.equal(unsafeCoordinate.toolIssues[0]?.code, "STRUCTURED_DIAGNOSTIC_INVALID");
+});
+
 test("line and request validation remain bounded", () => {
   const longLine = parse(request("x".repeat(16_385)));
   assert.equal(longLine.status, "partial");

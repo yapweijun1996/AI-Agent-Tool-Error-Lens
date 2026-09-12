@@ -148,6 +148,10 @@ for (const [name, value, expectedValid] of [
   console.log(`${name}: ${expectedValid ? "accepted" : "rejected"}`);
 }
 
+const unsafeLocationResult = structuredClone(validResult);
+unsafeLocationResult.data.diagnostics[0].location.line = Number.MAX_SAFE_INTEGER + 1;
+assert(validate(unsafeLocationResult, schema, schema).length > 0, "unsafe diagnostic coordinates must be rejected");
+
 const artifact = validRequest.artifacts[0];
 assert(Buffer.byteLength(artifact.content, "utf8") === validResult.stats.bytesReceived, "request/result byte stats disagree");
 assert(validResult.stats.bytesProcessed === validResult.stats.bytesReceived, "complete result has inconsistent processed bytes");

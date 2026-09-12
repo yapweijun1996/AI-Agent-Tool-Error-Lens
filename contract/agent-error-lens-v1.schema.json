@@ -472,14 +472,16 @@
             "integer",
             "null"
           ],
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 9007199254740991
         },
         "column": {
           "type": [
             "integer",
             "null"
           ],
-          "minimum": 1
+          "minimum": 1,
+          "maximum": 9007199254740991
         }
       }
     },

@@ -11,6 +11,7 @@ import { makeDiagnostic } from "./diagnostic-factory.js";
 import { evidenceFor } from "./evidence.js";
 import { LIMITS, type BudgetState } from "./limits.js";
 import type { NormalizedArtifact } from "./normalize.js";
+import { isWellFormedUnicode } from "./validation.js";
 
 export interface StructuredParseOutcome {
   supported: boolean;
@@ -25,7 +26,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function boundedString(value: unknown, max: number): value is string {
-  return typeof value === "string" && value.length <= max;
+  return typeof value === "string" && isWellFormedUnicode(value) && value.length <= max;
 }
 
 function makeIssue(code: string, message: string, artifactId: string, evidence: Evidence[] = []): ToolIssue {
@@ -48,8 +49,8 @@ function parseRecord(
   if (value.code !== undefined && value.code !== null && code === null) return null;
   const lineValue = value.line;
   const columnValue = value.column;
-  const line = lineValue === undefined || lineValue === null ? null : typeof lineValue === "number" && Number.isInteger(lineValue) && lineValue >= 1 ? lineValue : null;
-  const column = columnValue === undefined || columnValue === null ? null : typeof columnValue === "number" && Number.isInteger(columnValue) && columnValue >= 1 ? columnValue : null;
+  const line = lineValue === undefined || lineValue === null ? null : typeof lineValue === "number" && Number.isSafeInteger(lineValue) && lineValue >= 1 ? lineValue : null;
+  const column = columnValue === undefined || columnValue === null ? null : typeof columnValue === "number" && Number.isSafeInteger(columnValue) && columnValue >= 1 ? columnValue : null;
   if ((value.line !== undefined && value.line !== null && line === null) || (value.column !== undefined && value.column !== null && column === null)) return null;
 
   const file = value.file === undefined || value.file === null ? null : boundedString(value.file, 4096) && value.file.length > 0 ? value.file : null;
@@ -135,7 +136,7 @@ export function parseStructuredArtifact(
       budget.reasons.add("parser-matches");
       break;
     }
-    if (budget.diagnosticsBeforeLimit >= 10_000) {
+    if (budget.diagnosticsBeforeLimit >= LIMITS.maxParserMatches) {
       budget.reasons.add("parser-matches");
       break;
     }
