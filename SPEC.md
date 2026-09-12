@@ -209,6 +209,8 @@ The parser MAY inspect raw in-memory input to recognize syntax. Exported message
 
 V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tokens, passwords, Authorization headers, database URLs, and signed URLs. The replacement text is the stable literal `[REDACTED]`. Benign fields such as `inputTokens`, `outputTokens`, and `totalTokens` MUST remain readable unless their values independently match a secret pattern.
 
+Redaction MUST be applied before final contract-bound checks. If redaction expansion would exceed a diagnostic field's bound, the diagnostic MUST be rejected fail-closed; if it would exceed an optional producer-outcome field's bound, that field MUST be omitted rather than truncated or exported out of schema.
+
 The bounded provider-token patterns include standalone `sk-live-`, `sk-test-`, `sk-proj-`, `sk-svcacct-`, `ghp_`, `xox*`, `AIza`, and `AKIA` forms. This list is intentionally conservative and does not claim universal credential-format coverage.
 
 Bearer Authorization values MUST be redacted for both colon and equals key-value delimiters.
@@ -301,6 +303,7 @@ CLI requirements:
 - exit `2`: CLI usage or option validation failed before a result could be produced;
 - producer failure MUST NOT be copied to the Error Lens process exit code;
 - `--stdin` MUST NOT execute text that resembles a command;
+- `--root` MAY populate a missing `options.root`; a conflicting valid root is a usage error, while malformed existing request options MUST remain visible to library validation;
 - platform support remains unclaimed until the Node.js range and corrected CI matrix are approved and verified. A prior matrix run failed on Windows before the current portable command remediation.
 
 The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corrected corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
