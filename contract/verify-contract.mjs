@@ -1,9 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import { resolve } from "node:path";
 
-const here = new URL(".", import.meta.url);
-const root = (name) => resolve(here.pathname, name);
+const here = fileURLToPath(new URL(".", import.meta.url));
+const root = (name) => resolve(here, name);
 
 const readJson = async (name) => JSON.parse(await readFile(root(name), "utf8"));
 

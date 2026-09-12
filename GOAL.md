@@ -2,7 +2,7 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Interface Quality
+Lifecycle: Pre-implementation MVP / Verification
 Last reviewed: 2026-09-13
 
 ## Purpose
@@ -88,8 +88,8 @@ V0.1 is successful only when all of the following are verified:
 | Axis | State | Evidence |
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
-| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, and canonical output/interfaces; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, shared entry points, CLI, and 21-case inventory exist |
-| Verified | Contract/scaffold/core/producer/interface checks pass; full source/package quality matrix remains incomplete | Contract checks, 21-case fixture execution, 18 interface/core/adapter tests, build, lint, schema validation, repeated-process parity, and packed consumer/CLI checks pass |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, capability/resource checks, shared entry points, CLI, and 21-case inventory exist |
+| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; remote matrix and release proof remain incomplete | Contract checks, 21-case fixture execution, 21 core/adapter/interface/resource tests, build, lint, schema validation, repeated-process parity, package allowlist, and packed consumer/CLI checks pass |
 | Released | No | No version, tag, registry package, release, or artifact evidence exists |
 
 ## Evidence and authority

@@ -27,10 +27,12 @@
     "postbuild": "node scripts/make-cli-executable.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
+    "check:capabilities": "node scripts/check-capabilities.mjs",
+    "check:package": "node scripts/check-package.mjs",
     "check:contract": "node contract/verify-contract.mjs && node scripts/check-contract-drift.mjs",
     "check:fixtures": "node scripts/check-fixtures.mjs",
-    "test": "npm run check:contract && npm run check:fixtures && npm run typecheck && npm run lint && npm run build && node --test test/*.test.mjs",
-    "pack:check": "npm run build && npm pack --dry-run"
+    "test": "npm run check:contract && npm run check:fixtures && npm run check:capabilities && npm run typecheck && npm run lint && npm run build && npm run check:package && node --test test/*.test.mjs",
+    "pack:check": "npm run build && npm run check:package"
   },
   "devDependencies": {
     "@types/node": "^22.15.0",

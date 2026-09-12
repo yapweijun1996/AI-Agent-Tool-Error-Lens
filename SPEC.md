@@ -1,12 +1,12 @@
 # Agent Error Lens V0.1 Specification
 
-Specification status: Contract Frozen / Interface Quality Implemented / Release Pending
+Specification status: Contract Frozen / Verification In Progress / Release Pending
 Target release: Unreleased `0.1.0`
 Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, and canonical output/interface behavior is implemented and verified as T-006. Full source/package quality and release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and local capability/resource/package gates are verified as T-007 work. Remote CI execution, independent E2E proof, and release gates remain pending.
 
 ## 1. V0.1 scope
 

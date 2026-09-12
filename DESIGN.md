@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
 Document status: Contract Frozen / Architecture Review
-Lifecycle: Pre-implementation MVP / Interface Quality
+Lifecycle: Pre-implementation MVP / Verification
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, bounded normalization and producer adapters, and a canonical CLI/library output layer. Cross-platform CI, complete source/package quality proof, and release workflows remain unimplemented.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, and local capability/resource/package gates. Remote CI execution, complete independent E2E proof, and release workflows remain unverified.
 
 ## Architectural boundary
 
@@ -93,7 +93,7 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts` and `src/core/text.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI, complete source/package quality gates, and release modules are not present yet; they remain T-007 through T-008 work. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration now exists, while its remote execution, complete independent E2E, and release modules remain T-007 through T-008 evidence gaps. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 

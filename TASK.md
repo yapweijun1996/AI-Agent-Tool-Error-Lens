@@ -15,7 +15,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 21 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
-| T-007 | P0 | Planned | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Exact-HEAD evidence required |
+| T-007 | P0 | In progress | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks pass; remote CI and independent E2E remain |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
 | T-009 | P1 | Planned | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | KB readback required |
 
@@ -126,9 +126,26 @@ Verification:
 - representative producer, structural, failure, security, determinism, and agent-facing fixture assertions remain green;
 - exact materialized fixture outputs remain schema-valid under temporary Ajv draft-2020-12 validation.
 
+## T-007 — In progress source and package verification
+
+Goal: close local security, resource, capability, and package-boundary evidence before relying on remote CI or release evidence.
+
+Work completed:
+
+1. Add fail-closed tests for per-artifact and aggregate byte budgets, processed lines, parser matches, terminal sequences, and evidence spans.
+2. Add a static core capability audit rejecting network, subprocess, dynamic-code, and worker-thread imports/calls from the parsing path.
+3. Add a deterministic package allowlist audit for private ESM metadata, zero runtime dependencies, required entrypoints, declarations, and packed contents.
+4. Add Linux/macOS/Windows × Node 20.11/22/24 GitHub Actions verification configuration and make build scripts Windows-safe.
+
+Verification:
+
+- `npm test` passes 21 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
+- the local package boundary remains clean and the exact tarball imports in a consumer and runs the packed CLI;
+- remote matrix execution and independent agent-facing E2E remain unverified because they require CI host execution.
+
 ## Known gaps and defects
 
-- Full M4 security/resource/no-capability audit, README, CHANGELOG, ADR, CI, release workflow, and released artifact do not exist; source-level canonical output and interface behavior are implemented but release-quality proof is incomplete.
+- README, CHANGELOG, ADR, release workflow, remote CI execution, independent agent-facing E2E, and released artifact remain absent or unverified; local source/package gates are implemented and passing.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.
