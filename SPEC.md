@@ -55,7 +55,7 @@ Requirements:
 - `schemaVersion`, `artifacts`, artifact `id`, `stream`, and `content` MUST be validated before parsing.
 - Artifact IDs MUST be unique within a request.
 - Array order is authoritative artifact order.
-- V0.1 accepts decoded strings and UTF-8 CLI input only.
+- V0.1 accepts decoded strings and UTF-8 CLI input only. The CLI MUST reject invalid UTF-8 and MUST stop reading stdin after a deterministic 128 MiB transport ceiling, before JSON parsing; this transport ceiling protects the CLI boundary and does not replace the 20 MiB aggregate artifact budget enforced by the library.
 - Unknown fields are invalid for schema version `1`; they MUST NOT be silently ignored or change parsing semantics.
 - `producerOutcome` is caller-supplied evidence and MUST remain separate from parser status.
 - `root` enables lexical repository-relative path containment; omission MUST NOT imply the current working directory.
@@ -290,6 +290,7 @@ CLI requirements:
 
 - stdout contains only the machine-readable result for a valid operation;
 - human-readable usage and fatal CLI diagnostics go to stderr;
+- stdin MUST be decoded as fatal UTF-8 and MUST be bounded to 128 MiB before JSON parsing; an invalid or oversized stdin payload is a usage failure with exit `2`;
 - exit `0`: a valid result with `complete` or `partial` status was emitted;
 - exit `1`: Error Lens emitted or encountered an `error` result;
 - exit `2`: CLI usage or option validation failed before a result could be produced;

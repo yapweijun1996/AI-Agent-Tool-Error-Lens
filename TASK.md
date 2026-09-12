@@ -132,7 +132,7 @@ Goal: close local security, resource, capability, and package-boundary evidence 
 
 Work completed:
 
-1. Add fail-closed tests for per-artifact and aggregate byte budgets, processed lines, parser matches, terminal sequences, and evidence spans.
+1. Add fail-closed tests for CLI transport, per-artifact and aggregate byte budgets, processed lines, parser matches, terminal sequences, and evidence spans.
 2. Add a static core capability audit rejecting network, subprocess, dynamic-code, and worker-thread imports/calls from the parsing path.
 3. Add a deterministic package allowlist audit for private ESM metadata, zero runtime dependencies, required entrypoints, declarations, and packed contents.
 4. Add Linux/macOS/Windows × Node 20.11/22/24 GitHub Actions verification configuration and make build/test/package scripts Windows-safe.
@@ -140,10 +140,11 @@ Work completed:
 
 Verification:
 
-- `npm test` passes 23 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
+- `npm test` passes 24 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
 - the local package boundary remains clean and the exact tarball imports in a consumer and runs the packed CLI;
 - the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
+- bounded CLI stdin decoding rejects invalid UTF-8 and oversized input before JSON parsing;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 

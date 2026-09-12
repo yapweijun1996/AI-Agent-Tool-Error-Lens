@@ -63,9 +63,9 @@ Each stage receives bounded data and returns explicit issues instead of silently
 | `redact` | key-name and value-pattern masking for exported data |
 | `canonicalize` | diagnostic normalization, IDs, deduplication, ordering |
 | `serialize` | stable key order, Unicode/newline policy, JSON bytes |
-| `cli` | CLI-only input/output and exit semantics |
+| `cli` | CLI-only bounded stdin decoding, input/output, and exit semantics |
 
-Exact folders and filenames are intentionally not asserted before implementation.
+The current implementation map below is authoritative for this repository; future modules must preserve the same responsibility boundaries rather than relying on folder names alone.
 
 ## Public interfaces
 
@@ -84,7 +84,7 @@ The current repository implementation is intentionally narrower than the target 
 
 | Current entry/module | Verified responsibility |
 | --- | --- |
-| `src/cli.ts` | Validates CLI shape, rejects unknown/duplicate options, reads stdin as data, applies an explicit root option, delegates to the library, and emits canonical machine-readable JSON with the frozen usage exits. |
+| `src/cli.ts` and `src/core/cli-input.ts` | Validate CLI shape, reject unknown/duplicate options, decode bounded UTF-8 stdin as data, apply an explicit root option, delegate to the library, and emit canonical machine-readable JSON with the frozen usage exits. |
 | `src/index.ts` | Orchestrates runtime request validation, bounded normalization, generic structured and producer parsing, diagnostic/record sorting, summaries, and result assembly. |
 | `src/core/validation.ts` | Narrows untrusted runtime values, rejects unknown request fields/lone surrogates/invalid IDs, and enforces UTF-8 byte ceilings. |
 | `src/core/normalize.ts` | Converts CRLF/CR to LF, strips bounded terminal sequences, and maps normalized UTF-16 boundaries back to raw offsets. |
@@ -160,6 +160,7 @@ Deterministic limits are the primary safety mechanism:
 
 - 2 MiB per artifact;
 - 20 MiB per request;
+- 128 MiB maximum CLI stdin transport envelope before JSON parsing;
 - 16 KiB per line;
 - 200 returned diagnostics;
 - 64 KiB per evidence span;
