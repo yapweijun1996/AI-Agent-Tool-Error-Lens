@@ -209,7 +209,8 @@ function parseVitest(view: NormalizedArtifact, root: string | undefined, budget:
 
 function likelyFileLine(line: string): boolean {
   const value = line.trim();
-  return value.length > 0 && !value.startsWith("✖") && !value.startsWith("✔") && (value.includes("/") || value.includes("\\") || /\.[cm]?[jt]sx?$/u.test(value));
+  const isDiagnosticLine = /^\d+:\d+\s+(?:error|warning)\b/u.test(value);
+  return value.length > 0 && !isDiagnosticLine && !value.startsWith("✖") && !value.startsWith("✔") && (value.includes("/") || value.includes("\\") || /\.[cm]?[jt]sx?$/u.test(value));
 }
 
 function parseEslint(view: NormalizedArtifact, root: string | undefined, budget: BudgetState): AdapterOutcome {

@@ -43,6 +43,10 @@ test("approved producer fixtures return evidence-backed diagnostics", () => {
     assert.equal(diagnostic?.confidence, confidence, id);
     assert.ok((diagnostic?.evidence.length ?? 0) > 0, id);
   }
+
+  const slashRule = parseFixture("producer-eslint-slash-rule");
+  assert.equal(slashRule.data.diagnostics[0]?.location?.file, "/workspace/project/src/order.ts");
+  assert.equal(slashRule.data.diagnostics[0]?.code, "import/no-unresolved");
 });
 
 test("structural and nested producer fixtures preserve the relevant producer", () => {

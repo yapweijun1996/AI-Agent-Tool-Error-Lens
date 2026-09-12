@@ -173,6 +173,28 @@
       }
     },
     {
+      "id": "producer-eslint-slash-rule",
+      "family": "producer",
+      "producer": "eslint",
+      "input": {
+        "schemaVersion": "1",
+        "artifacts": [
+          {
+            "id": "stdout",
+            "stream": "stdout",
+            "content": "/workspace/project/src/order.ts\n  7:3  error  Unexpected import  import/no-unresolved\n"
+          }
+        ]
+      },
+      "expected": {
+        "status": "complete",
+        "producerNames": ["eslint"],
+        "diagnostics": [
+          {"message": "Unexpected import", "code": "import/no-unresolved", "location": {"file": "/workspace/project/src/order.ts", "line": 7, "column": 3}, "confidence": "confirmed"}
+        ]
+      }
+    },
+    {
       "id": "structural-ansi-crlf",
       "family": "structural",
       "input": {
