@@ -93,6 +93,18 @@ test("CLI usage errors exit 2 and capabilities use the same serializer", () => {
   assert.equal(capabilitiesRun.stdout, serializeCapabilities(capabilities()));
 });
 
+test("CLI root injection does not hide malformed request options", () => {
+  for (const options of [null, 5]) {
+    const run = spawnSync(process.execPath, ["dist/src/cli.js", "parse", "--stdin", "--format", "json", "--root", "/workspace/project"], {
+      encoding: "utf8",
+      input: JSON.stringify({ schemaVersion: "1", artifacts: [], options }),
+    });
+    assert.equal(run.status, 1);
+    assert.equal(run.stderr, "");
+    assert.equal(JSON.parse(run.stdout).toolIssues[0]?.code, "REQUEST_INVALID");
+  }
+});
+
 test("CLI input is bounded and rejects invalid UTF-8 before JSON parsing", async () => {
   const oversized = await readUtf8Stream((async function* () {
     yield Buffer.from("abc");

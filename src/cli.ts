@@ -100,12 +100,15 @@ async function main(): Promise<void> {
       return;
     }
     const requestRecord = isRecord(request) ? request : null;
-    const requestOptions = requestRecord && isRecord(requestRecord.options) ? requestRecord.options : null;
-    if (typeof requestOptions?.root === "string" && requestOptions.root !== rootValue) {
-      writeUsage("--root conflicts with options.root");
-      return;
+    const requestOptions = requestRecord?.options;
+    if (requestRecord && (requestOptions === undefined || isRecord(requestOptions))) {
+      const validOptions = isRecord(requestOptions) ? requestOptions : null;
+      if (typeof validOptions?.root === "string" && validOptions.root !== rootValue) {
+        writeUsage("--root conflicts with options.root");
+        return;
+      }
+      request = { ...requestRecord, options: { ...validOptions, root: rootValue } };
     }
-    if (requestRecord) request = { ...requestRecord, options: { ...requestOptions, root: rootValue } };
   }
 
   const result = parse(request);
