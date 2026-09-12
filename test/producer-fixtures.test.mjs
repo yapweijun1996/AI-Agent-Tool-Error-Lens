@@ -105,7 +105,10 @@ test("security, determinism, and agent-facing fixtures preserve their contracts"
     schemaVersion: "1",
     artifacts: [{ id: "stderr", stream: "stderr", content: "Error: [REDACTED]\n" }],
   });
-  assert.equal(security.data.diagnostics[0]?.id, sanitizedEquivalent.data.diagnostics[0]?.id);
+  const sanitizedDiagnostic = security.data.diagnostics.find((diagnostic) => diagnostic.message === "[REDACTED]");
+  assert.equal(sanitizedDiagnostic?.id, sanitizedEquivalent.data.diagnostics[0]?.id);
+  const jsonDiagnostic = security.data.diagnostics.find((diagnostic) => diagnostic.message.includes("Authorization"));
+  assert.equal(jsonDiagnostic?.message, "{\"Authorization\":\"Bearer [REDACTED]\",\"apiKey\":[REDACTED]}");
 
   const equalsAuthorization = parse({
     schemaVersion: "1",
