@@ -163,6 +163,7 @@ Verification:
 - `npm test` passes 29 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
 - the exact HEAD also passes `npm ci --ignore-scripts --no-audit --no-fund --offline` followed by the full suite in network-isolated `node:20.11.0-alpine`, `node:22-alpine`, and `node:24-alpine` Linux containers; the archived workspaces use the host npm cache only for offline package acquisition and a container-local writable cache for package smoke, so this still does not replace the GitHub Windows/macOS runners or the full approved matrix;
 - after pinning `@typescript-eslint/parser` to `8.40.0`, the same Node 20.11.0/22/24 clean-install matrix resolves `eslint-visitor-keys@4.2.1` without the prior Node 20.11 engine warning; npm still reports the non-blocking deprecation notice for `eslint@9.39.5`;
+- the Node 20.11.0/22/24 archived-workspace matrix also passes with `npm_config_engine_strict=true`, proving that the declared minimum Node version has no install-time engine mismatch; the ESLint deprecation notice remains non-blocking;
 - `check-package` creates a real tarball in a temporary directory, installs it into a temporary consumer with scripts/audit disabled, imports the public package, runs the packed CLI, and cleans up on success or failure;
 - the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
