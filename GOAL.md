@@ -2,7 +2,7 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Contract Frozen
+Lifecycle: Pre-implementation MVP / Fixture Baseline
 Last reviewed: 2026-09-13
 
 ## Purpose
@@ -20,7 +20,7 @@ Agent Error Lens is planned as one independently installable npm package with tw
 - a TypeScript/JavaScript library;
 - a command-line interface that delegates to the same core library.
 
-It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. No implementation or package manifest exists yet, so the classification is an approved product target rather than verified runtime capability.
+It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold and shared entry points now exist, but parser behavior is not implemented; the product classification is still not a claim of released runtime capability.
 
 ## Users and context
 
@@ -88,8 +88,8 @@ V0.1 is successful only when all of the following are verified:
 | Axis | State | Evidence |
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
-| Implemented | No | Repository contains no source or package manifest |
-| Verified | No product capability | No executable tests, build, package, or runtime exists |
+| Implemented | Contract, package scaffold, and fixture baseline only; no parser capability | Manifest, build configuration, shared entry points, CLI scaffold, and 21-case fixture inventory exist; parser adapters do not |
+| Verified | Contract/scaffold/fixture checks only; no parser capability | Contract checks, fixture corpus validation, build, lint, smoke tests, and packed consumer/CLI checks pass; parser behavior is not implemented |
 | Released | No | No version, tag, registry package, release, or artifact evidence exists |
 
 ## Evidence and authority

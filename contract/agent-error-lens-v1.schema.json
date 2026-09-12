@@ -9,6 +9,9 @@
     },
     {
       "$ref": "#/$defs/ParseResult"
+    },
+    {
+      "$ref": "#/$defs/CapabilitiesResult"
     }
   ],
   "x-agent-error-lens": {
@@ -287,6 +290,42 @@
         },
         "stats": {
           "$ref": "#/$defs/ParseStats"
+        }
+      }
+    },
+    "CapabilitiesResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "operations",
+        "producers"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "$ref": "#/$defs/SchemaVersion"
+        },
+        "operations": {
+          "type": "array",
+          "const": [
+            "parse",
+            "capabilities"
+          ]
+        },
+        "producers": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "typescript",
+              "vitest",
+              "eslint",
+              "generic-structured",
+              "generic-text"
+            ]
+          }
         }
       }
     },

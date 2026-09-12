@@ -1,4 +1,4 @@
-import type { ParseRequest, ParseResult } from "./agent-error-lens-v1.types";
+import type { CapabilitiesResult, ParseRequest, ParseResult } from "./agent-error-lens-v1.types.js";
 
 export const validRequest = {
   schemaVersion: "1",
@@ -59,3 +59,9 @@ export const validResult = {
     diagnosticsBeforeLimit: 0,
   },
 } satisfies ParseResult;
+
+export const validCapabilities = {
+  schemaVersion: "1",
+  operations: ["parse", "capabilities"],
+  producers: [],
+} satisfies CapabilitiesResult;

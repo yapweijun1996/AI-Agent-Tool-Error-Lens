@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Contract Frozen
+Lifecycle: Pre-implementation MVP / Fixture Baseline
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -30,15 +30,17 @@ State: Complete for contract hardening; 5/5 acceptance items complete; no parser
 
 Depends on: M0.
 
-- [ ] Add npm/package manifest and approved build/typecheck/lint configuration.
-- [ ] Integrate the authoritative schemas and checked TypeScript projection into the package with automated drift verification.
-- [ ] Add shared `parse` and `capabilities` core entry points.
-- [ ] Establish the zero-runtime-dependency baseline or record an approved exception.
-- [ ] Add the unit/fixture test harness and deterministic test environment.
+- [x] Add npm/package manifest and approved build/typecheck/lint configuration.
+- [x] Integrate the authoritative schemas and checked TypeScript projection into the package with automated drift verification.
+- [x] Add shared `parse` and `capabilities` core entry points.
+- [x] Establish the zero-runtime-dependency baseline or record an approved exception.
+- [x] Add the unit/fixture test harness and deterministic test environment.
 
 Exit gate: source builds and contract examples validate without producer-specific parsing.
 
-State: Planned; 0/5 complete.
+State: Complete for package scaffold; 5/5 acceptance items complete; parser behavior remains unimplemented.
+
+T-002 adds the reviewed Golden/adversarial fixture inventory as a dependency-preparation artifact. It does not earn M2 capability credit until executable parser behavior consumes and passes those assertions.
 
 ## M2 — Bounded normalization foundation
 
@@ -103,12 +105,12 @@ State: Planned; 0/6 complete.
 | Scope | Completed | Total | Progress |
 | --- | ---: | ---: | ---: |
 | M0 contract/governance | 5 | 5 | 100% |
-| M1 package skeleton | 0 | 5 | 0% |
+| M1 package skeleton | 5 | 5 | 100% |
 | M2 normalization foundation | 0 | 5 | 0% |
 | M3 producer coverage | 0 | 5 | 0% |
 | M4 interfaces/quality | 0 | 6 | 0% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 5 | 32 | 15.6% |
+| V0.1 roadmap | 10 | 32 | 31.3% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

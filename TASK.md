@@ -10,8 +10,8 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | --- | --- | --- | --- | --- | --- | --- |
 | T-000 | P0 | Done | Establish eight Core SSOT documents | None | All files exist, agree on scope/status, and pass the documentation audit | Eight files; 32-item/10-task/prompt-length/fence/whitespace/status checks passed |
 | T-001 | P0 | Done | Freeze executable V0.1 contract | T-000 | Schemas/types/examples validate; IDs, offsets, redaction, paths, status, budgets, CLI exits, package and compatibility decisions are explicit | `contract/verify-contract.mjs`; Ajv draft-2020-12 validation; strict TypeScript compile; architecture/security review |
-| T-002 | P0 | Planned | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | Fixture review required |
-| T-003 | P0 | Planned | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | Executable verification required |
+| T-002 | P0 | Done | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | `node scripts/check-fixtures.mjs`; 21 cases and 6 families pass inventory/shape checks |
+| T-003 | P0 | Done | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | `npm test`; `npm run pack:check`; clean consumer import; packed CLI smoke |
 | T-004 | P0 | Planned | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | Unit and integration evidence required |
 | T-005 | P0 | Planned | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | Adapter fixture evidence required |
 | T-006 | P0 | Planned | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | Repeated-process and parity evidence required |
@@ -45,6 +45,23 @@ Verification:
 - architecture/security review against `GOAL.md` and `DESIGN.md` completed;
 - second-pass contradiction review across all eight Core SSOT files completed.
 
+## T-002 — Completed fixture baseline
+
+Goal: establish a deterministic Golden/adversarial input inventory before normalization and producer implementation.
+
+Work:
+
+1. Add 21 fixture cases covering TypeScript, Vitest, ESLint, generic structured/text input, mixed streams, ANSI/CRLF, paths, multiline/nested output, malformed/unsupported/truncated/oversized input, incomplete traces, redaction, benign token metrics, repeated determinism, and agent-facing location/evidence use.
+2. Keep expected values as reviewed assertions rather than complete parser results, so the corpus cannot claim unimplemented behavior as verified.
+3. Add deterministic repeat generators for long-line and excessive-diagnostic boundary cases without storing oversized raw fixtures.
+4. Add a no-dependency corpus checker for unique IDs, required families, schema-shaped inputs, bounds, determinism partners, and security-safe placeholders.
+
+Verification:
+
+- `node scripts/check-fixtures.mjs` passes with 21 cases and 6 families;
+- `npm test` includes the fixture check alongside contract, typecheck, lint, build, and package smoke checks;
+- fixture documentation explicitly states that corpus validation is not parser behavior evidence.
+
 ## Deferred decisions that do not block implementation
 
 T-001 closed the executable parser/package defaults. The following decisions are deliberately deferred because they affect legal or release authority rather than local contract implementation:
@@ -54,7 +71,7 @@ T-001 closed the executable parser/package defaults. The following decisions are
 
 ## Known gaps and defects
 
-- No parser source, package manifest, README, CHANGELOG, ADR, product test harness, CI, release workflow, or runtime exists; the contract verifier is the only executable project tool.
+- No parser source, executable parser fixture assertions, README, CHANGELOG, ADR, CI, release workflow, or functional diagnostic runtime exists; the current package scaffold, fixture inventory, and contract verifier are not parser capability.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; runtime enforcement remains unimplemented.

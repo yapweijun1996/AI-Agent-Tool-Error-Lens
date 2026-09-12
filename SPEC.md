@@ -297,7 +297,21 @@ CLI requirements:
 
 The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
 
-## 13. Library and package contract
+## 13. Capabilities operation
+
+The library and CLI `capabilities` operation MUST return this machine-readable shape:
+
+```ts
+interface CapabilitiesResult {
+  schemaVersion: "1";
+  operations: ["parse", "capabilities"];
+  producers: Array<"typescript" | "vitest" | "eslint" | "generic-structured" | "generic-text">;
+}
+```
+
+`operations` has the fixed order shown above. `producers` is sorted by the same fixed V0.1 order and reports the producer adapters actually available in the package. A scaffold with no adapters may return an empty producer list; it MUST NOT claim unsupported producers.
+
+## 14. Library and package contract
 
 The public library MUST expose the same operations and result schema as the CLI. Public TypeScript types and runtime validation MUST share one authoritative schema contract.
 
@@ -313,9 +327,9 @@ Before release the package MUST define and verify:
 
 The target is zero runtime dependencies. Any exception requires an explicit reviewed decision and supply-chain analysis.
 
-The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `agent-error-lens`, zero runtime dependencies, and an explicit license decision before any publish/tag/release operation. CommonJS support is not implied.
+The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `agent-error-lens`, zero runtime dependencies, and an explicit license decision before any publish/tag/release operation. CommonJS support is not implied. The pre-release scaffold uses `private: true` and `license: "UNLICENSED"` as accidental-publish guards; those fields MUST be reviewed before any release.
 
-## 14. Verification matrix
+## 15. Verification matrix
 
 | Area | Required evidence |
 | --- | --- |
@@ -334,6 +348,6 @@ The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `
 
 Source tests alone do not prove package or release behavior.
 
-## 15. Acceptance
+## 16. Acceptance
 
 V0.1 acceptance requires every measurable criterion in `GOAL.md`, every applicable verification row above, package artifact inspection, and explicit separation of Implemented, Verified, and Released state in `PROGRESS.md`.

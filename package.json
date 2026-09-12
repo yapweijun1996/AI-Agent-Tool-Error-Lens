@@ -1,0 +1,41 @@
+{
+  "name": "agent-error-lens",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Deterministic, local-first diagnostic parsing for AI coding agents.",
+  "type": "module",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.11.0 <25"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/src/index.d.ts",
+      "import": "./dist/src/index.js"
+    },
+    "./contract": "./contract/agent-error-lens-v1.schema.json"
+  },
+  "bin": {
+    "agent-error-lens": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist",
+    "contract/agent-error-lens-v1.schema.json"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "postbuild": "node scripts/make-cli-executable.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "check:contract": "node contract/verify-contract.mjs && node scripts/check-contract-drift.mjs",
+    "check:fixtures": "node scripts/check-fixtures.mjs",
+    "test": "npm run check:contract && npm run check:fixtures && npm run typecheck && npm run lint && npm run build && node --test test/*.test.mjs",
+    "pack:check": "npm run build && npm pack --dry-run"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "eslint": "^9.35.0",
+    "typescript": "^5.9.2"
+  }
+}

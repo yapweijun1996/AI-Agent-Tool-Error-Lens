@@ -103,6 +103,7 @@ const validRequest = await readJson("examples/valid-request.json");
 const validEmptyRequest = await readJson("examples/valid-empty-request.json");
 const validResult = await readJson("examples/valid-complete-result.json");
 const validPartialResult = await readJson("examples/valid-partial-result.json");
+const validCapabilities = await readJson("examples/valid-capabilities.json");
 const invalidRequest = await readJson("examples/invalid-request.json");
 const invalidResult = await readJson("examples/invalid-result.json");
 
@@ -137,6 +138,7 @@ for (const [name, value, expectedValid] of [
   ["valid-empty-request", validEmptyRequest, true],
   ["valid-complete-result", validResult, true],
   ["valid-partial-result", validPartialResult, true],
+  ["valid-capabilities", validCapabilities, true],
   ["invalid-request", invalidRequest, false],
   ["invalid-result", invalidResult, false],
 ]) {
@@ -197,6 +199,7 @@ assert(validPartialResult.status === "partial" && validPartialResult.truncation.
 
 const keyOrder = schema["x-agent-error-lens"].canonicalJson.objectKeyOrder;
 assertOrderedKeys(validRequest, keyOrder.request, "request");
+assertOrderedKeys(validCapabilities, ["schemaVersion", "operations", "producers"], "capabilities");
 assertOrderedKeys(validResult, keyOrder.result, "result");
 assertOrderedKeys(validResult.data, keyOrder["result.data"], "result.data");
 assertOrderedKeys(validResult.data.diagnostics[0], keyOrder.diagnostic, "diagnostic");

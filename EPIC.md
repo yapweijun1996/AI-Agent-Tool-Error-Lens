@@ -50,7 +50,7 @@ Acceptance:
 - malformed, excessive, unsupported, and outside-root inputs fail closed;
 - processing performs no network, subprocess, or repository writes.
 
-State: Planned and dependency-ready after the frozen contract; not implemented, verified, or released.
+State: Planned and dependency-ready after the frozen contract and package scaffold; not implemented, verified, or released.
 
 ## E2 — V0.1 producer adapters
 
@@ -115,7 +115,7 @@ Acceptance:
 - clean consumers can import the packed library and run the packed CLI;
 - package metadata and contents match the approved contract.
 
-State: Planned; not implemented, verified, or released.
+State: Package scaffold implemented; scaffold checks verified; V0.1 parser/interface behavior is not complete or released.
 
 ## E5 — Verification and release evidence
 

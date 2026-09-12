@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
 Document status: Contract Frozen / Architecture Review
-Lifecycle: Pre-implementation MVP / Contract Frozen
+Lifecycle: Pre-implementation MVP / Fixture Baseline
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. It does not describe verified product implementation. The repository has contract artifacts and a no-dependency contract verifier, but still has no package manifest, parser source, public runtime entry point, producer adapter, package artifact, CI workflow, or release workflow.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. It does not describe verified parser implementation. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, and a 21-case fixture inventory, but still has no parser source, executable producer adapter, CI workflow, or release workflow.
 
 ## Architectural boundary
 
@@ -76,7 +76,7 @@ The planned package exposes:
 - `agent-error-lens parse` in the CLI;
 - `agent-error-lens capabilities` in the CLI.
 
-`explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; final ownership and license selection remain release gates. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is a checked projection until package scaffolding adds the automated drift command.
+`explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; final ownership and license selection remain release gates. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is checked by the package `check:contract` command.
 
 ## State, persistence, and source of truth
 
@@ -166,7 +166,7 @@ The CLI keeps stdout machine-readable. Human-readable usage and fatal CLI diagno
 
 ## Package, build, and release design
 
-The target is a dependency-light npm package with no runtime dependencies unless a later decision proves one necessary. Build tooling may use development dependencies. Planned release gates include:
+The repository now has a private ESM package scaffold with zero runtime dependencies; build tooling uses development dependencies. The scaffold exports the shared entry point, maps the CLI executable, and includes only `dist` plus the frozen schema in its current files allowlist. Planned release gates include:
 
 - typecheck, unit, fixture, determinism, security, resource-limit, parity, and cross-platform checks;
 - package tarball inspection;

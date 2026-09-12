@@ -78,6 +78,12 @@ export interface ParseResult {
   stats: ParseStats;
 }
 
+export interface CapabilitiesResult {
+  schemaVersion: SchemaVersion;
+  operations: ["parse", "capabilities"];
+  producers: ProducerName[];
+}
+
 export interface ResultData {
   producers: Producer[];
   diagnostics: Diagnostic[];
