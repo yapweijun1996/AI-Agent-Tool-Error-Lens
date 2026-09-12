@@ -372,13 +372,13 @@
       "input": {
         "schemaVersion": "1",
         "artifacts": [
-          {"id": "stderr", "stream": "stderr", "content": "Authorization: Bearer EXAMPLE_TOKEN_VALUE\nAuthorization: Basic EXAMPLE_BASIC_CREDENTIAL_VALUE\napiKey=EXAMPLE_SECRET_VALUE\nrefresh_token=EXAMPLE_REFRESH_TOKEN_VALUE\nclient_secret=EXAMPLE_CLIENT_SECRET_VALUE\nprivate_key=EXAMPLE_PRIVATE_KEY_VALUE\ndatabaseUrl=postgres://user:EXAMPLE_PASSWORD@example.test/db\nhttps://example.test/callback?X-Amz-Signature=EXAMPLE_SIGNATURE\nError: sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890\n"}
+          {"id": "stderr", "stream": "stderr", "content": "Authorization: Bearer EXAMPLE_TOKEN_VALUE\nAuthorization: Basic EXAMPLE_BASIC_CREDENTIAL_VALUE\nHTTP_AUTHORIZATION=Bearer EXAMPLE_HTTP_AUTH_VALUE\napiKey=EXAMPLE_SECRET_VALUE\nOPENAI_API_KEY=EXAMPLE_OPENAI_ENV_KEY_VALUE\nGITHUB_TOKEN=EXAMPLE_GITHUB_TOKEN_VALUE\nrefresh_token=EXAMPLE_REFRESH_TOKEN_VALUE\nclient_secret=EXAMPLE_CLIENT_SECRET_VALUE\nprivate_key=EXAMPLE_PRIVATE_KEY_VALUE\nAWS_SECRET_ACCESS_KEY=EXAMPLE_AWS_SECRET_VALUE\ndatabaseUrl=postgres://user:EXAMPLE_PASSWORD@example.test/db\nhttps://example.test/callback?X-Amz-Signature=EXAMPLE_SIGNATURE\nError: sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890\n"}
         ]
       },
       "expected": {
         "status": "complete",
         "redactionReplacement": "[REDACTED]",
-        "forbidOutput": ["EXAMPLE_TOKEN_VALUE", "EXAMPLE_BASIC_CREDENTIAL_VALUE", "EXAMPLE_SECRET_VALUE", "EXAMPLE_REFRESH_TOKEN_VALUE", "EXAMPLE_CLIENT_SECRET_VALUE", "EXAMPLE_PRIVATE_KEY_VALUE", "EXAMPLE_PASSWORD", "EXAMPLE_SIGNATURE", "sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890"],
+        "forbidOutput": ["EXAMPLE_TOKEN_VALUE", "EXAMPLE_BASIC_CREDENTIAL_VALUE", "EXAMPLE_HTTP_AUTH_VALUE", "EXAMPLE_SECRET_VALUE", "EXAMPLE_OPENAI_ENV_KEY_VALUE", "EXAMPLE_GITHUB_TOKEN_VALUE", "EXAMPLE_REFRESH_TOKEN_VALUE", "EXAMPLE_CLIENT_SECRET_VALUE", "EXAMPLE_PRIVATE_KEY_VALUE", "EXAMPLE_AWS_SECRET_VALUE", "EXAMPLE_PASSWORD", "EXAMPLE_SIGNATURE", "sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890"],
         "idsMustUseSanitizedFields": true
       }
     },
