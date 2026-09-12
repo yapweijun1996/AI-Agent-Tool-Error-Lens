@@ -10,10 +10,10 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | --- | --- | --- | --- | --- | --- | --- |
 | T-000 | P0 | Done | Establish eight Core SSOT documents | None | All files exist, agree on scope/status, and pass the documentation audit | Eight files; 32-item/10-task/prompt-length/fence/whitespace/status checks passed |
 | T-001 | P0 | Done | Freeze executable V0.1 contract | T-000 | Schemas/types/examples validate; IDs, offsets, redaction, paths, status, budgets, CLI exits, package and compatibility decisions are explicit | `contract/verify-contract.mjs`; Ajv draft-2020-12 validation; strict TypeScript compile; architecture/security review |
-| T-002 | P0 | Done | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | `node scripts/check-fixtures.mjs`; 22 cases and 6 families pass inventory/shape checks |
+| T-002 | P0 | Done | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | `node scripts/check-fixtures.mjs`; 23 cases and 6 families pass inventory/shape checks |
 | T-003 | P0 | Done | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | `npm test`; `npm run pack:check`; clean consumer import; packed CLI smoke |
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
-| T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 22 materialized fixture results schema-valid; adapter fixture assertions pass |
+| T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 23 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
 | T-007 | P0 | In progress | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks and agent-facing CLI E2E pass; remote run `34709741735` failed Windows verification at prior SHA and awaits rerun after remediation |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
@@ -58,7 +58,7 @@ Work:
 
 Verification:
 
-- `node scripts/check-fixtures.mjs` passes with 22 cases and 6 families;
+- `node scripts/check-fixtures.mjs` passes with 23 cases and 6 families;
 - `npm test` includes the fixture check alongside contract, typecheck, lint, build, and package smoke checks;
 - fixture documentation explicitly states that corpus validation is not parser behavior evidence.
 
@@ -98,7 +98,7 @@ Verification:
 
 - `npm test` passes contract/schema drift, fixture inventory, strict typecheck, lint, build, and 14 Node tests;
 - adapter tests assert all five producer families, ANSI/CRLF, mixed streams, Windows paths, multiline/nested attribution, malformed/unsupported/truncated/incomplete failures, security, determinism, agent-facing location/evidence, long-line, and diagnostic caps;
-- temporary Ajv draft-2020-12 validation accepts all 22 materialized fixture results;
+- temporary Ajv draft-2020-12 validation accepts all 23 materialized fixture results;
 - packed CLI/library smoke and representative fresh-process adapter runs pass.
 
 ## Deferred decisions that do not block implementation
@@ -143,6 +143,7 @@ Work completed:
 9. Align structured/factory string bounds with the schema's Unicode code-point length semantics.
 10. Cover both colon and equals delimiters for Bearer Authorization redaction.
 11. Fix Vitest multi-failure fallback attribution so each locationless message uses the nearest preceding failed test file.
+12. Fix ESLint file-header detection so slash-containing rule names cannot replace the current file path.
 
 Verification:
 
@@ -156,6 +157,7 @@ Verification:
 - Bearer Authorization values are redacted for both `Authorization:` and `Authorization=` forms;
 - astral Unicode values at structured string bounds are accepted according to code-point limits, while evidence remains UTF-16-offset based;
 - Vitest messages without location lines are attributed to the nearest preceding `FAIL` block, with a two-failure regression fixture;
+- ESLint rule names containing `/` do not replace the current file header, with a slash-rule regression fixture;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 
