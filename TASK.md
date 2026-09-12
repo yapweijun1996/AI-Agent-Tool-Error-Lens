@@ -180,6 +180,7 @@ Verification:
 - an incomplete ANSI CSI/OSC sequence returns `partial` with `mapping-failure` rather than appearing complete;
 - quoted environment keys such as `AWS_SECRET_ACCESS_KEY` are redacted even when the sensitive key segment has a prefix;
 - repeated redaction passes preserve `[REDACTED]` markers and JSON closing delimiters without duplicating or truncating content;
+- already sanitized quoted and unquoted marker forms remain byte-stable on a second parse;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 

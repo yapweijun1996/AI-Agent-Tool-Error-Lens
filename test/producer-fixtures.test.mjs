@@ -128,6 +128,12 @@ test("security, determinism, and agent-facing fixtures preserve their contracts"
   const jsonDiagnostic = security.data.diagnostics.find((diagnostic) => diagnostic.message.includes("Authorization"));
   assert.equal(jsonDiagnostic?.message, "{\"Authorization\":\"Bearer [REDACTED]\",\"apiKey\":[REDACTED],\"AWS_SECRET_ACCESS_KEY\":[REDACTED]}");
 
+  const alreadySanitized = parse({
+    schemaVersion: "1",
+    artifacts: [{ id: "stderr", stream: "stderr", content: JSON.stringify({ diagnostics: [{ message: "{\"apiKey\":\"[REDACTED]\",\"AWS_SECRET_ACCESS_KEY\":[REDACTED]} Authorization: \\\"Bearer [REDACTED]\\\" Authorization=Basic [REDACTED]", severity: "error" }] }) }],
+  });
+  assert.equal(alreadySanitized.data.diagnostics[0]?.message, "{\"apiKey\":\"[REDACTED]\",\"AWS_SECRET_ACCESS_KEY\":[REDACTED]} Authorization: \\\"Bearer [REDACTED]\\\" Authorization=Basic [REDACTED]");
+
   const equalsAuthorization = parse({
     schemaVersion: "1",
     artifacts: [{ id: "stderr", stream: "stderr", content: "Error: Authorization=Bearer EXAMPLE_AUTH_TOKEN_VALUE_1234567890\n" }],
