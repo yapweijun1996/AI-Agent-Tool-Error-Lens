@@ -154,6 +154,8 @@ Work completed:
 20. Redact JSON-style quoted credential keys inside exported diagnostic messages.
 21. Aggregate all supported producer adapters within one artifact before generic fallback.
 22. Mark incomplete terminal sequences as fail-closed mapping truncation.
+23. Cover prefixed environment credential keys inside quoted JSON-style diagnostic messages.
+24. Make quoted-key redaction idempotent without consuming JSON structural delimiters.
 
 Verification:
 
@@ -176,6 +178,8 @@ Verification:
 - JSON-style quoted `Authorization` and credential key names are redacted inside exported diagnostic messages;
 - a single mixed artifact preserves TypeScript, ESLint, and Vitest producer identities and diagnostics in deterministic evidence order;
 - an incomplete ANSI CSI/OSC sequence returns `partial` with `mapping-failure` rather than appearing complete;
+- quoted environment keys such as `AWS_SECRET_ACCESS_KEY` are redacted even when the sensitive key segment has a prefix;
+- repeated redaction passes preserve `[REDACTED]` markers and JSON closing delimiters without duplicating or truncating content;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 
