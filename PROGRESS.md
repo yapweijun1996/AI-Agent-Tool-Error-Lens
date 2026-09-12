@@ -77,7 +77,7 @@ T-001, T-002, and T-003 are complete at their stated boundaries. The JSON Schema
 
 ## Blockers and unresolved items
 
-There is no hard blocker to package implementation. Runtime enforcement, package CI, license selection, and final package ownership are unresolved release/implementation gates; Node/module support is a selected target but not yet verified.
+There is no hard blocker to package implementation. Runtime enforcement, package CI, license selection, and final package ownership are unresolved release/implementation gates; Node/module support is a selected target but not yet verified. T-009 project-KB synchronization is externally blocked for now: both available KB-MCP write routes returned `KB_NOT_FOUND` with `write_committed:false` for the supplied project UUID on 2026-09-13.
 
 ## Resume point
 

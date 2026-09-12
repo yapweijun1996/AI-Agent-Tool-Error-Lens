@@ -72,7 +72,7 @@ T-001 closed the executable parser/package defaults. The following decisions are
 ## Known gaps and defects
 
 - No parser source, executable parser fixture assertions, README, CHANGELOG, ADR, CI, release workflow, or functional diagnostic runtime exists; the current package scaffold, fixture inventory, and contract verifier are not parser capability.
-- The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history.
+- The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; runtime enforcement remains unimplemented.
 - Node.js compatibility and module format are selected as a target but remain unverified until package CI exists; package allowlist, license, and npm registry ownership remain release gates.
