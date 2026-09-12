@@ -2,10 +2,19 @@ import { readFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+const npmExecPath = process.env.npm_execpath;
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
-const pack = spawnSync(npmCommand, ["pack", "--dry-run", "--json", "--ignore-scripts"], { encoding: "utf8" });
+const command = npmExecPath ? process.execPath : npmCommand;
+const commandArgs = npmExecPath
+  ? [npmExecPath, "pack", "--dry-run", "--json", "--ignore-scripts"]
+  : ["pack", "--dry-run", "--json", "--ignore-scripts"];
+const pack = spawnSync(command, commandArgs, { encoding: "utf8" });
 if (pack.status !== 0) {
-  console.error(pack.stderr || "npm pack dry-run failed");
+  const failureDetail = [pack.stderr, pack.stdout, pack.error?.message]
+    .filter(Boolean)
+    .join("\n")
+    .trim();
+  console.error(failureDetail || "npm pack dry-run failed");
   process.exit(1);
 }
 
