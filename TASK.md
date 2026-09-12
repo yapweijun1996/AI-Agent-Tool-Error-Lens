@@ -150,6 +150,7 @@ Work completed:
 16. Cover common composite credential keys and non-Bearer Authorization schemes without leaking values.
 17. Cover underscore-delimited environment credential keys and Authorization aliases without leaking values.
 18. Enforce strict runtime stream types and keep error-result byte bounds sourced from the shared limits model.
+19. Redact quoted Authorization scheme values while preserving the scheme and quote delimiter.
 
 Verification:
 
@@ -168,6 +169,7 @@ Verification:
 - Vitest `FAIL file > suite > test` headers retain only the file path for locationless fallback diagnostics;
 - redaction expansion beyond diagnostic bounds rejects the diagnostic, while oversized optional producer-outcome fields are omitted safely;
 - direct library input rejects coercible non-string artifact streams, and error-result byte statistics use the shared request limit;
+- quoted and unquoted Authorization values are redacted for both colon and equals delimiters while preserving the scheme and quote delimiter;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 
