@@ -99,6 +99,12 @@ test("security, determinism, and agent-facing fixtures preserve their contracts"
   });
   assert.equal(security.data.diagnostics[0]?.id, sanitizedEquivalent.data.diagnostics[0]?.id);
 
+  const equalsAuthorization = parse({
+    schemaVersion: "1",
+    artifacts: [{ id: "stderr", stream: "stderr", content: "Error: Authorization=Bearer EXAMPLE_AUTH_TOKEN_VALUE_1234567890\n" }],
+  });
+  assert.equal(equalsAuthorization.data.diagnostics[0]?.message, "Authorization=Bearer [REDACTED]");
+
   const metrics = parseFixture("security-benign-token-metrics");
   assert.equal(metrics.status, "complete");
 
