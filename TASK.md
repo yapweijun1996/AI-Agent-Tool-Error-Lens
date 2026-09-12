@@ -160,7 +160,7 @@ Work completed:
 Verification:
 
 - `npm test` passes 29 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
-- the exact HEAD also passes the full suite in network-isolated `node:22-alpine` and `node:24-alpine` Linux containers; this is runtime evidence using the workspace dependency tree, not a replacement for clean `npm ci` or GitHub Windows/macOS runners;
+- the exact HEAD also passes `npm ci --ignore-scripts --no-audit --no-fund --offline` followed by the full suite in network-isolated `node:22-alpine` and `node:24-alpine` Linux containers; the archived workspaces use the host npm cache only for offline package acquisition and a container-local writable cache for package smoke, so this still does not replace GitHub Windows/macOS/Node20 runners;
 - `check-package` creates a real tarball in a temporary directory, installs it into a temporary consumer with scripts/audit disabled, imports the public package, runs the packed CLI, and cleans up on success or failure;
 - the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
