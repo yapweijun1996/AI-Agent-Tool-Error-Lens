@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Contract Hardening
+Lifecycle: Pre-implementation MVP / Contract Frozen
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -17,21 +17,21 @@ Last reviewed: 2026-09-13
 Depends on: none.
 
 - [x] Create and cross-check the eight Core SSOT documents.
-- [ ] Freeze executable input/output schemas and their TypeScript source of truth.
-- [ ] Freeze stable ID, deduplication, evidence-offset, path, redaction, ordering, and null rules.
-- [ ] Freeze CLI exit semantics, package/module format, Node/OS support, and package contents.
-- [ ] Complete architecture review and approve the V0.1 contract baseline.
+- [x] Freeze executable input/output schemas and their TypeScript source of truth.
+- [x] Freeze stable ID, deduplication, evidence-offset, path, redaction, ordering, and null rules.
+- [x] Freeze CLI exit semantics, package/module format, Node/OS support, and package contents.
+- [x] Complete architecture review and approve the V0.1 contract baseline.
 
 Exit gate: public contracts are testable and no critical behavior remains implicit.
 
-State: Planned in progress; 1/5 acceptance items complete; no product implementation.
+State: Complete for contract hardening; 5/5 acceptance items complete; no parser or package implementation.
 
 ## M1 — Package and shared contract skeleton
 
 Depends on: M0.
 
 - [ ] Add npm/package manifest and approved build/typecheck/lint configuration.
-- [ ] Add authoritative schemas, generated or checked TypeScript types, and drift verification.
+- [ ] Integrate the authoritative schemas and checked TypeScript projection into the package with automated drift verification.
 - [ ] Add shared `parse` and `capabilities` core entry points.
 - [ ] Establish the zero-runtime-dependency baseline or record an approved exception.
 - [ ] Add the unit/fixture test harness and deterministic test environment.
@@ -102,19 +102,19 @@ State: Planned; 0/6 complete.
 
 | Scope | Completed | Total | Progress |
 | --- | ---: | ---: | ---: |
-| M0 contract/governance | 1 | 5 | 20.0% |
+| M0 contract/governance | 5 | 5 | 100% |
 | M1 package skeleton | 0 | 5 | 0% |
 | M2 normalization foundation | 0 | 5 | 0% |
 | M3 producer coverage | 0 | 5 | 0% |
 | M4 interfaces/quality | 0 | 6 | 0% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 1 | 32 | 3.1% |
+| V0.1 roadmap | 5 | 32 | 15.6% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 
 ## Ecosystem sequencing
 
-The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. Local contract hardening can proceed independently; implementation start and company status should be synchronized before either is reported as active.
+The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. Local contract hardening is now complete; implementation start and company status should be synchronized before either is reported as active.
 
 ## Deferred V0.2+ candidates
 

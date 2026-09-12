@@ -2,7 +2,7 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Contract Hardening
+Lifecycle: Pre-implementation MVP / Contract Frozen
 Last reviewed: 2026-09-13
 
 ## Purpose
@@ -102,4 +102,4 @@ Current evidence order is:
 4. project KB `agent-error-lens` (`76b1c4bc-b21f-4906-b063-155c5450472b`);
 5. company AI-Agent-Tools roadmap KB.
 
-The company roadmap record still says `queued` and `design_status=not_started` as of 2026-09-07. The newer project report places local work in Contract Hardening. This is a status-synchronization gap, not implementation evidence.
+The company roadmap record still says `queued` and `design_status=not_started` as of 2026-09-07. The newer project report placed local work in Contract Hardening, and the repository now contains a locally verified frozen contract. This is a status-synchronization gap, not parser or package implementation evidence.

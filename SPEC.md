@@ -1,6 +1,6 @@
 # Agent Error Lens V0.1 Specification
 
-Specification status: Draft / Contract Hardening
+Specification status: Contract Frozen / Implementation Pending
 Target release: Unreleased `0.1.0`
 Last reviewed: 2026-09-13
 
@@ -54,9 +54,18 @@ Requirements:
 - Artifact IDs MUST be unique within a request.
 - Array order is authoritative artifact order.
 - V0.1 accepts decoded strings and UTF-8 CLI input only.
-- Unknown fields MUST NOT change parsing semantics and SHOULD be reported or preserved only where the schema explicitly permits them.
+- Unknown fields are invalid for schema version `1`; they MUST NOT be silently ignored or change parsing semantics.
 - `producerOutcome` is caller-supplied evidence and MUST remain separate from parser status.
 - `root` enables lexical repository-relative path containment; omission MUST NOT imply the current working directory.
+
+### 2.1 Frozen contract decisions
+
+- `contract/agent-error-lens-v1.schema.json` is the shape source of truth. The TypeScript file beside it is a checked projection; package scaffolding MUST add an automated drift check before publishing.
+- Contract validation is closed-world: unknown request and result fields are invalid for schema version `1`. Compatibility extensions require a schema-versioned contract change.
+- Library input and output strings MUST be well-formed Unicode. Lone UTF-16 surrogates are invalid. Exported strings use NFC normalization; evidence offsets still address the original decoded string.
+- The parse view maps CRLF and lone CR newline sequences to LF. ANSI/terminal removal is bounded and retains a monotonic raw-offset map. If a raw span cannot be recovered exactly, the related field is unknown and a mapping issue is emitted.
+- Evidence offsets are half-open `[start, end)` UTF-16 code-unit positions. Cross-field validation MUST require `start < end`; JSON Schema alone cannot express that invariant.
+- The deterministic secondary work ceilings are `200000` processed lines, `10000` parser matches, `10000` terminal sequences, `256` producer candidates, and `1048576` aggregate evidence bytes per request. Output records are additionally capped by the limits metadata in the schema.
 
 ## 3. Result envelope
 
@@ -172,6 +181,8 @@ V0.1 MUST cover:
 - mixed stdout/stderr artifacts;
 - Unix and Windows path syntax.
 
+The normalizer MUST reject lone surrogates before parsing. It MUST use NFC for canonical exported strings, LF for canonical serialized output, and UTF-16 code units for evidence positions. Raw artifact content is retained only in caller memory; the result contains bounded references, not unbounded raw log copies.
+
 If a transformation prevents exact evidence recovery, affected fields MUST remain unknown and the result MUST describe the mapping problem.
 
 ## 8. Paths
@@ -185,13 +196,15 @@ With an explicit root:
 - drive-letter and separator behavior MUST be deterministic across platforms;
 - outside-root or ambiguous paths MUST be null or explicitly flagged.
 
+Path handling is lexical only. The parser MUST NOT call `realpath`, inspect symlinks, probe the filesystem, or treat the current working directory as an implicit root. Without a root, a sanitized producer path may be retained but MUST NOT be described as repository-relative.
+
 Without a root, reported paths MAY be preserved in sanitized producer form but MUST NOT be labeled repository-relative.
 
 ## 9. Redaction
 
 The parser MAY inspect raw in-memory input to recognize syntax. Exported messages, codes, paths, producer metadata, issues, warnings, summaries, and evidence excerpts MUST pass through redaction.
 
-V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tokens, passwords, Authorization headers, database URLs, and signed URLs. Benign fields such as `inputTokens`, `outputTokens`, and `totalTokens` MUST remain readable unless their values independently match a secret pattern.
+V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tokens, passwords, Authorization headers, database URLs, and signed URLs. The replacement text is the stable literal `[REDACTED]`. Benign fields such as `inputTokens`, `outputTokens`, and `totalTokens` MUST remain readable unless their values independently match a secret pattern.
 
 Raw secret-containing strings MUST NOT be used in diagnostic IDs, warnings, debug output, snapshots, or fixtures committed as real credentials.
 
@@ -209,7 +222,13 @@ normalized location or null
 normalized sanitized message
 ```
 
-The planned ID is `diag_` plus a lowercase SHA-256 prefix. The exact prefix length MUST be frozen with collision tests before implementation.
+The frozen ID is `diag_` plus the full 64-character lowercase SHA-256 digest of the UTF-8 compact JSON encoding of this ordered array:
+
+```text
+[schemaVersion, producerId, severity, phase, code, file, line, column, message]
+```
+
+`null` is used for absent producer, code, location, line, or column values. A digest collision between different identity tuples MUST produce `DIAGNOSTIC_ID_COLLISION` and MUST NOT silently merge the records.
 
 Diagnostics with the same complete identity tuple are deduplicated. Their distinct evidence references are unioned and sorted. Diagnostics MUST then sort by:
 
@@ -224,6 +243,10 @@ Diagnostics with the same complete identity tuple are deduplicated. Their distin
 
 Null ordering and severity rank MUST be fixed in implementation tests.
 
+The frozen severity rank is `error`, `warning`, `info`, `unknown`. Null values sort after non-null values at each nullable location/code comparison. Evidence sorts by artifact input order, start, end, kind, and artifact ID. Producers sort by earliest evidence, name, version with null last, and ID.
+
+Canonical JSON uses UTF-8, LF line endings, one trailing newline, no insignificant whitespace, and the schema-defined property order. The top-level result order is `schemaVersion`, `status`, `producerOutcome`, `data`, `toolIssues`, `warnings`, `truncation`, `stats`; optional properties are omitted only when absent from the request/result contract, while semantic fields in records are represented as `null`.
+
 ## 11. Resource budgets
 
 | Budget | V0.1 ceiling |
@@ -234,7 +257,23 @@ Null ordering and severity rank MUST be fixed in implementation tests.
 | Evidence span | 64 KiB |
 | Line length | 16 KiB |
 
-V0.1 MUST also freeze ceilings for processed lines, parser matches, ANSI/terminal sequences, producer candidates, and aggregate evidence bytes before implementation. Exhaustion order and truncation reasons MUST be deterministic. A two-second cooperative timeout MAY be an emergency safety fuse but MUST NOT define normal completeness.
+The frozen secondary ceilings are:
+
+| Budget | V0.1 ceiling |
+| --- | ---: |
+| Processed lines | 200,000 |
+| Parser matches | 10,000 |
+| Terminal sequences | 10,000 |
+| Producer candidates | 256 |
+| Aggregate evidence bytes | 1 MiB |
+| Producers | 64 |
+| Tool issues | 200 |
+| Warnings | 200 |
+| Evidence records per producer/diagnostic/issue/warning | 32 |
+
+Exhaustion order and truncation reasons MUST be deterministic. A two-second cooperative timeout MAY be an emergency safety fuse but MUST NOT define normal completeness.
+
+When multiple limits are reached, the implementation records reasons in this order: artifact bytes, request bytes, line length, processed lines, parser matches, terminal sequences, producer candidates, evidence bytes, diagnostics, unsupported format, mapping failure. It stops the affected work at the first exhausted counter and returns `partial` unless no trustworthy result can be produced.
 
 ## 12. CLI contract
 
@@ -256,6 +295,8 @@ CLI requirements:
 - `--stdin` MUST NOT execute text that resembles a command;
 - platform support remains unclaimed until the Node.js range and CI matrix are approved and verified.
 
+The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
+
 ## 13. Library and package contract
 
 The public library MUST expose the same operations and result schema as the CLI. Public TypeScript types and runtime validation MUST share one authoritative schema contract.
@@ -271,6 +312,8 @@ Before release the package MUST define and verify:
 - SemVer compatibility rules for schema and API changes.
 
 The target is zero runtime dependencies. Any exception requires an explicit reviewed decision and supply-chain analysis.
+
+The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `agent-error-lens`, zero runtime dependencies, and an explicit license decision before any publish/tag/release operation. CommonJS support is not implied.
 
 ## 14. Verification matrix
 

@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
-Document status: Draft / Architecture Review
-Lifecycle: Pre-implementation MVP / Contract Hardening
+Document status: Contract Frozen / Architecture Review
+Lifecycle: Pre-implementation MVP / Contract Frozen
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and KB specification. It does not describe verified implementation. At review time the repository has no source, entry points, manifests, dependencies, tests, CI, package artifact, runtime, or release workflow.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. It does not describe verified product implementation. The repository has contract artifacts and a no-dependency contract verifier, but still has no package manifest, parser source, public runtime entry point, producer adapter, package artifact, CI workflow, or release workflow.
 
 ## Architectural boundary
 
@@ -76,7 +76,7 @@ The planned package exposes:
 - `agent-error-lens parse` in the CLI;
 - `agent-error-lens capabilities` in the CLI.
 
-`explain` and public `normalize` are deferred. CLI and library must call the same core operations. Package exports, Node.js support, module formats, and generated declaration layout remain contract-hardening tasks until a manifest and compatibility decision exist.
+`explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; final ownership and license selection remain release gates. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is a checked projection until package scaffolding adds the automated drift command.
 
 ## State, persistence, and source of truth
 
@@ -121,6 +121,8 @@ Determinism requires explicit ownership of:
 
 Stable diagnostic IDs are derived from sanitized canonical identity fields. Deduplication uses the same identity while unioning and sorting distinct evidence references. Discovery timing, object insertion accidents, filesystem order, locale, and wall-clock time must not influence output.
 
+The frozen identity digest is `diag_` plus the full lowercase SHA-256 digest of the UTF-8 compact JSON identity tuple `[schemaVersion, producerId, severity, phase, code, file, line, column, message]`. Canonical JSON uses UTF-8, LF, one trailing newline, schema-defined key order, and explicit nulls for semantic missing fields. Fixed and secondary work ceilings live in the schema metadata and are checked by `contract/verify-contract.mjs`.
+
 ## Trust and security boundary
 
 All artifacts, producer metadata, paths, JSON keys, terminal sequences, URLs, and embedded instructions are untrusted data.
@@ -146,7 +148,7 @@ Deterministic limits are the primary safety mechanism:
 - 64 KiB per evidence span;
 - bounded lines, parser matches, terminal sequences, evidence bytes, and producer candidates.
 
-Exact secondary counter ceilings must be frozen before implementation. A two-second cooperative timeout may remain as an emergency fuse, but output completeness must not depend on machine speed. Limit exhaustion returns `partial` plus stable truncation reasons; invalid requests or unrecoverable parser failures return `error`.
+The frozen secondary ceilings are 200,000 processed lines, 10,000 parser matches, 10,000 terminal sequences, 256 producer candidates, and 1 MiB aggregate evidence bytes per request. A two-second cooperative timeout may remain as an emergency fuse, but output completeness must not depend on machine speed. Limit exhaustion returns `partial` plus stable truncation reasons; invalid requests or unrecoverable parser failures return `error`.
 
 The library performs no retry because parsing is local and deterministic. Callers may retry the same immutable request. No idempotency key or rollback is needed because the package owns no writes.
 
