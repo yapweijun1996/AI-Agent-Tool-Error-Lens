@@ -138,7 +138,7 @@ Determinism requires explicit ownership of:
 
 Stable diagnostic IDs are derived from sanitized canonical identity fields. Deduplication uses the same identity while unioning and sorting distinct evidence references. Discovery timing, object insertion accidents, filesystem order, locale, and wall-clock time must not influence output.
 
-The frozen identity digest is `diag_` plus the full lowercase SHA-256 digest of the UTF-8 compact JSON identity tuple `[schemaVersion, producerId, severity, phase, code, file, line, column, message]`. Canonical JSON uses UTF-8, LF, one trailing newline, schema-defined key order, and explicit nulls for semantic missing fields. Diagnostic strings must remain well-formed Unicode, and known line/column values must be one-based safe integers; invalid adapter or structured values are rejected before identity creation. Fixed and secondary work ceilings live in the schema metadata and are checked by `contract/verify-contract.mjs`.
+The frozen identity digest is `diag_` plus the full lowercase SHA-256 digest of the UTF-8 compact JSON identity tuple `[schemaVersion, producerId, severity, phase, code, file, line, column, message]`. Canonical JSON uses UTF-8, LF, one trailing newline, schema-defined key order, and explicit nulls for semantic missing fields. Diagnostic strings must remain well-formed Unicode; bounded string lengths use Unicode code points, while evidence offsets use UTF-16 code units. Known line/column values must be one-based safe integers; invalid adapter or structured values are rejected before identity creation. Fixed and secondary work ceilings live in the schema metadata and are checked by `contract/verify-contract.mjs`.
 
 ## Trust and security boundary
 

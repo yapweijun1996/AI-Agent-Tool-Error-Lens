@@ -64,7 +64,7 @@ Requirements:
 
 - `contract/agent-error-lens-v1.schema.json` is the shape source of truth. The TypeScript file beside it is a checked projection; package scaffolding MUST add an automated drift check before publishing.
 - Contract validation is closed-world: unknown request and result fields are invalid for schema version `1`. Compatibility extensions require a schema-versioned contract change.
-- Library input and output strings MUST be well-formed Unicode. Lone UTF-16 surrogates are invalid. Exported strings use NFC normalization; evidence offsets still address the original decoded string.
+- Library input and output strings MUST be well-formed Unicode. Lone UTF-16 surrogates are invalid. Schema `maxLength` values count Unicode code points; evidence offsets still address the original decoded string in UTF-16 code units. Exported strings use NFC normalization.
 - Structured diagnostic records MUST contain bounded, well-formed Unicode strings. Known `line` and `column` values MUST be one-based safe integers; malformed strings or unsafe coordinates MUST be rejected as `STRUCTURED_DIAGNOSTIC_INVALID` rather than exported or coerced.
 - The parse view maps CRLF and lone CR newline sequences to LF. ANSI/terminal removal is bounded and retains a monotonic raw-offset map. If a raw span cannot be recovered exactly, the related field is unknown and a mapping issue is emitted.
 - Evidence offsets are half-open `[start, end)` UTF-16 code-unit positions. Cross-field validation MUST require `start < end`; JSON Schema alone cannot express that invariant.
