@@ -6,6 +6,7 @@ import type {
 } from "../../contract/agent-error-lens-v1.types.js";
 import { LIMITS } from "./limits.js";
 import { redactText } from "./redact.js";
+import { stringLength } from "./validation.js";
 
 export function emptyData() {
   return {
@@ -40,9 +41,18 @@ export function emptyStats(artifactsReceived = 0, bytesReceived = 0) {
 export function sanitizeProducerOutcome(outcome: ProducerOutcome | undefined): ProducerOutcome | undefined {
   if (!outcome) return undefined;
   const sanitized: ProducerOutcome = {};
-  if (outcome.command !== undefined) sanitized.command = redactText(outcome.command);
+  if (outcome.command !== undefined) {
+    const command = redactText(outcome.command);
+    if (stringLength(command) <= 8192) sanitized.command = command;
+  }
   if (outcome.exitCode !== undefined) sanitized.exitCode = outcome.exitCode;
-  if (outcome.signal !== undefined) sanitized.signal = outcome.signal === null ? null : redactText(outcome.signal);
+  if (outcome.signal !== undefined) {
+    if (outcome.signal === null) sanitized.signal = null;
+    else {
+      const signal = redactText(outcome.signal);
+      if (stringLength(signal) <= 128) sanitized.signal = signal;
+    }
+  }
   return sanitized;
 }
 

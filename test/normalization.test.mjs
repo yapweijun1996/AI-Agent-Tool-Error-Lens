@@ -111,3 +111,19 @@ test("redaction masks secrets but preserves benign token metrics", () => {
   const metricsResult = parse(request(metrics));
   assert.equal(metricsResult.data.diagnostics[0]?.message, "inputTokens=42 outputTokens=17 totalTokens=59");
 });
+
+test("redaction expansion cannot make exported fields exceed contract bounds", () => {
+  const expandedMessage = "token=x ".repeat(1000);
+  const result = parse(request(JSON.stringify({ diagnostics: [{ message: expandedMessage, severity: "error" }] })));
+  assert.equal(result.status, "partial");
+  assert.equal(result.data.diagnostics.length, 0);
+  assert.equal(result.toolIssues[0]?.code, "STRUCTURED_DIAGNOSTIC_INVALID");
+
+  const producerOutcome = parse({
+    schemaVersion: "1",
+    artifacts: [],
+    producerOutcome: { command: expandedMessage, signal: "token=x ".repeat(10) },
+  });
+  assert.equal(producerOutcome.status, "complete");
+  assert.deepEqual(producerOutcome.producerOutcome, {});
+});

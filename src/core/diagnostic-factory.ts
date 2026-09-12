@@ -37,6 +37,11 @@ export function makeDiagnostic(
   if (fields.column !== null && (!Number.isSafeInteger(fields.column) || fields.column < 1)) return null;
   if (fields.evidence.length === 0) return null;
 
+  const sanitizedMessage = redactText(fields.message);
+  if (stringLength(sanitizedMessage) === 0 || stringLength(sanitizedMessage) > 8192) return null;
+  const sanitizedCode = fields.code === null ? null : redactText(fields.code);
+  if (sanitizedCode !== null && stringLength(sanitizedCode) > 128) return null;
+
   let location = null;
   if (fields.file !== null) {
     if (stringLength(fields.file) === 0 || stringLength(fields.file) > 4096) return null;
@@ -51,8 +56,10 @@ export function makeDiagnostic(
         evidence: fields.evidence.slice(0, 32),
       });
     } else {
+      const sanitizedFile = redactText(normalizedPath.file);
+      if (stringLength(sanitizedFile) === 0 || stringLength(sanitizedFile) > 4096) return null;
       location = {
-        file: redactText(normalizedPath.file),
+        file: sanitizedFile,
         line: fields.line,
         column: fields.column,
       };
@@ -62,8 +69,8 @@ export function makeDiagnostic(
   const withoutId: Omit<Diagnostic, "id"> = {
     severity: fields.severity,
     phase: fields.phase,
-    message: redactText(fields.message),
-    code: fields.code === null ? null : redactText(fields.code),
+    message: sanitizedMessage,
+    code: sanitizedCode,
     location,
     producerId: fields.producerId,
     confidence: fields.confidence,
