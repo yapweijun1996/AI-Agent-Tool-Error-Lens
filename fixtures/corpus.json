@@ -150,6 +150,29 @@
       }
     },
     {
+      "id": "producer-vitest-multiple-failures",
+      "family": "producer",
+      "producer": "vitest",
+      "input": {
+        "schemaVersion": "1",
+        "artifacts": [
+          {
+            "id": "stderr",
+            "stream": "stderr",
+            "content": " FAIL  src/first.test.ts\nAssertionError: first failure\n FAIL  src/second.test.ts\nError: second failure\n"
+          }
+        ]
+      },
+      "expected": {
+        "status": "complete",
+        "producerNames": ["vitest"],
+        "diagnostics": [
+          {"message": "first failure", "location": {"file": "src/first.test.ts", "line": null, "column": null}, "confidence": "strong"},
+          {"message": "second failure", "location": {"file": "src/second.test.ts", "line": null, "column": null}, "confidence": "strong"}
+        ]
+      }
+    },
+    {
       "id": "structural-ansi-crlf",
       "family": "structural",
       "input": {

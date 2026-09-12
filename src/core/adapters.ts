@@ -182,12 +182,14 @@ function parseVitest(view: NormalizedArtifact, root: string | undefined, budget:
   if (failures.length === 0 || messages.length === 0) return result;
   result.supported = true;
   addProducer(result, "vitest", failures[0]?.evidence ?? messages[0]!.evidence, budget);
+  let failureIndex = -1;
   for (let index = 0; index < messages.length; index += 1) {
     const message = messages[index];
     if (!message || !reserveMatch(budget)) break;
     const nextMessageStart = messages[index + 1]?.start ?? Number.MAX_SAFE_INTEGER;
     const location = locations.find((candidate) => candidate.start >= message.end && candidate.start < nextMessageStart);
-    const fallback = failures.find((failure) => failure.start <= message.start);
+    while (failureIndex + 1 < failures.length && failures[failureIndex + 1]!.start <= message.start) failureIndex += 1;
+    const fallback = failures[failureIndex];
     const evidence = location ? [message.evidence, location.evidence] : [message.evidence];
     addMappedDiagnostic(result, {
       severity: "error",

@@ -51,6 +51,10 @@ test("structural and nested producer fixtures preserve the relevant producer", (
   assert.equal(firstDiagnostic("structural-windows-rooted-path")?.location?.file, "src/order.ts");
   assert.equal(firstDiagnostic("structural-multiline-diagnostic")?.location?.line, 42);
 
+  const multipleFailures = parseFixture("producer-vitest-multiple-failures");
+  assert.deepEqual(multipleFailures.data.diagnostics.map((diagnostic) => diagnostic.location?.file), ["src/first.test.ts", "src/second.test.ts"]);
+  assert.deepEqual(multipleFailures.data.diagnostics.map((diagnostic) => diagnostic.confidence), ["strong", "strong"]);
+
   const nested = parseFixture("structural-nested-producers");
   assert.deepEqual(nested.data.producers.map((item) => item.name), ["vitest"]);
   assert.equal(nested.data.producers.some((item) => item.name === "npm"), false);
