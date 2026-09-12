@@ -2,7 +2,7 @@ const KEY_VALUE_PATTERN = /\b(api[-_]?key|apikey|access[-_]?token|token|password
 const AUTHORIZATION_PATTERN = /\b(authorization)\b(\s*:\s*)(bearer\s+)[^\s,;]+/giu;
 const SIGNED_QUERY_PATTERN = /([?&](?:x-amz-signature|x-amz-credential|signature|sig)=)[^&\s]+/giu;
 const DATABASE_PASSWORD_PATTERN = /((?:postgres(?:ql)?|mysql|mariadb|mongodb(?:\+srv)?):\/\/[^:\/\s]+:)[^@\/\s]+(@)/giu;
-const PROVIDER_TOKEN_PATTERN = /\b(?:sk-(?:live|test)-|ghp_|xox[baprs]-|AIza|AKIA)[A-Za-z0-9_-]{8,}\b/gu;
+const PROVIDER_TOKEN_PATTERN = /\b(?:sk-(?:live|test|proj|svcacct)-|ghp_|xox[baprs]-|AIza|AKIA)[A-Za-z0-9_-]{8,}\b/gu;
 
 export function redactText(value: string): string {
   let sanitized = value.normalize("NFC");

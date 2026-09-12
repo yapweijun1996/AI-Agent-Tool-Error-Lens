@@ -93,6 +93,11 @@ test("security, determinism, and agent-facing fixtures preserve their contracts"
   const serializedSecurity = JSON.stringify(security);
   for (const secret of fixture("security-redaction-families").expected.forbidOutput) assert.equal(serializedSecurity.includes(secret), false, secret);
   assert.equal(security.status, "complete");
+  const sanitizedEquivalent = parse({
+    schemaVersion: "1",
+    artifacts: [{ id: "stderr", stream: "stderr", content: "Error: [REDACTED]\n" }],
+  });
+  assert.equal(security.data.diagnostics[0]?.id, sanitizedEquivalent.data.diagnostics[0]?.id);
 
   const metrics = parseFixture("security-benign-token-metrics");
   assert.equal(metrics.status, "complete");

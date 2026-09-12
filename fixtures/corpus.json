@@ -327,13 +327,13 @@
       "input": {
         "schemaVersion": "1",
         "artifacts": [
-          {"id": "stderr", "stream": "stderr", "content": "Authorization: Bearer EXAMPLE_TOKEN_VALUE\napiKey=EXAMPLE_SECRET_VALUE\ndatabaseUrl=postgres://user:EXAMPLE_PASSWORD@example.test/db\nhttps://example.test/callback?X-Amz-Signature=EXAMPLE_SIGNATURE\n"}
+          {"id": "stderr", "stream": "stderr", "content": "Authorization: Bearer EXAMPLE_TOKEN_VALUE\napiKey=EXAMPLE_SECRET_VALUE\ndatabaseUrl=postgres://user:EXAMPLE_PASSWORD@example.test/db\nhttps://example.test/callback?X-Amz-Signature=EXAMPLE_SIGNATURE\nError: sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890\n"}
         ]
       },
       "expected": {
         "status": "complete",
         "redactionReplacement": "[REDACTED]",
-        "forbidOutput": ["EXAMPLE_TOKEN_VALUE", "EXAMPLE_SECRET_VALUE", "EXAMPLE_PASSWORD", "EXAMPLE_SIGNATURE"],
+        "forbidOutput": ["EXAMPLE_TOKEN_VALUE", "EXAMPLE_SECRET_VALUE", "EXAMPLE_PASSWORD", "EXAMPLE_SIGNATURE", "sk-proj-EXAMPLE_OPENAI_TOKEN_VALUE_1234567890"],
         "idsMustUseSanitizedFields": true
       }
     },
