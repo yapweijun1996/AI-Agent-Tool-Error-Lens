@@ -136,7 +136,7 @@ Acceptance:
 - version, tag, release, and registry evidence agree;
 - `PROGRESS.md` separately records Implemented, Verified, and Released state.
 
-State: Planned; not implemented, verified, or released.
+State: In progress. Local static, unit, fixture, determinism, security, resource, parity, package, and agent-facing E2E evidence is implemented and verified. The cross-platform workflow exists, but remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` failed on Windows before the current portable test/package remediation; exact-HEAD rerun, release documentation, tag, registry, integrity, and `gitHead` evidence remain unverified and unreleased.
 
 ## Dependency order
 

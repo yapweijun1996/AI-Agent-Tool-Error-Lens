@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Verification
+Lifecycle: MVP / Verification
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -83,7 +83,7 @@ Depends on: M3.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
-State: 5/6 complete for source-level canonical interfaces, local capability/resource/package behavior, and agent-facing E2E; remote Node/OS CI execution remains unverified.
+State: 5/6 complete for source-level canonical interfaces, local capability/resource/package behavior, and agent-facing E2E. Remote run `34709741735` passed Linux/macOS jobs but failed Windows verification before the current portable command remediation; the corrected Node/OS matrix remains unverified.
 
 ## M5 — Package and release proof
 

@@ -1,7 +1,7 @@
 # Agent Error Lens Progress
 
 Snapshot date: 2026-09-13
-Lifecycle: Pre-implementation MVP / Verification
+Lifecycle: MVP / Verification
 Working branch: `main`
 Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
@@ -9,15 +9,15 @@ Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
 The repository began this pass with only `.gitattributes` and one initial commit. There were no project-level `AGENTS.md`, nested rules, `CLAUDE.md`, `CONTRIBUTING.md`, README, CHANGELOG, ADRs, docs, source, entry points, configuration, package/build files, dependencies, tests, scripts, CI, release workflows, tags, stashes, or uncommitted work.
 
-The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, and local security/resource/package gates added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete; remote CI and release proof are incomplete.
+The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, local security/resource/package gates, and Windows-portable verification commands added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification before the current remediation; release proof remains incomplete.
 
 ## Delivery axes
 
 | Axis | Current state | Strongest evidence |
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
-| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, and CLI exist |
-| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; remote CI and release matrix incomplete | `npm test`, 21-case materialized schema validation, 23 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, and packed CLI smoke pass |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, and Windows CI-script remediation; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, CLI, and portable test/package commands exist |
+| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, `npm run pack:check`, `npm audit --omit=dev`, 21-case materialized schema validation, 23 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, and packed CLI smoke pass locally; remote rerun is pending |
 | Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -63,11 +63,11 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities |
 | Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
-| CI/release/registry | Unverified | CI workflow configuration exists, but remote matrix execution, tag, release, registry artifact, and integrity readback do not |
+| CI/release/registry | Failed / pending rerun | Remote run `34709741735` passed Linux/macOS jobs but failed Windows verification at the previous SHA; local remediation passes, but corrected exact-HEAD CI, tag, release, registry artifact, and integrity readback do not yet exist |
 
 ## Contract-hardening result
 
-T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI, license selection, and final package ownership remain release gates.
+T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, portable test/package commands, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI has an observed Windows failure at the previous SHA; the remediation is not remotely verified. License selection and final package ownership remain release gates.
 
 ## Risks
 
@@ -77,15 +77,15 @@ T-001 through T-006 are complete at their stated boundaries, and T-007 local saf
 4. Mixed producers may be collapsed into a false single identity.
 5. Generic heuristics may appear more certain than their evidence supports.
 6. Nondeterministic work-budget termination or untested record classes may still break byte stability outside the covered matrix.
-7. Remote Node/OS CI execution remains unverified despite passing local equivalents.
+7. The observed remote Node/OS run failed on Windows; the local remediation still needs an exact-HEAD CI rerun.
 8. Package, platform, or release compatibility may be claimed before artifact-level proof.
 9. Local and company KB lifecycle status may continue to diverge.
-10. Fixture assertions may drift from the frozen contract until the remote matrix is completed.
+10. Fixture assertions may drift from the frozen contract until the corrected remote matrix is completed.
 
 ## Blockers and unresolved items
 
-There is no hard blocker to package implementation. Runtime enforcement, package CI, license selection, and final package ownership are unresolved release/implementation gates; Node/module support is a selected target but not yet verified. T-009 project-KB synchronization is externally blocked for now: both available KB-MCP write routes returned `KB_NOT_FOUND` with `write_committed:false` for the supplied project UUID on 2026-09-13.
+There is no hard blocker to package implementation. The current local remediation is verified, but corrected exact-HEAD remote CI is not available without a push or CI rerun. License selection and final package ownership remain unresolved release gates; Node/module support is a selected target but not yet verified across the approved matrix. T-009 project-KB synchronization is externally blocked for now: both available KB-MCP write routes returned `KB_NOT_FOUND` with `write_committed:false` for the supplied project UUID on 2026-09-13.
 
 ## Resume point
 
-Continue T-007. Obtain remote Node/OS CI evidence, then perform the final docs/package/release-readiness audit. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.
+Continue T-007. Rerun the corrected exact-HEAD Node/OS matrix when external CI execution is authorized, then perform the final docs/package/release-readiness audit. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.

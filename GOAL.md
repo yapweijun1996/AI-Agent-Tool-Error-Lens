@@ -2,12 +2,12 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Verification
+Lifecycle: MVP / Verification
 Last reviewed: 2026-09-13
 
 ## Purpose
 
-Agent Error Lens will convert bounded, supplied compiler, test, linter, build, and CLI output into small, deterministic, evidence-backed diagnostics for AI coding agents.
+Agent Error Lens converts bounded, supplied compiler, test, linter, build, and CLI output into small, deterministic, evidence-backed diagnostics for AI coding agents.
 
 The product boundary is deliberately narrow:
 
@@ -15,7 +15,7 @@ The product boundary is deliberately narrow:
 
 ## Project classification
 
-Agent Error Lens is planned as one independently installable npm package with two public interfaces:
+Agent Error Lens is implemented as one independently installable npm package with two public interfaces:
 
 - a TypeScript/JavaScript library;
 - a command-line interface that delegates to the same core library.
@@ -88,8 +88,8 @@ V0.1 is successful only when all of the following are verified:
 | Axis | State | Evidence |
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
-| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, capability/resource checks, shared entry points, CLI, and 21-case inventory exist |
-| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; remote matrix and release proof remain incomplete | Contract checks, 21-case fixture execution, 23 core/adapter/interface/resource/E2E tests, build, lint, schema validation, repeated-process parity, package allowlist, and packed consumer/CLI checks pass |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, and Windows CI-script remediation; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, capability/resource checks, shared entry points, CLI, 21-case inventory, cross-platform workflow, and portable test/package commands exist |
+| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; the observed remote matrix failed on Windows before the remediation commit, and release proof remains incomplete | Contract checks, 21-case fixture execution, 23 core/adapter/interface/resource/E2E tests, build, lint, schema validation, repeated-process parity, package allowlist, packed consumer/CLI checks, and local Windows-path remediation checks pass; remote rerun is pending |
 | Released | No | The manifest is private/unreleased at `0.1.0`; no authorized tag, registry package, release, or integrity readback exists |
 
 ## Evidence and authority

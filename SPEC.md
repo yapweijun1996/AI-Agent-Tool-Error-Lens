@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and local capability/resource/package plus agent-facing CLI handoff gates are verified as T-007 work. Remote CI execution and release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and local capability/resource/package plus agent-facing CLI handoff gates are verified as T-007 work. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification: PowerShell did not expand the test glob on Node 20, and the npm package dry-run command failed on Node 22/24. The local command remediation is verified; the corrected exact-HEAD matrix and release gates remain pending.
 
 ## 1. V0.1 scope
 
@@ -295,9 +295,9 @@ CLI requirements:
 - exit `2`: CLI usage or option validation failed before a result could be produced;
 - producer failure MUST NOT be copied to the Error Lens process exit code;
 - `--stdin` MUST NOT execute text that resembles a command;
-- platform support remains unclaimed until the Node.js range and CI matrix are approved and verified.
+- platform support remains unclaimed until the Node.js range and corrected CI matrix are approved and verified. A prior matrix run failed on Windows before the current portable command remediation.
 
-The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
+The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corrected corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
 
 ## 13. Capabilities operation
 

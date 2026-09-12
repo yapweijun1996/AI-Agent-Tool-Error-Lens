@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
 Document status: Contract Frozen / Architecture Review
-Lifecycle: Pre-implementation MVP / Verification
+Lifecycle: MVP / Verification
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, and a local agent-facing CLI handoff test. Remote CI execution and release workflows remain unverified.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows jobs: PowerShell glob expansion broke Node 20 test discovery, and npm 22/24 package dry-run invocation failed. The local remediation is implemented and verified locally; remote rerun and release workflows remain unverified.
 
 ## Architectural boundary
 
@@ -69,7 +69,7 @@ Exact folders and filenames are intentionally not asserted before implementation
 
 ## Public interfaces
 
-The planned package exposes:
+The package exposes:
 
 - a library `parse(request)` operation;
 - a library `capabilities()` operation;
@@ -93,11 +93,11 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts` and `src/core/text.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI configuration and local agent-facing E2E now exist, while remote CI execution and release modules remain T-007 through T-008 evidence gaps. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration, Windows-portable test/package commands, and local agent-facing E2E now exist. The prior remote execution is a recorded failure, so cross-platform support remains an evidence gap until the remediation is exercised by CI; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 
-The parser is planned to be stateless:
+The parser is stateless by implementation:
 
 - request state exists only for one parse call;
 - no database, cache, telemetry upload, or durable log storage is owned by the package;
