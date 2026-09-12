@@ -211,6 +211,8 @@ V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tok
 
 The bounded provider-token patterns include standalone `sk-live-`, `sk-test-`, `sk-proj-`, `sk-svcacct-`, `ghp_`, `xox*`, `AIza`, and `AKIA` forms. This list is intentionally conservative and does not claim universal credential-format coverage.
 
+Bearer Authorization values MUST be redacted for both colon and equals key-value delimiters.
+
 Raw secret-containing strings MUST NOT be used in diagnostic IDs, warnings, debug output, snapshots, or fixtures committed as real credentials.
 
 ## 10. Stable IDs, deduplication, and ordering

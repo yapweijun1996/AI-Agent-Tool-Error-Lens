@@ -141,6 +141,7 @@ Work completed:
 7. Close the observed standalone `sk-proj-` provider-token redaction gap and extend the security fixture without broadening the parser boundary.
 8. Convert package allowlist evidence into a real temporary tarball consumer/import/CLI smoke audit with deterministic cleanup.
 9. Align structured/factory string bounds with the schema's Unicode code-point length semantics.
+10. Cover both colon and equals delimiters for Bearer Authorization redaction.
 
 Verification:
 
@@ -151,6 +152,7 @@ Verification:
 - bounded CLI stdin decoding rejects invalid UTF-8 and oversized input before JSON parsing;
 - structured records reject escaped lone surrogates and unsafe line/column values with bounded partial results;
 - standalone `sk-proj-` provider-token values are absent from exported diagnostics and their stable IDs are based on sanitized fields;
+- Bearer Authorization values are redacted for both `Authorization:` and `Authorization=` forms;
 - astral Unicode values at structured string bounds are accepted according to code-point limits, while evidence remains UTF-16-offset based;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
