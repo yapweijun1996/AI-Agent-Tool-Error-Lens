@@ -148,6 +148,7 @@ Work completed:
 14. Strip Vitest suite/test title suffixes from `FAIL` headers before locationless fallback attribution.
 15. Apply redaction before final contract bounds so replacement expansion cannot produce invalid exported fields.
 16. Cover common composite credential keys and non-Bearer Authorization schemes without leaking values.
+17. Cover underscore-delimited environment credential keys and Authorization aliases without leaking values.
 
 Verification:
 
@@ -158,7 +159,7 @@ Verification:
 - bounded CLI stdin decoding rejects invalid UTF-8 and oversized input before JSON parsing;
 - structured records reject escaped lone surrogates and unsafe line/column values with bounded partial results;
 - standalone `sk-proj-` provider-token values are absent from exported diagnostics and their stable IDs are based on sanitized fields;
-- Authorization scheme values and common composite credential keys are redacted for both `Authorization:` and `Authorization=` forms;
+- Authorization scheme values, common composite credential keys, and underscore-delimited environment credential keys are redacted for both `Authorization:` and `Authorization=` forms;
 - astral Unicode values at structured string bounds are accepted according to code-point limits, while evidence remains UTF-16-offset based;
 - Vitest messages without location lines are attributed to the nearest preceding `FAIL` block, with a two-failure regression fixture;
 - ESLint rule names containing `/` do not replace the current file header, with a slash-rule regression fixture;

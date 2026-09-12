@@ -211,7 +211,7 @@ V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tok
 
 Redaction MUST be applied before final contract-bound checks. If redaction expansion would exceed a diagnostic field's bound, the diagnostic MUST be rejected fail-closed; if it would exceed an optional producer-outcome field's bound, that field MUST be omitted rather than truncated or exported out of schema.
 
-The bounded provider-token patterns include standalone `sk-live-`, `sk-test-`, `sk-proj-`, `sk-svcacct-`, `ghp_`, `xox*`, `AIza`, and `AKIA` forms. Common composite credential keys such as `refresh_token`, `client_secret`, `private_key`, `secret_key`, `session_token`, `id_token`, and `oauth_token` are also covered. This list is intentionally conservative and does not claim universal credential-format coverage.
+The bounded provider-token patterns include standalone `sk-live-`, `sk-test-`, `sk-proj-`, `sk-svcacct-`, `ghp_`, `xox*`, `AIza`, and `AKIA` forms. Common composite and environment-style credential keys such as `refresh_token`, `client_secret`, `private_key`, `secret_key`, `session_token`, `id_token`, `oauth_token`, `OPENAI_API_KEY`, `GITHUB_TOKEN`, and `AWS_SECRET_ACCESS_KEY` are also covered. This list is intentionally conservative and does not claim universal credential-format coverage.
 
 Authorization scheme values MUST be redacted for both colon and equals key-value delimiters, while preserving the scheme label (for example, `Bearer` or `Basic`).
 
