@@ -5,6 +5,7 @@ import type {
   Producer,
 } from "../contract/agent-error-lens-v1.types.js";
 import { deduplicateDiagnostics, summarize } from "./core/diagnostics.js";
+import { parseTextArtifact } from "./core/adapters.js";
 import { LIMITS, createBudget, orderedReasons } from "./core/limits.js";
 import { normalizeArtifact } from "./core/normalize.js";
 import { parseStructuredArtifact } from "./core/structured.js";
@@ -15,7 +16,7 @@ export function capabilities(): CapabilitiesResult {
   return {
     schemaVersion: "1",
     operations: ["parse", "capabilities"],
-    producers: ["generic-structured"],
+    producers: ["typescript", "vitest", "eslint", "generic-structured", "generic-text"],
   };
 }
 
@@ -46,8 +47,11 @@ export function parse(request: unknown): ParseResult {
     const view = normalizeArtifact(artifact, budget);
     artifactsProcessed += 1;
     bytesProcessed += view.rawBytesProcessed;
-    const outcome = parseStructuredArtifact(view, validation.request.options?.root, budget);
-    if (!outcome.supported && outcome.issues.length === 0 && view.text.trim().length > 0) {
+    const looksStructured = /^[\[{]/u.test(view.text.trimStart());
+    const outcome = looksStructured
+      ? parseStructuredArtifact(view, validation.request.options?.root, budget)
+      : parseTextArtifact(view, validation.request.options?.root, budget);
+    if (!outcome.supported && outcome.issues.length === 0 && !view.stopped && view.text.trim().length > 0) {
       budget.reasons.add("unsupported-format");
       addIssue(toolIssues, {
         code: "UNSUPPORTED_FORMAT",

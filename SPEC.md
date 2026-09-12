@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization and generic-structured subset is implemented and verified as T-004; the approved producer matrix and release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, and the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005. Canonical interface quality and release gates remain pending.
 
 ## 1. V0.1 scope
 

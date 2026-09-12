@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Bounded Core
+Lifecycle: Pre-implementation MVP / Producer Coverage
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -38,7 +38,7 @@ Depends on: M0.
 
 Exit gate: source builds and contract examples validate without producer-specific parsing.
 
-State: Complete for package scaffold; 5/5 acceptance items complete; producer-specific parser behavior remains unimplemented.
+State: Complete for package scaffold; 5/5 acceptance items complete; producer-specific behavior is tracked and credited under M3 rather than this skeleton milestone.
 
 T-002 adds the reviewed Golden/adversarial fixture inventory as a dependency-preparation artifact. The inventory itself is not capability credit; T-004 now supplies the bounded generic-structured implementation and tests that consume the relevant assertions.
 
@@ -54,21 +54,21 @@ Depends on: M1.
 
 Exit gate: bounded structured inputs produce evidence-resolvable sanitized results.
 
-State: Complete for bounded generic-structured core; 5/5 acceptance items complete; producer-specific adapters remain unimplemented.
+State: Complete for bounded generic-structured core; 5/5 acceptance items complete; producer-specific adapters are tracked in M3.
 
 ## M3 — V0.1 producer coverage
 
 Depends on: M2.
 
-- [ ] Implement the TypeScript adapter and fixtures.
-- [ ] Implement the Vitest adapter and fixtures.
-- [ ] Implement the ESLint adapter and fixtures.
-- [ ] Implement the conservative generic text fallback and negative fixtures.
-- [ ] Implement deterministic mixed/nested producer attribution.
+- [x] Implement the TypeScript adapter and fixtures.
+- [x] Implement the Vitest adapter and fixtures.
+- [x] Implement the ESLint adapter and fixtures.
+- [x] Implement the conservative generic text fallback and negative fixtures.
+- [x] Implement deterministic mixed/nested producer attribution.
 
 Exit gate: every approved producer family passes positive, negative, malformed, ANSI, multiline, and bound cases.
 
-State: Planned; 0/5 complete.
+State: Complete for the approved V0.1 adapter matrix; 5/5 acceptance items complete; canonical interface quality and release remain.
 
 ## M4 — Canonical interfaces and quality gates
 
@@ -107,10 +107,10 @@ State: Planned; 0/6 complete.
 | M0 contract/governance | 5 | 5 | 100% |
 | M1 package skeleton | 5 | 5 | 100% |
 | M2 normalization foundation | 5 | 5 | 100% |
-| M3 producer coverage | 0 | 5 | 0% |
+| M3 producer coverage | 5 | 5 | 100% |
 | M4 interfaces/quality | 0 | 6 | 0% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 15 | 32 | 46.9% |
+| V0.1 roadmap | 20 | 32 | 62.5% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

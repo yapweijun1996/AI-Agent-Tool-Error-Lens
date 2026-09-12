@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
 Document status: Contract Frozen / Architecture Review
-Lifecycle: Pre-implementation MVP / Bounded Core
+Lifecycle: Pre-implementation MVP / Producer Coverage
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, and a bounded generic-structured parser core. TypeScript, Vitest, ESLint, generic-text, CI, and release workflows remain unimplemented.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, a bounded normalization core, and TypeScript/Vitest/ESLint/generic-text adapters. Canonical release-quality interface work, CI, and release workflows remain unimplemented.
 
 ## Architectural boundary
 
@@ -90,9 +90,10 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/normalize.ts` | Converts CRLF/CR to LF, strips bounded terminal sequences, and maps normalized UTF-16 boundaries back to raw offsets. |
 | `src/core/paths.ts` and `src/core/redact.ts` | Apply lexical root containment and bounded export redaction without filesystem, network, or subprocess access. |
 | `src/core/structured.ts` | Parses a JSON diagnostics array into `generic-structured` diagnostics with evidence-backed locations and stable IDs. |
+| `src/core/adapters.ts` and `src/core/text.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines. |
 | `src/core/limits.ts`, `src/core/diagnostics.ts`, and `src/core/result.ts` | Own counters, ordered truncation reasons, canonical diagnostic identity/order, summaries, sanitized producer outcome, and envelope construction. |
 
-TypeScript, Vitest, ESLint, generic-text, mixed-producer detection, and release/CI modules are not present yet; they remain T-005 through T-008 work. This table is based on source and test behavior, not directory names alone.
+Canonical serialization/expanded interface quality gates, cross-platform CI, and release modules are not present yet; they remain T-006 through T-008 work. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 

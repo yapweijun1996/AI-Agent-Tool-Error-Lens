@@ -6,11 +6,11 @@ import type {
   ToolIssue,
   Warning,
 } from "../../contract/agent-error-lens-v1.types.js";
-import { createDiagnosticId, phaseForStructured } from "./diagnostics.js";
+import { phaseForStructured } from "./diagnostics.js";
+import { makeDiagnostic } from "./diagnostic-factory.js";
+import { evidenceFor } from "./evidence.js";
 import { LIMITS, type BudgetState } from "./limits.js";
-import { normalizePath } from "./paths.js";
-import { redactText } from "./redact.js";
-import { rawBoundary, type NormalizedArtifact } from "./normalize.js";
+import type { NormalizedArtifact } from "./normalize.js";
 
 export interface StructuredParseOutcome {
   supported: boolean;
@@ -32,51 +32,19 @@ function makeIssue(code: string, message: string, artifactId: string, evidence: 
   return { code, stage: "parse", message, artifactId, evidence };
 }
 
-function makeWarning(code: string, message: string, artifactId: string, evidence: Evidence[] = []): Warning {
-  return { code, stage: "path", message, diagnosticId: null, artifactId, evidence };
-}
-
-function evidenceFor(view: NormalizedArtifact, start: number, end: number, budget: BudgetState, kind: Evidence["kind"]): Evidence | null {
-  const rawStart = rawBoundary(view, start);
-  const rawEnd = rawBoundary(view, end);
-  if (rawEnd <= rawStart) return null;
-  const rawContent = view.artifact.content.slice(rawStart, rawEnd);
-  const bytes = Buffer.byteLength(rawContent, "utf8");
-  if (bytes > LIMITS.maxEvidenceSpanBytes) {
-    budget.reasons.add("evidence-bytes");
-    return null;
-  }
-  const key = `${view.artifact.id}:${kind}:${rawStart}:${rawEnd}`;
-  if (!budget.evidenceKeys.has(key)) {
-    if (budget.evidenceBytes + bytes > LIMITS.maxAggregateEvidenceBytes) {
-      budget.reasons.add("evidence-bytes");
-      return null;
-    }
-    budget.evidenceKeys.add(key);
-    budget.evidenceBytes += bytes;
-  }
-  return {
-    artifactId: view.artifact.id,
-    kind,
-    start: rawStart,
-    end: rawEnd,
-    offsetUnit: "utf16-code-unit",
-  };
-}
-
 function parseRecord(
   value: unknown,
   evidence: Evidence,
   artifact: InputArtifact,
   root: string | undefined,
   warnings: Warning[],
-): Diagnostic | null {
+): ReturnType<typeof makeDiagnostic> {
   if (!isRecord(value)) return null;
   if (!boundedString(value.message, 8192) || value.message.length === 0) return null;
 
   const severity = value.severity === "error" || value.severity === "warning" || value.severity === "info" || value.severity === "unknown" ? value.severity : "unknown";
   const phase = phaseForStructured(value.phase);
-  const code = value.code === undefined || value.code === null ? null : boundedString(value.code, 128) ? redactText(value.code) : null;
+  const code = value.code === undefined || value.code === null ? null : boundedString(value.code, 128) ? value.code : null;
   if (value.code !== undefined && value.code !== null && code === null) return null;
   const lineValue = value.line;
   const columnValue = value.column;
@@ -84,28 +52,20 @@ function parseRecord(
   const column = columnValue === undefined || columnValue === null ? null : typeof columnValue === "number" && Number.isInteger(columnValue) && columnValue >= 1 ? columnValue : null;
   if ((value.line !== undefined && value.line !== null && line === null) || (value.column !== undefined && value.column !== null && column === null)) return null;
 
-  let location = null;
-  if (value.file !== undefined && value.file !== null) {
-    if (!boundedString(value.file, 4096) || value.file.length === 0) return null;
-    const normalizedPath = normalizePath(value.file, root);
-    if (normalizedPath.outsideRoot || normalizedPath.file === null) {
-      warnings.push(makeWarning("PATH_OUTSIDE_ROOT", "diagnostic path is outside the explicit root and was withheld", artifact.id, [evidence]));
-    } else {
-      location = { file: redactText(normalizedPath.file), line, column };
-    }
-  }
-
-  const withoutId: Omit<Diagnostic, "id"> = {
+  const file = value.file === undefined || value.file === null ? null : boundedString(value.file, 4096) && value.file.length > 0 ? value.file : null;
+  if (value.file !== undefined && value.file !== null && file === null) return null;
+  return makeDiagnostic({
     severity,
     phase,
-    message: redactText(value.message),
+    message: value.message,
     code,
-    location,
+    file,
+    line,
+    column,
     producerId: "generic-structured",
     confidence: "confirmed",
     evidence: [evidence],
-  };
-  return { id: createDiagnosticId(withoutId), ...withoutId };
+  }, artifact, root, warnings);
 }
 
 export function parseStructuredArtifact(

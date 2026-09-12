@@ -8,7 +8,7 @@ test("library exposes the frozen capabilities contract", () => {
   assert.deepEqual(capabilities(), {
     schemaVersion: "1",
     operations: ["parse", "capabilities"],
-    producers: ["generic-structured"],
+    producers: ["typescript", "vitest", "eslint", "generic-structured", "generic-text"],
   });
 });
 

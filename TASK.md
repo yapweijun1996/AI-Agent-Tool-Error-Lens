@@ -13,7 +13,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-002 | P0 | Done | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | `node scripts/check-fixtures.mjs`; 21 cases and 6 families pass inventory/shape checks |
 | T-003 | P0 | Done | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | `npm test`; `npm run pack:check`; clean consumer import; packed CLI smoke |
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
-| T-005 | P0 | Planned | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | Adapter fixture evidence required |
+| T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 21 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Planned | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | Repeated-process and parity evidence required |
 | T-007 | P0 | Planned | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Exact-HEAD evidence required |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
@@ -82,6 +82,25 @@ Verification:
 - temporary Ajv draft-2020-12 validation accepts a real generic-structured library result against the authoritative schema;
 - packed CLI/library smoke returns the same structured diagnostic boundary and preserves machine-readable output.
 
+## T-005 — Completed V0.1 producer adapters
+
+Goal: extract evidence-backed diagnostics for the approved TypeScript, Vitest, ESLint, and generic-text families without adding execution or reasoning capabilities.
+
+Work:
+
+1. Add fixed-priority adapters for TypeScript location diagnostics and bare compiler diagnostics, Vitest assertion traces, ESLint file/line/rule output, and conservative generic text candidates.
+2. Preserve `confirmed` confidence for exact producer syntax and use `candidate`/`unknown` only for generic text or incomplete/truncated evidence.
+3. Treat npm/pnpm/yarn wrapper lines as non-producer context so nested Vitest remains attributed to Vitest.
+4. Reuse the shared evidence mapping, diagnostic factory, path containment, redaction, budget, deduplication, and canonical ordering boundaries.
+5. Recognize bounded metadata-only security/metric lines without exporting raw sensitive values or inventing diagnostics.
+
+Verification:
+
+- `npm test` passes contract/schema drift, fixture inventory, strict typecheck, lint, build, and 14 Node tests;
+- adapter tests assert all five producer families, ANSI/CRLF, mixed streams, Windows paths, multiline/nested attribution, malformed/unsupported/truncated/incomplete failures, security, determinism, agent-facing location/evidence, long-line, and diagnostic caps;
+- temporary Ajv draft-2020-12 validation accepts all 21 materialized fixture results;
+- packed CLI/library smoke and representative fresh-process adapter runs pass.
+
 ## Deferred decisions that do not block implementation
 
 T-001 closed the executable parser/package defaults. The following decisions are deliberately deferred because they affect legal or release authority rather than local contract implementation:
@@ -91,10 +110,10 @@ T-001 closed the executable parser/package defaults. The following decisions are
 
 ## Known gaps and defects
 
-- No TypeScript/Vitest/ESLint/generic-text producer adapter, executable producer matrix, README, CHANGELOG, ADR, CI, release workflow, or released artifact exists; the bounded generic-structured core is implemented but is not full V0.1 capability.
+- No canonical serializer module/expanded interface quality gate, README, CHANGELOG, ADR, CI, release workflow, or released artifact exists; the approved V0.1 producer adapter matrix is implemented but release-quality proof is incomplete.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
-- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core enforcement is implemented, while full producer/mixed-input budget coverage remains unverified.
+- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.
 - Node.js compatibility and module format are selected as a target but remain unverified until package CI exists; package allowlist, license, and npm registry ownership remain release gates.
 - No browser/UI audit is applicable because this project has no user interface or running product.
 

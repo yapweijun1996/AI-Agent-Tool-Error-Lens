@@ -28,7 +28,7 @@ Acceptance:
 - unresolved public decisions are closed or explicitly deferred;
 - architecture review confirms no reasoning/execution responsibility leaked into the package.
 
-State: Implemented contract artifacts; contract verification passed; bounded-core/package capability is implemented, while producer coverage and release remain incomplete.
+State: Implemented contract artifacts; contract verification passed; bounded-core/package capability and approved producer coverage are implemented and verified, while canonical quality and release remain incomplete.
 
 ## E1 — Bounded input and normalization core
 
@@ -50,7 +50,7 @@ Acceptance:
 - malformed, excessive, unsupported, and outside-root inputs fail closed;
 - processing performs no network, subprocess, or repository writes.
 
-State: Implemented and verified for bounded generic-structured parsing; producer-specific adapters, full V0.1 verification, and release remain incomplete.
+State: Implemented and verified for bounded normalization plus generic-structured parsing; approved producer adapters are now also verified under E2, while canonical quality and release remain incomplete.
 
 ## E2 — V0.1 producer adapters
 
@@ -72,7 +72,7 @@ Acceptance:
 - generic patterns never produce `confirmed`;
 - unsupported segments remain explicit.
 
-State: Planned; not implemented, verified, or released.
+State: Implemented and verified for the approved V0.1 adapter matrix; canonical output quality, cross-platform proof, and release remain incomplete.
 
 ## E3 — Canonicalization and output safety
 

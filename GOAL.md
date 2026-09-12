@@ -2,7 +2,7 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Bounded Core
+Lifecycle: Pre-implementation MVP / Producer Coverage
 Last reviewed: 2026-09-13
 
 ## Purpose
@@ -20,7 +20,7 @@ Agent Error Lens is planned as one independently installable npm package with tw
 - a TypeScript/JavaScript library;
 - a command-line interface that delegates to the same core library.
 
-It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold, shared entry points, and a bounded generic-structured parser core now exist; approved producer-specific adapters and release capability are not yet implemented.
+It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold, shared entry points, bounded normalization core, and approved V0.1 producer adapters now exist; canonical release-quality interfaces and release capability are not yet complete.
 
 ## Users and context
 
@@ -88,8 +88,8 @@ V0.1 is successful only when all of the following are verified:
 | Axis | State | Evidence |
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
-| Implemented | Contract, package scaffold, fixture baseline, and bounded generic-structured core; producer adapters remain incomplete | Validation, normalization, paths, redaction, structured parsing, shared entry points, CLI scaffold, and 21-case fixture inventory exist; TypeScript/Vitest/ESLint/generic-text adapters do not |
-| Verified | Contract/scaffold/core checks pass; approved producer matrix remains unverified | Contract checks, fixture corpus validation, bounded-core tests, build, lint, smoke tests, and packed consumer/CLI checks pass; producer-specific behavior is not complete |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, and V0.1 producer adapters; release-quality interfaces remain incomplete | Validation, normalization, paths, redaction, structured parsing, TypeScript/Vitest/ESLint/generic-text adapters, shared entry points, CLI scaffold, and 21-case inventory exist |
+| Verified | Contract/scaffold/core/producer checks pass; canonical release matrix remains incomplete | Contract checks, 21-case fixture execution, bounded-core and adapter tests, build, lint, schema validation, and packed consumer/CLI checks pass |
 | Released | No | No version, tag, registry package, release, or artifact evidence exists |
 
 ## Evidence and authority
