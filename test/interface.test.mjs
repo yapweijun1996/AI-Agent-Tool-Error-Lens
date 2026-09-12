@@ -3,6 +3,7 @@ import { spawnSync } from "node:child_process";
 import { test } from "node:test";
 
 import { capabilities, parse } from "../dist/src/index.js";
+import { readUtf8Stream } from "../dist/src/core/cli-input.js";
 import { serializeCapabilities, serializeResult } from "../dist/src/core/serialize.js";
 
 test("duplicate identities are deduplicated with a deterministic evidence union", () => {
@@ -90,4 +91,27 @@ test("CLI usage errors exit 2 and capabilities use the same serializer", () => {
   assert.equal(capabilitiesRun.status, 0);
   assert.equal(capabilitiesRun.stderr, "");
   assert.equal(capabilitiesRun.stdout, serializeCapabilities(capabilities()));
+});
+
+test("CLI input is bounded and rejects invalid UTF-8 before JSON parsing", async () => {
+  const oversized = await readUtf8Stream((async function* () {
+    yield Buffer.from("abc");
+    yield Buffer.from("d");
+  }()), 3);
+  assert.equal(oversized.ok, false);
+  assert.equal(oversized.code, "CLI_INPUT_TOO_LARGE");
+
+  const splitUtf8 = await readUtf8Stream((async function* () {
+    yield Buffer.from([0xe2]);
+    yield Buffer.from([0x82, 0xac]);
+  }()));
+  assert.deepEqual(splitUtf8, { ok: true, text: "€", bytes: 3 });
+
+  const invalidUtf8Run = spawnSync(process.execPath, ["dist/src/cli.js", "parse", "--stdin", "--format", "json"], {
+    encoding: "utf8",
+    input: Buffer.from([0xff]),
+  });
+  assert.equal(invalidUtf8Run.status, 2);
+  assert.equal(invalidUtf8Run.stdout, "");
+  assert.match(invalidUtf8Run.stderr, /stdin must contain valid UTF-8/u);
 });

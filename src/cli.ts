@@ -2,6 +2,7 @@
 
 import { parse, capabilities } from "./index.js";
 import { serializeCapabilities, serializeResult } from "./core/serialize.js";
+import { readUtf8Stream } from "./core/cli-input.js";
 
 const usage = "Usage: agent-error-lens <parse|capabilities> --format json [--stdin] [--root <path>]";
 
@@ -9,14 +10,6 @@ function writeUsage(message?: string): void {
   if (message) process.stderr.write(`${message}\n`);
   process.stderr.write(`${usage}\n`);
   process.exitCode = 2;
-}
-
-async function readStdin(): Promise<string> {
-  const chunks: Buffer[] = [];
-  for await (const chunk of process.stdin) {
-    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
-  }
-  return Buffer.concat(chunks).toString("utf8");
 }
 
 function hasFlag(args: string[], flag: string): boolean {
@@ -86,10 +79,15 @@ async function main(): Promise<void> {
     return;
   }
 
-  const input = await readStdin();
+  const input = await readUtf8Stream(process.stdin);
+  if (!input.ok) {
+    writeUsage(input.message);
+    return;
+  }
+
   let request: unknown;
   try {
-    request = JSON.parse(input) as unknown;
+    request = JSON.parse(input.text) as unknown;
   } catch {
     writeUsage("stdin must contain a JSON request");
     return;
