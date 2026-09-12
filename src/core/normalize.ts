@@ -9,28 +9,34 @@ export interface NormalizedArtifact {
   stopped: boolean;
 }
 
-function terminalSequenceEnd(raw: string, start: number): number {
+interface TerminalSequence {
+  end: number;
+  complete: boolean;
+}
+
+function terminalSequenceEnd(raw: string, start: number): TerminalSequence {
   const next = raw.charCodeAt(start + 1);
+  if (Number.isNaN(next)) return { end: raw.length, complete: false };
   if (next === 0x5b) {
     let index = start + 2;
     while (index < raw.length) {
       const code = raw.charCodeAt(index);
       index += 1;
-      if (code >= 0x40 && code <= 0x7e) return index;
+      if (code >= 0x40 && code <= 0x7e) return { end: index, complete: true };
     }
-    return raw.length;
+    return { end: raw.length, complete: false };
   }
   if (next === 0x5d) {
     let index = start + 2;
     while (index < raw.length) {
       const code = raw.charCodeAt(index);
-      if (code === 0x07) return index + 1;
-      if (code === 0x1b && raw.charCodeAt(index + 1) === 0x5c) return index + 2;
+      if (code === 0x07) return { end: index + 1, complete: true };
+      if (code === 0x1b && raw.charCodeAt(index + 1) === 0x5c) return { end: index + 2, complete: true };
       index += 1;
     }
-    return raw.length;
+    return { end: raw.length, complete: false };
   }
-  return Math.min(raw.length, start + 2);
+  return { end: Math.min(raw.length, start + 2), complete: true };
 }
 
 function appendMapped(
@@ -65,10 +71,15 @@ export function normalizeArtifact(artifact: InputArtifact, budget: BudgetState):
         stopped = true;
         break;
       }
-      const rawEnd = terminalSequenceEnd(raw, index);
+      const sequence = terminalSequenceEnd(raw, index);
       budget.terminalSequences += 1;
-      boundaryMap[boundaryMap.length - 1] = rawEnd;
-      index = rawEnd;
+      boundaryMap[boundaryMap.length - 1] = sequence.end;
+      index = sequence.end;
+      if (!sequence.complete) {
+        budget.reasons.add("mapping-failure");
+        stopped = true;
+        break;
+      }
       continue;
     }
 

@@ -109,6 +109,13 @@ test("line and request validation remain bounded", () => {
   assert.equal(coercibleStream.toolIssues[0]?.code, "REQUEST_INVALID");
 });
 
+test("incomplete terminal sequences fail closed as mapping truncation", () => {
+  const result = parse(request("Error: truncated before \u001b[31"));
+  assert.equal(result.status, "partial");
+  assert.equal(result.data.diagnostics[0]?.message, "truncated before ");
+  assert.ok(result.truncation.reasons.includes("mapping-failure"));
+});
+
 test("redaction masks secrets but preserves benign token metrics", () => {
   const secret = JSON.stringify({ diagnostics: [{ message: "Authorization: Bearer EXAMPLE_TOKEN_VALUE", severity: "error" }] });
   const secretResult = parse(request(secret));

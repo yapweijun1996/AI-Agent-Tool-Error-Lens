@@ -67,6 +67,7 @@ Requirements:
 - Library input and output strings MUST be well-formed Unicode. Lone UTF-16 surrogates are invalid. Schema `maxLength` values count Unicode code points; evidence offsets still address the original decoded string in UTF-16 code units. Exported strings use NFC normalization.
 - Structured diagnostic records MUST contain bounded, well-formed Unicode strings. Known `line` and `column` values MUST be one-based safe integers; malformed strings or unsafe coordinates MUST be rejected as `STRUCTURED_DIAGNOSTIC_INVALID` rather than exported or coerced.
 - The parse view maps CRLF and lone CR newline sequences to LF. ANSI/terminal removal is bounded and retains a monotonic raw-offset map. If a raw span cannot be recovered exactly, the related field is unknown and a mapping issue is emitted.
+- An unterminated ANSI CSI or OSC sequence at an artifact boundary MUST stop normalization and record `mapping-failure`; the result MUST be `partial` rather than presenting the truncated parse view as complete.
 - Evidence offsets are half-open `[start, end)` UTF-16 code-unit positions. Cross-field validation MUST require `start < end`; JSON Schema alone cannot express that invariant.
 - The deterministic secondary work ceilings are `200000` processed lines, `10000` parser matches, `10000` terminal sequences, `256` producer candidates, and `1048576` aggregate evidence bytes per request. Output records are additionally capped by the limits metadata in the schema.
 
