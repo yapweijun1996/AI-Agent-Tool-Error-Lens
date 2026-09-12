@@ -18,7 +18,7 @@ The project KB contains a Draft Standard Project Report and an earlier MVP speci
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, and CLI exist |
 | Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; remote CI/E2E and release matrix incomplete | `npm test`, 21-case materialized schema validation, 21 core/adapter/interface/resource tests, repeated-process parity, package allowlist, packed consumer import, and packed CLI smoke pass |
-| Released | 0 releases | No manifest version, tag, release, registry artifact, or integrity readback exists |
+| Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
 
@@ -42,7 +42,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Check | Result | Meaning |
 | --- | --- | --- |
 | Repository inventory and rule search | Pass | Only `.gitattributes` existed; no scoped repository instructions were found |
-| Git status/history/branches/tags/stash inspection | Pass | Clean `main`, one initial commit, no tags or stashes |
+| Git status/history/branches/tags/stash inspection | Pass | Final audit is clean on `main`; local implementation commits exist, with no tags or stashes |
 | KB project report and MVP specification readback | Pass | Product intent and draft contracts were available |
 | Company roadmap status retrieval | Pass | Ecosystem status and position were available |
 | Engineering reuse gate | Pass | Reuse context was available; no prior implementation was accepted as completion proof |
@@ -62,7 +62,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Resource/capability/package audit | Pass | 21 Node tests cover fixed/secondary bounds; static core capability audit and 66-file package allowlist audit pass |
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
-| CI/release/registry | Unverified | No workflow, version, tag, release, or registry artifact exists |
+| CI/release/registry | Unverified | CI workflow configuration exists, but remote matrix execution, tag, release, registry artifact, and integrity readback do not |
 
 ## Contract-hardening result
 

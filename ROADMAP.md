@@ -24,7 +24,7 @@ Depends on: none.
 
 Exit gate: public contracts are testable and no critical behavior remains implicit.
 
-State: Complete for contract hardening; 5/5 acceptance items complete; producer-specific parser and release implementation are tracked later.
+State: Complete for contract hardening; 5/5 acceptance items complete; downstream implementation and release proof are tracked later.
 
 ## M1 — Package and shared contract skeleton
 
@@ -68,7 +68,7 @@ Depends on: M2.
 
 Exit gate: every approved producer family passes positive, negative, malformed, ANSI, multiline, and bound cases.
 
-State: Complete for the approved V0.1 adapter matrix; 5/5 acceptance items complete; canonical interface quality and release remain.
+State: Complete for the approved V0.1 adapter matrix; 5/5 acceptance items complete; remaining verification and release proof are tracked later.
 
 ## M4 — Canonical interfaces and quality gates
 
@@ -116,7 +116,7 @@ This percentage measures explicit roadmap acceptance items, not code volume or e
 
 ## Ecosystem sequencing
 
-The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. Local contract hardening is now complete; implementation start and company status should be synchronized before either is reported as active.
+The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. Local implementation and verification have progressed through safety/package gates; company status should be synchronized before external roadmap state is reported as active.
 
 ## Deferred V0.2+ candidates
 
