@@ -15,7 +15,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 21 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
-| T-007 | P0 | In progress | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks pass; remote CI and independent E2E remain |
+| T-007 | P0 | In progress | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks and agent-facing CLI E2E pass; remote CI remains |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
 | T-009 | P1 | Planned | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | KB readback required |
 
@@ -139,13 +139,14 @@ Work completed:
 
 Verification:
 
-- `npm test` passes 21 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
+- `npm test` passes 23 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
 - the local package boundary remains clean and the exact tarball imports in a consumer and runs the packed CLI;
-- remote matrix execution and independent agent-facing E2E remain unverified because they require CI host execution.
+- the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
+- remote matrix execution remains unverified because it requires CI host execution.
 
 ## Known gaps and defects
 
-- README, CHANGELOG, ADR, release workflow, remote CI execution, independent agent-facing E2E, and released artifact remain absent or unverified; local source/package gates are implemented and passing.
+- README, CHANGELOG, ADR, release workflow, remote CI execution, and released artifact remain absent or unverified; local source/package gates and agent-facing CLI E2E are implemented and passing.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.

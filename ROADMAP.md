@@ -83,7 +83,7 @@ Depends on: M3.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
-State: 5/6 complete for source-level canonical interfaces and local capability/resource/package behavior; remote Node/OS CI execution and independent agent E2E remain unverified.
+State: 5/6 complete for source-level canonical interfaces, local capability/resource/package behavior, and agent-facing E2E; remote Node/OS CI execution remains unverified.
 
 ## M5 — Package and release proof
 

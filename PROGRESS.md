@@ -9,7 +9,7 @@ Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
 The repository began this pass with only `.gitattributes` and one initial commit. There were no project-level `AGENTS.md`, nested rules, `CLAUDE.md`, `CONTRIBUTING.md`, README, CHANGELOG, ADRs, docs, source, entry points, configuration, package/build files, dependencies, tests, scripts, CI, release workflows, tags, stashes, or uncommitted work.
 
-The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, and local security/resource/package gates added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete; remote CI/E2E and release proof are incomplete.
+The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, and local security/resource/package gates added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete; remote CI and release proof are incomplete.
 
 ## Delivery axes
 
@@ -17,7 +17,7 @@ The project KB contains a Draft Standard Project Report and an earlier MVP speci
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, and CLI exist |
-| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; remote CI/E2E and release matrix incomplete | `npm test`, 21-case materialized schema validation, 21 core/adapter/interface/resource tests, repeated-process parity, package allowlist, packed consumer import, and packed CLI smoke pass |
+| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; remote CI and release matrix incomplete | `npm test`, 21-case materialized schema validation, 23 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, and packed CLI smoke pass |
 | Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -35,7 +35,7 @@ The V0.1 roadmap defines 32 explicit acceptance items:
 
 Total: **25/32 = 78.1%**.
 
-The twenty-five completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first five M4 interface/quality acceptance items. Canonical source behavior and local safety/package boundaries are implemented and verified; remote CI/E2E and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
+The twenty-five completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first five M4 interface/quality acceptance items. Canonical source behavior, local safety/package boundaries, and agent-facing handoff are implemented and verified; remote CI and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
 
 ## Verification performed in this pass
 
@@ -59,14 +59,15 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, security, determinism, and agent-facing evidence |
 | Full fixture result schema | Pass | Temporary Ajv draft-2020-12 validation accepts all 21 materialized corpus results |
 | Canonical output/interface matrix | Pass | 18 Node tests cover stable ordering, deduplication/evidence union, NFC/key order, repeated-process bytes, CLI/library parity, and exits 0/1/2 |
-| Resource/capability/package audit | Pass | 21 Node tests cover fixed/secondary bounds; static core capability audit and 66-file package allowlist audit pass |
+| Resource/capability/package audit | Pass | 23 Node tests cover fixed/secondary bounds; static core capability audit and 66-file package allowlist audit pass |
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities |
+| Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
 | CI/release/registry | Unverified | CI workflow configuration exists, but remote matrix execution, tag, release, registry artifact, and integrity readback do not |
 
 ## Contract-hardening result
 
-T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, and package allowlist are implemented and locally verified. Remote CI/E2E, license selection, and final package ownership remain release gates.
+T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI, license selection, and final package ownership remain release gates.
 
 ## Risks
 
@@ -76,10 +77,10 @@ T-001 through T-006 are complete at their stated boundaries, and T-007 local saf
 4. Mixed producers may be collapsed into a false single identity.
 5. Generic heuristics may appear more certain than their evidence supports.
 6. Nondeterministic work-budget termination or untested record classes may still break byte stability outside the covered matrix.
-7. Remote Node/OS CI execution and independent agent-facing E2E remain unverified despite local equivalents.
+7. Remote Node/OS CI execution remains unverified despite passing local equivalents.
 8. Package, platform, or release compatibility may be claimed before artifact-level proof.
 9. Local and company KB lifecycle status may continue to diverge.
-10. Fixture assertions may drift from the frozen contract until the remote matrix and independent E2E are completed.
+10. Fixture assertions may drift from the frozen contract until the remote matrix is completed.
 
 ## Blockers and unresolved items
 
@@ -87,4 +88,4 @@ There is no hard blocker to package implementation. Runtime enforcement, package
 
 ## Resume point
 
-Continue T-007. Obtain remote Node/OS CI and independent agent-facing E2E evidence, then perform the final docs/package/release-readiness audit. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.
+Continue T-007. Obtain remote Node/OS CI evidence, then perform the final docs/package/release-readiness audit. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.

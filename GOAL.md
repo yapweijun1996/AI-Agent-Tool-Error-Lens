@@ -89,7 +89,7 @@ V0.1 is successful only when all of the following are verified:
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, and local verification gates; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, capability/resource checks, shared entry points, CLI, and 21-case inventory exist |
-| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; remote matrix and release proof remain incomplete | Contract checks, 21-case fixture execution, 21 core/adapter/interface/resource tests, build, lint, schema validation, repeated-process parity, package allowlist, and packed consumer/CLI checks pass |
+| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; remote matrix and release proof remain incomplete | Contract checks, 21-case fixture execution, 23 core/adapter/interface/resource/E2E tests, build, lint, schema validation, repeated-process parity, package allowlist, and packed consumer/CLI checks pass |
 | Released | No | The manifest is private/unreleased at `0.1.0`; no authorized tag, registry package, release, or integrity readback exists |
 
 ## Evidence and authority

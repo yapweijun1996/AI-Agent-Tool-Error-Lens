@@ -49,3 +49,16 @@ test("evidence span budget stays bounded and explicit", () => {
   assert.ok(result.truncation.reasons.includes("evidence-bytes"));
   assert.equal(result.data.diagnostics.length, 0);
 });
+
+test("aggregate evidence budget stops export without unbounded growth", () => {
+  const artifacts = Array.from({ length: 64 }, (_, index) => {
+    const linePrefix = `ERROR at src/item-${index}.ts:1:1 `;
+    const line = `${linePrefix}${"x".repeat(16_384 - linePrefix.length)}`;
+    return { id: `artifact-${index}`, stream: "stderr", content: `${line}\n${line}\n` };
+  });
+  const result = parse({ schemaVersion: "1", artifacts });
+
+  assert.equal(result.status, "partial");
+  assert.ok(result.truncation.reasons.includes("evidence-bytes"));
+  assert.ok(result.stats.evidenceBytes <= 1024 * 1024);
+});
