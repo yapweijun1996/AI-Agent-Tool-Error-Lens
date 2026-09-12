@@ -324,9 +324,19 @@ function parseGenericText(view: NormalizedArtifact, root: string | undefined, bu
 
 export function parseTextArtifact(view: NormalizedArtifact, root: string | undefined, budget: BudgetState): AdapterOutcome {
   const parsers = [parseTypeScript, parseVitest, parseEslint];
+  const results: AdapterOutcome[] = [];
   for (const parser of parsers) {
     const result = parser(view, root, budget);
-    if (result.supported) return result;
+    results.push(result);
+  }
+  if (results.some((result) => result.supported)) {
+    return {
+      supported: true,
+      diagnostics: results.flatMap((result) => result.diagnostics),
+      producers: results.flatMap((result) => result.producers),
+      issues: results.flatMap((result) => result.issues),
+      warnings: results.flatMap((result) => result.warnings),
+    };
   }
   return parseGenericText(view, root, budget);
 }

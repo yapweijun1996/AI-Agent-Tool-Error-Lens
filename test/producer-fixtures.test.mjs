@@ -63,6 +63,24 @@ test("structural and nested producer fixtures preserve the relevant producer", (
   assert.deepEqual(nested.data.producers.map((item) => item.name), ["vitest"]);
   assert.equal(nested.data.producers.some((item) => item.name === "npm"), false);
   assert.equal(nested.status, "complete");
+
+  const mixedArtifact = parse({
+    schemaVersion: "1",
+    artifacts: [{
+      id: "stderr",
+      stream: "stderr",
+      content: [
+        "src/order.ts(1,1): error TS2339: missing",
+        "/workspace/project/src/order.ts",
+        "  2:3 error no-console  no-console",
+        " FAIL src/order.test.ts",
+        "AssertionError: expected 1 to be 2",
+        " ❯ src/order.test.ts:4:2",
+      ].join("\n"),
+    }],
+  });
+  assert.deepEqual(mixedArtifact.data.producers.map((producer) => producer.name), ["typescript", "eslint", "vitest"]);
+  assert.deepEqual(mixedArtifact.data.diagnostics.map((diagnostic) => diagnostic.producerId), ["typescript", "eslint", "vitest"]);
 });
 
 test("failure fixtures stay explicit and bounded", () => {
