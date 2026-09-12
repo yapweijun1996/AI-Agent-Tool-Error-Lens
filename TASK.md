@@ -139,11 +139,12 @@ Work completed:
 5. Diagnose the first remote matrix failure and make the npm test discovery and npm pack dry-run invocation portable under Windows PowerShell and npm lifecycle environments.
 6. Harden the shared Unicode predicate and diagnostic factory so nested structured records reject lone surrogates and unsafe coordinates before stable identity creation.
 7. Close the observed standalone `sk-proj-` provider-token redaction gap and extend the security fixture without broadening the parser boundary.
+8. Convert package allowlist evidence into a real temporary tarball consumer/import/CLI smoke audit with deterministic cleanup.
 
 Verification:
 
 - `npm test` passes 25 Node tests, capability audit, package allowlist audit, typecheck, lint, build, contract drift, and fixture checks;
-- the local package boundary remains clean and the exact tarball imports in a consumer and runs the packed CLI;
+- `check-package` creates a real tarball in a temporary directory, installs it into a temporary consumer with scripts/audit disabled, imports the public package, runs the packed CLI, and cleans up on success or failure;
 - the CLI-to-downstream-locator-to-raw-evidence handoff passes as a local agent-facing E2E;
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
 - bounded CLI stdin decoding rejects invalid UTF-8 and oversized input before JSON parsing;

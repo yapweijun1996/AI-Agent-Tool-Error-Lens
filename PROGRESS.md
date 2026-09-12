@@ -54,7 +54,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Fixture corpus baseline | Pass | `node scripts/check-fixtures.mjs` validates 21 cases across 6 required families; assertions are parser-pending |
 | Bounded normalization core | Pass | 10 Node tests cover validation, budgets, ANSI/CRLF raw mapping, paths, redaction, generic structured parsing, and canonical envelope order |
 | Runtime result contract | Pass | Temporary Ajv draft-2020-12 validation accepts a real generic-structured library result |
-| Packed package boundary | Pass | `npm run pack:check`, clean consumer import, and packed CLI capabilities smoke pass |
+| Packed package boundary | Pass | `npm run pack:check` performs allowlist inspection plus temporary tarball install, clean consumer import, and packed CLI diagnostic smoke |
 | Markdown whitespace/structure/status consistency | Pass | No diff whitespace errors; balanced code fences; prompt remains under 2,000 characters; lifecycle axes agree |
 | Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, standalone provider-token security, determinism, and agent-facing evidence |
 | Full fixture result schema | Pass | Temporary Ajv draft-2020-12 validation accepts all 21 materialized corpus results |

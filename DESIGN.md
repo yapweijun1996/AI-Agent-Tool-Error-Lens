@@ -93,7 +93,7 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts`, `src/core/text.ts`, and `src/core/diagnostic-factory.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines, with final fail-closed diagnostic field validation. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI configuration, Windows-portable test/package commands, and local agent-facing E2E now exist. The prior remote execution is a recorded failure, so cross-platform support remains an evidence gap until the remediation is exercised by CI; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, so cross-platform support remains an evidence gap until the remediation is exercised by CI; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 
