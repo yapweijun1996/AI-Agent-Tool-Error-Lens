@@ -20,7 +20,7 @@ Agent Error Lens is implemented as one independently installable npm package wit
 - a TypeScript/JavaScript library;
 - a command-line interface that delegates to the same core library.
 
-It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold, shared entry points, bounded normalization core, approved V0.1 producer adapters, and canonical CLI/library output layer now exist; full source/package quality proof and release capability are not yet complete.
+It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold, shared entry points, bounded normalization core, approved V0.1 producer adapters, and canonical CLI/library output layer now exist; local source/package quality proof is strong, while corrected cross-platform proof and release capability are not yet complete.
 
 ## Users and context
 
@@ -89,7 +89,7 @@ V0.1 is successful only when all of the following are verified:
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, Windows CI-script remediation, and bounded UTF-8 CLI input; full quality proof remains incomplete | Validation, normalization, paths, redaction, structured parsing, adapters, stable IDs/dedup/order, serializer, capability/resource checks, shared entry points, CLI, 21-case inventory, cross-platform workflow, and portable test/package commands exist |
-| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; the observed remote matrix failed on Windows before the remediation commit, and release proof remains incomplete | Contract checks, 21-case fixture execution, 24 core/adapter/interface/resource/E2E tests, build, lint, schema validation, repeated-process parity, package allowlist, packed consumer/CLI checks, bounded stdin, and local Windows-path remediation checks pass; remote rerun is pending |
+| Verified | Contract/scaffold/core/producer/interface/local-boundary checks pass; the observed remote matrix failed on Windows before the remediation commit, and release proof remains incomplete | Contract checks, 21-case fixture execution, 25 core/adapter/interface/resource/E2E tests, build, lint, schema validation, repeated-process parity, package allowlist, packed consumer/CLI checks, bounded stdin, structured Unicode/safe-coordinate rejection, and local Windows-path remediation checks pass; remote rerun is pending |
 | Released | No | The manifest is private/unreleased at `0.1.0`; no authorized tag, registry package, release, or integrity readback exists |
 
 ## Evidence and authority

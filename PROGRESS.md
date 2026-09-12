@@ -17,7 +17,7 @@ The project KB contains a Draft Standard Project Report and an earlier MVP speci
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, Windows CI-script remediation, and bounded UTF-8 CLI input; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, CLI, bounded stdin reader, and portable test/package commands exist |
-| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, `npm run pack:check`, `npm audit --omit=dev`, 21-case materialized schema validation, 24 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, and bounded UTF-8 stdin checks pass locally; remote rerun is pending |
+| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, `npm run pack:check`, `npm audit --omit=dev`, 21-case materialized schema validation, 25 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, bounded UTF-8 stdin, and structured Unicode/safe-coordinate checks pass locally; remote rerun is pending |
 | Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -35,7 +35,7 @@ The V0.1 roadmap defines 32 explicit acceptance items:
 
 Total: **25/32 = 78.1%**.
 
-The twenty-five completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first five M4 interface/quality acceptance items. Canonical source behavior, local safety/package boundaries, and agent-facing handoff are implemented and verified; remote CI and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
+The twenty-five completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first five M4 interface/quality acceptance items. Canonical source behavior, local safety/package boundaries, structured-record safety, and agent-facing handoff are implemented and verified; remote CI and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
 
 ## Verification performed in this pass
 
@@ -59,9 +59,9 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, security, determinism, and agent-facing evidence |
 | Full fixture result schema | Pass | Temporary Ajv draft-2020-12 validation accepts all 21 materialized corpus results |
 | Canonical output/interface matrix | Pass | 18 Node tests cover stable ordering, deduplication/evidence union, NFC/key order, repeated-process bytes, CLI/library parity, and exits 0/1/2 |
-| Resource/capability/package audit | Pass | 24 Node tests cover fixed/secondary bounds; static core capability audit and 70-file package allowlist audit pass |
+| Resource/capability/package audit | Pass | 25 Node tests cover fixed/secondary bounds and structured-record safety; static core capability audit and 70-file package allowlist audit pass |
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities |
-| Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact |
+| Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact; structured invalid Unicode/coordinate inputs fail closed |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
 | CI/release/registry | Failed / pending rerun | Remote run `34709741735` passed Linux/macOS jobs but failed Windows verification at the previous SHA; local remediation passes, but corrected exact-HEAD CI, tag, release, registry artifact, and integrity readback do not yet exist |
 

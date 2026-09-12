@@ -86,11 +86,11 @@ The current repository implementation is intentionally narrower than the target 
 | --- | --- |
 | `src/cli.ts` and `src/core/cli-input.ts` | Validate CLI shape, reject unknown/duplicate options, decode bounded UTF-8 stdin as data, apply an explicit root option, delegate to the library, and emit canonical machine-readable JSON with the frozen usage exits. |
 | `src/index.ts` | Orchestrates runtime request validation, bounded normalization, generic structured and producer parsing, diagnostic/record sorting, summaries, and result assembly. |
-| `src/core/validation.ts` | Narrows untrusted runtime values, rejects unknown request fields/lone surrogates/invalid IDs, and enforces UTF-8 byte ceilings. |
+| `src/core/validation.ts` | Narrows untrusted runtime values, rejects unknown request fields/lone surrogates/invalid IDs, and enforces UTF-8 byte ceilings; its Unicode predicate also guards nested structured records. |
 | `src/core/normalize.ts` | Converts CRLF/CR to LF, strips bounded terminal sequences, and maps normalized UTF-16 boundaries back to raw offsets. |
 | `src/core/paths.ts` and `src/core/redact.ts` | Apply lexical root containment and bounded export redaction without filesystem, network, or subprocess access. |
-| `src/core/structured.ts` | Parses a JSON diagnostics array into `generic-structured` diagnostics with evidence-backed locations and stable IDs. |
-| `src/core/adapters.ts` and `src/core/text.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines. |
+| `src/core/structured.ts` | Parses a JSON diagnostics array into `generic-structured` diagnostics with evidence-backed locations and stable IDs, rejecting malformed strings and unsafe coordinates. |
+| `src/core/adapters.ts`, `src/core/text.ts`, and `src/core/diagnostic-factory.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines, with final fail-closed diagnostic field validation. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
 Cross-platform CI configuration, Windows-portable test/package commands, and local agent-facing E2E now exist. The prior remote execution is a recorded failure, so cross-platform support remains an evidence gap until the remediation is exercised by CI; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
@@ -138,7 +138,7 @@ Determinism requires explicit ownership of:
 
 Stable diagnostic IDs are derived from sanitized canonical identity fields. Deduplication uses the same identity while unioning and sorting distinct evidence references. Discovery timing, object insertion accidents, filesystem order, locale, and wall-clock time must not influence output.
 
-The frozen identity digest is `diag_` plus the full lowercase SHA-256 digest of the UTF-8 compact JSON identity tuple `[schemaVersion, producerId, severity, phase, code, file, line, column, message]`. Canonical JSON uses UTF-8, LF, one trailing newline, schema-defined key order, and explicit nulls for semantic missing fields. Fixed and secondary work ceilings live in the schema metadata and are checked by `contract/verify-contract.mjs`.
+The frozen identity digest is `diag_` plus the full lowercase SHA-256 digest of the UTF-8 compact JSON identity tuple `[schemaVersion, producerId, severity, phase, code, file, line, column, message]`. Canonical JSON uses UTF-8, LF, one trailing newline, schema-defined key order, and explicit nulls for semantic missing fields. Diagnostic strings must remain well-formed Unicode, and known line/column values must be one-based safe integers; invalid adapter or structured values are rejected before identity creation. Fixed and secondary work ceilings live in the schema metadata and are checked by `contract/verify-contract.mjs`.
 
 ## Trust and security boundary
 
