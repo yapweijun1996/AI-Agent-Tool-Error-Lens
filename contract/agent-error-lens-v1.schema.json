@@ -84,6 +84,7 @@
     "unicode": {
       "input": "well-formed Unicode only; lone UTF-16 surrogates are invalid",
       "canonicalStrings": "NFC",
+      "lengthUnits": "unicode-code-point",
       "evidenceOffsets": "utf16-code-unit"
     },
     "redaction": {

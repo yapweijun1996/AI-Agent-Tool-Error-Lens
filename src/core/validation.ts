@@ -39,7 +39,7 @@ function isWellFormedUnicode(value: string): boolean {
   return true;
 }
 
-function stringLength(value: string): number {
+export function stringLength(value: string): number {
   return Array.from(value).length;
 }
 

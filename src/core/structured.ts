@@ -11,7 +11,7 @@ import { makeDiagnostic } from "./diagnostic-factory.js";
 import { evidenceFor } from "./evidence.js";
 import { LIMITS, type BudgetState } from "./limits.js";
 import type { NormalizedArtifact } from "./normalize.js";
-import { isWellFormedUnicode } from "./validation.js";
+import { isWellFormedUnicode, stringLength } from "./validation.js";
 
 export interface StructuredParseOutcome {
   supported: boolean;
@@ -26,7 +26,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 }
 
 function boundedString(value: unknown, max: number): value is string {
-  return typeof value === "string" && isWellFormedUnicode(value) && value.length <= max;
+  return typeof value === "string" && isWellFormedUnicode(value) && stringLength(value) <= max;
 }
 
 function makeIssue(code: string, message: string, artifactId: string, evidence: Evidence[] = []): ToolIssue {
@@ -41,7 +41,7 @@ function parseRecord(
   warnings: Warning[],
 ): ReturnType<typeof makeDiagnostic> {
   if (!isRecord(value)) return null;
-  if (!boundedString(value.message, 8192) || value.message.length === 0) return null;
+  if (!boundedString(value.message, 8192) || stringLength(value.message) === 0) return null;
 
   const severity = value.severity === "error" || value.severity === "warning" || value.severity === "info" || value.severity === "unknown" ? value.severity : "unknown";
   const phase = phaseForStructured(value.phase);
@@ -53,7 +53,7 @@ function parseRecord(
   const column = columnValue === undefined || columnValue === null ? null : typeof columnValue === "number" && Number.isSafeInteger(columnValue) && columnValue >= 1 ? columnValue : null;
   if ((value.line !== undefined && value.line !== null && line === null) || (value.column !== undefined && value.column !== null && column === null)) return null;
 
-  const file = value.file === undefined || value.file === null ? null : boundedString(value.file, 4096) && value.file.length > 0 ? value.file : null;
+  const file = value.file === undefined || value.file === null ? null : boundedString(value.file, 4096) && stringLength(value.file) > 0 ? value.file : null;
   if (value.file !== undefined && value.file !== null && file === null) return null;
   return makeDiagnostic({
     severity,

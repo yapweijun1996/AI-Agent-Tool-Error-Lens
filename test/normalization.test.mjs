@@ -84,6 +84,14 @@ test("structured records reject malformed Unicode and unsafe coordinates", () =>
   assert.equal(unsafeCoordinate.toolIssues[0]?.code, "STRUCTURED_DIAGNOSTIC_INVALID");
 });
 
+test("structured string limits use Unicode code points consistently", () => {
+  const code = "😀".repeat(65);
+  const result = parse(request(JSON.stringify({ diagnostics: [{ message: "unicode code points", severity: "error", code }] })));
+
+  assert.equal(result.status, "complete");
+  assert.equal(result.data.diagnostics[0]?.code, code);
+});
+
 test("line and request validation remain bounded", () => {
   const longLine = parse(request("x".repeat(16_385)));
   assert.equal(longLine.status, "partial");
