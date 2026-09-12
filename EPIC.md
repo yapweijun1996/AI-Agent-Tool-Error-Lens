@@ -28,7 +28,7 @@ Acceptance:
 - unresolved public decisions are closed or explicitly deferred;
 - architecture review confirms no reasoning/execution responsibility leaked into the package.
 
-State: Implemented contract artifacts; contract verification passed; parser/package capabilities are not implemented or released.
+State: Implemented contract artifacts; contract verification passed; bounded-core/package capability is implemented, while producer coverage and release remain incomplete.
 
 ## E1 — Bounded input and normalization core
 
@@ -50,7 +50,7 @@ Acceptance:
 - malformed, excessive, unsupported, and outside-root inputs fail closed;
 - processing performs no network, subprocess, or repository writes.
 
-State: Planned and dependency-ready after the frozen contract and package scaffold; not implemented, verified, or released.
+State: Implemented and verified for bounded generic-structured parsing; producer-specific adapters, full V0.1 verification, and release remain incomplete.
 
 ## E2 — V0.1 producer adapters
 

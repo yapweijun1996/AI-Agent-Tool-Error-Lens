@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Fixture Baseline
+Lifecycle: Pre-implementation MVP / Bounded Core
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -24,7 +24,7 @@ Depends on: none.
 
 Exit gate: public contracts are testable and no critical behavior remains implicit.
 
-State: Complete for contract hardening; 5/5 acceptance items complete; no parser or package implementation.
+State: Complete for contract hardening; 5/5 acceptance items complete; producer-specific parser and release implementation are tracked later.
 
 ## M1 — Package and shared contract skeleton
 
@@ -38,23 +38,23 @@ Depends on: M0.
 
 Exit gate: source builds and contract examples validate without producer-specific parsing.
 
-State: Complete for package scaffold; 5/5 acceptance items complete; parser behavior remains unimplemented.
+State: Complete for package scaffold; 5/5 acceptance items complete; producer-specific parser behavior remains unimplemented.
 
-T-002 adds the reviewed Golden/adversarial fixture inventory as a dependency-preparation artifact. It does not earn M2 capability credit until executable parser behavior consumes and passes those assertions.
+T-002 adds the reviewed Golden/adversarial fixture inventory as a dependency-preparation artifact. The inventory itself is not capability credit; T-004 now supplies the bounded generic-structured implementation and tests that consume the relevant assertions.
 
 ## M2 — Bounded normalization foundation
 
 Depends on: M1.
 
-- [ ] Implement request validation and all deterministic work-budget counters.
-- [ ] Implement newline/ANSI normalization with raw offset mapping.
-- [ ] Implement lexical Unix/Windows path handling and explicit-root containment.
-- [ ] Implement output redaction with benign-neighbor protections.
-- [ ] Implement generic structured diagnostic parsing.
+- [x] Implement request validation and all deterministic work-budget counters.
+- [x] Implement newline/ANSI normalization with raw offset mapping.
+- [x] Implement lexical Unix/Windows path handling and explicit-root containment.
+- [x] Implement output redaction with benign-neighbor protections.
+- [x] Implement generic structured diagnostic parsing.
 
 Exit gate: bounded structured inputs produce evidence-resolvable sanitized results.
 
-State: Planned; 0/5 complete.
+State: Complete for bounded generic-structured core; 5/5 acceptance items complete; producer-specific adapters remain unimplemented.
 
 ## M3 — V0.1 producer coverage
 
@@ -106,11 +106,11 @@ State: Planned; 0/6 complete.
 | --- | ---: | ---: | ---: |
 | M0 contract/governance | 5 | 5 | 100% |
 | M1 package skeleton | 5 | 5 | 100% |
-| M2 normalization foundation | 0 | 5 | 0% |
+| M2 normalization foundation | 5 | 5 | 100% |
 | M3 producer coverage | 0 | 5 | 0% |
 | M4 interfaces/quality | 0 | 6 | 0% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 10 | 32 | 31.3% |
+| V0.1 roadmap | 15 | 32 | 46.9% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

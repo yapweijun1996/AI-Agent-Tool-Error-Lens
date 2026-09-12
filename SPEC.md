@@ -1,10 +1,12 @@
 # Agent Error Lens V0.1 Specification
 
-Specification status: Contract Frozen / Implementation Pending
+Specification status: Contract Frozen / V0.1 Implementation Pending
 Target release: Unreleased `0.1.0`
 Last reviewed: 2026-09-13
 
-Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is an implementation or release claim.
+Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
+
+The bounded normalization and generic-structured subset is implemented and verified as T-004; the approved producer matrix and release gates remain pending.
 
 ## 1. V0.1 scope
 

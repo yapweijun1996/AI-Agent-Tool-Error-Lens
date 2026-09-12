@@ -2,7 +2,7 @@
 
 Document status: Draft / Architecture Review
 Project: `agent-error-lens`
-Lifecycle: Pre-implementation MVP / Fixture Baseline
+Lifecycle: Pre-implementation MVP / Bounded Core
 Last reviewed: 2026-09-13
 
 ## Purpose
@@ -20,7 +20,7 @@ Agent Error Lens is planned as one independently installable npm package with tw
 - a TypeScript/JavaScript library;
 - a command-line interface that delegates to the same core library.
 
-It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold and shared entry points now exist, but parser behavior is not implemented; the product classification is still not a claim of released runtime capability.
+It is not a web application, service, database, desktop/mobile application, browser extension, infrastructure project, monorepo, or autonomous AI agent. A private package scaffold, shared entry points, and a bounded generic-structured parser core now exist; approved producer-specific adapters and release capability are not yet implemented.
 
 ## Users and context
 
@@ -88,8 +88,8 @@ V0.1 is successful only when all of the following are verified:
 | Axis | State | Evidence |
 | --- | --- | --- |
 | Planned | In progress | Project report, MVP KB specification, and these Core SSOT documents |
-| Implemented | Contract, package scaffold, and fixture baseline only; no parser capability | Manifest, build configuration, shared entry points, CLI scaffold, and 21-case fixture inventory exist; parser adapters do not |
-| Verified | Contract/scaffold/fixture checks only; no parser capability | Contract checks, fixture corpus validation, build, lint, smoke tests, and packed consumer/CLI checks pass; parser behavior is not implemented |
+| Implemented | Contract, package scaffold, fixture baseline, and bounded generic-structured core; producer adapters remain incomplete | Validation, normalization, paths, redaction, structured parsing, shared entry points, CLI scaffold, and 21-case fixture inventory exist; TypeScript/Vitest/ESLint/generic-text adapters do not |
+| Verified | Contract/scaffold/core checks pass; approved producer matrix remains unverified | Contract checks, fixture corpus validation, bounded-core tests, build, lint, smoke tests, and packed consumer/CLI checks pass; producer-specific behavior is not complete |
 | Released | No | No version, tag, registry package, release, or artifact evidence exists |
 
 ## Evidence and authority

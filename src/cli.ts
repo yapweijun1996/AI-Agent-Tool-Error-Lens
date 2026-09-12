@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 
 import { parse, capabilities } from "./index.js";
-import type { ParseRequest } from "../contract/agent-error-lens-v1.types.js";
 
 const usage = "Usage: agent-error-lens <parse|capabilities> --format json [--stdin] [--root <path>]";
 
@@ -21,6 +20,10 @@ async function readStdin(): Promise<string> {
 
 function hasFlag(args: string[], flag: string): boolean {
   return args.includes(flag);
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
 }
 
 async function main(): Promise<void> {
@@ -63,9 +66,9 @@ async function main(): Promise<void> {
   }
 
   const input = await readStdin();
-  let request: ParseRequest;
+  let request: unknown;
   try {
-    request = JSON.parse(input) as ParseRequest;
+    request = JSON.parse(input) as unknown;
   } catch {
     writeUsage("stdin must contain a JSON request");
     return;
@@ -77,17 +80,13 @@ async function main(): Promise<void> {
       writeUsage("--root requires a path");
       return;
     }
-    if (request.options?.root && request.options.root !== rootValue) {
+    const requestRecord = isRecord(request) ? request : null;
+    const requestOptions = requestRecord && isRecord(requestRecord.options) ? requestRecord.options : null;
+    if (typeof requestOptions?.root === "string" && requestOptions.root !== rootValue) {
       writeUsage("--root conflicts with options.root");
       return;
     }
-    request = {
-      ...request,
-      options: {
-        ...request.options,
-        root: rootValue,
-      },
-    };
+    if (requestRecord) request = { ...requestRecord, options: { ...requestOptions, root: rootValue } };
   }
 
   const result = parse(request);

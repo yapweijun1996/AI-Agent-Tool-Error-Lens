@@ -8,14 +8,14 @@ test("library exposes the frozen capabilities contract", () => {
   assert.deepEqual(capabilities(), {
     schemaVersion: "1",
     operations: ["parse", "capabilities"],
-    producers: [],
+    producers: ["generic-structured"],
   });
 });
 
-test("library parse keeps the scaffold explicitly incomplete", () => {
+test("library parse returns a complete result for an empty valid request", () => {
   const result = parse({ schemaVersion: "1", artifacts: [] });
-  assert.equal(result.status, "error");
-  assert.equal(result.toolIssues[0]?.code, "PARSER_NOT_IMPLEMENTED");
+  assert.equal(result.status, "complete");
+  assert.deepEqual(result.toolIssues, []);
 });
 
 test("CLI capabilities and parse use the shared entry points", () => {
@@ -30,7 +30,7 @@ test("CLI capabilities and parse use the shared entry points", () => {
     encoding: "utf8",
     input: JSON.stringify({ schemaVersion: "1", artifacts: [] }),
   });
-  assert.equal(parseRun.status, 1);
+  assert.equal(parseRun.status, 0);
   assert.equal(parseRun.stderr, "");
-  assert.equal(JSON.parse(parseRun.stdout).status, "error");
+  assert.equal(JSON.parse(parseRun.stdout).status, "complete");
 });

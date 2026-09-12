@@ -12,7 +12,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-001 | P0 | Done | Freeze executable V0.1 contract | T-000 | Schemas/types/examples validate; IDs, offsets, redaction, paths, status, budgets, CLI exits, package and compatibility decisions are explicit | `contract/verify-contract.mjs`; Ajv draft-2020-12 validation; strict TypeScript compile; architecture/security review |
 | T-002 | P0 | Done | Build Golden and adversarial fixture corpus | T-001 | Required producer, structural, failure, security, determinism, and agent-facing fixtures exist with expected outputs | `node scripts/check-fixtures.mjs`; 21 cases and 6 families pass inventory/shape checks |
 | T-003 | P0 | Done | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | `npm test`; `npm run pack:check`; clean consumer import; packed CLI smoke |
-| T-004 | P0 | Planned | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | Unit and integration evidence required |
+| T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Planned | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | Adapter fixture evidence required |
 | T-006 | P0 | Planned | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | Repeated-process and parity evidence required |
 | T-007 | P0 | Planned | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Exact-HEAD evidence required |
@@ -62,6 +62,26 @@ Verification:
 - `npm test` includes the fixture check alongside contract, typecheck, lint, build, and package smoke checks;
 - fixture documentation explicitly states that corpus validation is not parser behavior evidence.
 
+## T-004 — Completed bounded normalization core
+
+Goal: implement the smallest read-only core that validates bounded requests, normalizes terminal/newline input, preserves raw UTF-16 evidence, handles lexical paths, redacts exported values, and parses documented generic structured diagnostics.
+
+Work:
+
+1. Add strict runtime request validation for schema version, closed-world fields, artifact identity/streams, Unicode, UTF-8 byte ceilings, producer outcome, and explicit root options.
+2. Add deterministic line, terminal-sequence, parser-match, producer-candidate, evidence-span/aggregate, and diagnostic ceilings with ordered truncation reasons.
+3. Normalize CRLF/CR to LF and strip bounded terminal sequences while maintaining normalized-to-raw UTF-16 boundary maps.
+4. Add lexical Unix/Windows path normalization and explicit-root containment without filesystem access.
+5. Add bounded redaction for authorization, key/token/password/database/signed-URL values while preserving benign token metric names.
+6. Parse a documented JSON diagnostics array as `generic-structured`, create contract-valid stable IDs, deduplicate repeated identities, and return explicit partial/unsupported results for malformed or unsupported text.
+
+Verification:
+
+- `npm test` passes contract/schema drift, fixture corpus, strict typecheck, lint, build, and 10 Node tests;
+- bounded-core tests cover structured evidence, ANSI/CRLF mapping, rooted Unix/Windows paths, outside-root withholding, malformed input, line limits, redaction, benign metrics, envelope ordering, and invalid requests;
+- temporary Ajv draft-2020-12 validation accepts a real generic-structured library result against the authoritative schema;
+- packed CLI/library smoke returns the same structured diagnostic boundary and preserves machine-readable output.
+
 ## Deferred decisions that do not block implementation
 
 T-001 closed the executable parser/package defaults. The following decisions are deliberately deferred because they affect legal or release authority rather than local contract implementation:
@@ -71,10 +91,10 @@ T-001 closed the executable parser/package defaults. The following decisions are
 
 ## Known gaps and defects
 
-- No parser source, executable parser fixture assertions, README, CHANGELOG, ADR, CI, release workflow, or functional diagnostic runtime exists; the current package scaffold, fixture inventory, and contract verifier are not parser capability.
+- No TypeScript/Vitest/ESLint/generic-text producer adapter, executable producer matrix, README, CHANGELOG, ADR, CI, release workflow, or released artifact exists; the bounded generic-structured core is implemented but is not full V0.1 capability.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
-- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; runtime enforcement remains unimplemented.
+- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core enforcement is implemented, while full producer/mixed-input budget coverage remains unverified.
 - Node.js compatibility and module format are selected as a target but remain unverified until package CI exists; package allowlist, license, and npm registry ownership remain release gates.
 - No browser/UI audit is applicable because this project has no user interface or running product.
 

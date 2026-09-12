@@ -1,12 +1,12 @@
 # Agent Error Lens Design
 
 Document status: Contract Frozen / Architecture Review
-Lifecycle: Pre-implementation MVP / Fixture Baseline
+Lifecycle: Pre-implementation MVP / Bounded Core
 Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. It does not describe verified parser implementation. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, and a 21-case fixture inventory, but still has no parser source, executable producer adapter, CI workflow, or release workflow.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 21-case fixture inventory, and a bounded generic-structured parser core. TypeScript, Vitest, ESLint, generic-text, CI, and release workflows remain unimplemented.
 
 ## Architectural boundary
 
@@ -77,6 +77,22 @@ The planned package exposes:
 - `agent-error-lens capabilities` in the CLI.
 
 `explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; final ownership and license selection remain release gates. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is checked by the package `check:contract` command.
+
+## Verified implementation map
+
+The current repository implementation is intentionally narrower than the target pipeline:
+
+| Current entry/module | Verified responsibility |
+| --- | --- |
+| `src/cli.ts` | Validates CLI shape, reads stdin as data, applies an explicit root option, delegates to the library, and emits machine-readable JSON with the frozen usage exits. |
+| `src/index.ts` | Orchestrates runtime request validation, bounded normalization, generic structured parsing, diagnostic deduplication/sorting, summaries, and result assembly. |
+| `src/core/validation.ts` | Narrows untrusted runtime values, rejects unknown request fields/lone surrogates/invalid IDs, and enforces UTF-8 byte ceilings. |
+| `src/core/normalize.ts` | Converts CRLF/CR to LF, strips bounded terminal sequences, and maps normalized UTF-16 boundaries back to raw offsets. |
+| `src/core/paths.ts` and `src/core/redact.ts` | Apply lexical root containment and bounded export redaction without filesystem, network, or subprocess access. |
+| `src/core/structured.ts` | Parses a JSON diagnostics array into `generic-structured` diagnostics with evidence-backed locations and stable IDs. |
+| `src/core/limits.ts`, `src/core/diagnostics.ts`, and `src/core/result.ts` | Own counters, ordered truncation reasons, canonical diagnostic identity/order, summaries, sanitized producer outcome, and envelope construction. |
+
+TypeScript, Vitest, ESLint, generic-text, mixed-producer detection, and release/CI modules are not present yet; they remain T-005 through T-008 work. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 
