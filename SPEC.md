@@ -209,6 +209,8 @@ The parser MAY inspect raw in-memory input to recognize syntax. Exported message
 
 V0.1 MUST detect bounded key-name and value-pattern cases covering API keys, tokens, passwords, Authorization headers, database URLs, and signed URLs. The replacement text is the stable literal `[REDACTED]`. Benign fields such as `inputTokens`, `outputTokens`, and `totalTokens` MUST remain readable unless their values independently match a secret pattern.
 
+The bounded provider-token patterns include standalone `sk-live-`, `sk-test-`, `sk-proj-`, `sk-svcacct-`, `ghp_`, `xox*`, `AIza`, and `AKIA` forms. This list is intentionally conservative and does not claim universal credential-format coverage.
+
 Raw secret-containing strings MUST NOT be used in diagnostic IDs, warnings, debug output, snapshots, or fixtures committed as real credentials.
 
 ## 10. Stable IDs, deduplication, and ordering

@@ -138,6 +138,7 @@ Work completed:
 4. Add Linux/macOS/Windows × Node 20.11/22/24 GitHub Actions verification configuration and make build/test/package scripts Windows-safe.
 5. Diagnose the first remote matrix failure and make the npm test discovery and npm pack dry-run invocation portable under Windows PowerShell and npm lifecycle environments.
 6. Harden the shared Unicode predicate and diagnostic factory so nested structured records reject lone surrogates and unsafe coordinates before stable identity creation.
+7. Close the observed standalone `sk-proj-` provider-token redaction gap and extend the security fixture without broadening the parser boundary.
 
 Verification:
 
@@ -147,6 +148,7 @@ Verification:
 - `npm run pack:check` and `npm audit --omit=dev` pass locally after the Windows remediation;
 - bounded CLI stdin decoding rejects invalid UTF-8 and oversized input before JSON parsing;
 - structured records reject escaped lone surrogates and unsafe line/column values with bounded partial results;
+- standalone `sk-proj-` provider-token values are absent from exported diagnostics and their stable IDs are based on sanitized fields;
 - remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
 

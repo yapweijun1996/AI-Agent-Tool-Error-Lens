@@ -17,7 +17,7 @@ The project KB contains a Draft Standard Project Report and an earlier MVP speci
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
 | Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, Windows CI-script remediation, and bounded UTF-8 CLI input; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, CLI, bounded stdin reader, and portable test/package commands exist |
-| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, `npm run pack:check`, `npm audit --omit=dev`, 21-case materialized schema validation, 25 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, bounded UTF-8 stdin, and structured Unicode/safe-coordinate checks pass locally; remote rerun is pending |
+| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, `npm run pack:check`, `npm audit --omit=dev`, 21-case materialized schema validation, 25 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, bounded UTF-8 stdin, structured Unicode/safe-coordinate checks, and standalone provider-token redaction checks pass locally; remote rerun is pending |
 | Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -56,7 +56,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Runtime result contract | Pass | Temporary Ajv draft-2020-12 validation accepts a real generic-structured library result |
 | Packed package boundary | Pass | `npm run pack:check`, clean consumer import, and packed CLI capabilities smoke pass |
 | Markdown whitespace/structure/status consistency | Pass | No diff whitespace errors; balanced code fences; prompt remains under 2,000 characters; lifecycle axes agree |
-| Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, security, determinism, and agent-facing evidence |
+| Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, standalone provider-token security, determinism, and agent-facing evidence |
 | Full fixture result schema | Pass | Temporary Ajv draft-2020-12 validation accepts all 21 materialized corpus results |
 | Canonical output/interface matrix | Pass | 18 Node tests cover stable ordering, deduplication/evidence union, NFC/key order, repeated-process bytes, CLI/library parity, and exits 0/1/2 |
 | Resource/capability/package audit | Pass | 25 Node tests cover fixed/secondary bounds and structured-record safety; static core capability audit and 70-file package allowlist audit pass |
@@ -67,7 +67,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 
 ## Contract-hardening result
 
-T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, fatal UTF-8 CLI decoding, bounded stdin transport, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, portable test/package commands, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI has an observed Windows failure at the previous SHA; the remediation is not remotely verified. License selection and final package ownership remain release gates.
+T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, fatal UTF-8 CLI decoding, bounded stdin transport, bounded provider-token redaction, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, portable test/package commands, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI has an observed Windows failure at the previous SHA; the remediation is not remotely verified. License selection and final package ownership remain release gates.
 
 ## Risks
 
