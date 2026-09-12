@@ -102,7 +102,7 @@ export function validateRequest(value: unknown): RequestValidation {
       };
     }
     artifactIds.add(artifactId);
-    if (!["stdout", "stderr", "combined", "unknown"].includes(String(artifactValue.stream))) {
+    if (typeof artifactValue.stream !== "string" || !["stdout", "stderr", "combined", "unknown"].includes(artifactValue.stream)) {
       return { ...issue("REQUEST_INVALID", "artifact stream is invalid", artifactId), bytesReceived, artifactsReceived: artifactIds.size };
     }
     if (artifactValue.encoding !== undefined && artifactValue.encoding !== "utf-8") {

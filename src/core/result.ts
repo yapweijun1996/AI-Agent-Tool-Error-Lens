@@ -72,6 +72,6 @@ export function errorResult(issue: ToolIssue, artifactsReceived = 0, bytesReceiv
     toolIssues: [issue],
     warnings: [],
     truncation: { truncated: false, reasons: [] },
-    stats: emptyStats(Math.min(artifactsReceived, 64), Math.min(bytesReceived, 20 * 1024 * 1024)),
+    stats: emptyStats(Math.min(artifactsReceived, 64), Math.min(bytesReceived, LIMITS.maxRequestBytes)),
   };
 }

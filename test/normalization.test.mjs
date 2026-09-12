@@ -100,6 +100,13 @@ test("line and request validation remain bounded", () => {
   const invalid = parse({ schemaVersion: "1", artifacts: [{ id: "stderr", stream: "stderr", content: "x", unexpected: true }] });
   assert.equal(invalid.status, "error");
   assert.equal(invalid.toolIssues[0]?.code, "REQUEST_INVALID");
+
+  const coercibleStream = parse({
+    schemaVersion: "1",
+    artifacts: [{ id: "stderr", stream: { toString: () => "stderr" }, content: "x" }],
+  });
+  assert.equal(coercibleStream.status, "error");
+  assert.equal(coercibleStream.toolIssues[0]?.code, "REQUEST_INVALID");
 });
 
 test("redaction masks secrets but preserves benign token metrics", () => {
