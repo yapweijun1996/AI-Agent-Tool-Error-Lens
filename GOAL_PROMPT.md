@@ -9,7 +9,7 @@ This is a pre-implementation TypeScript/npm library plus CLI sharing one core. I
 
 Loop:
 1. Inspect rules, git state/history, Core SSOT, KB context, source/config/manifests, tests, CI, package, runtime, and release evidence.
-2. Select the highest-value ready task (T-006 now).
+2. Select the highest-value ready task (T-007 now).
 3. Implement the smallest complete change with clear ownership and one source of truth.
 4. Run applicable static, unit, fixture, determinism, security, resource, parity, package, consumer, cross-platform, and agent-facing checks.
 5. Self-review contract, architecture, security, compatibility, scope, and evidence. Seek independent review when useful; reproduce and fix valid findings.

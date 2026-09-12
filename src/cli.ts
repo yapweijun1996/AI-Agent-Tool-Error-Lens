@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { parse, capabilities } from "./index.js";
+import { serializeCapabilities, serializeResult } from "./core/serialize.js";
 
 const usage = "Usage: agent-error-lens <parse|capabilities> --format json [--stdin] [--root <path>]";
 
@@ -22,6 +23,36 @@ function hasFlag(args: string[], flag: string): boolean {
   return args.includes(flag);
 }
 
+function parseFlags(args: string[]): { root?: string; error?: string } {
+  let root: string | undefined;
+  let rootSeen = false;
+  let formatSeen = false;
+  let stdinSeen = false;
+  for (let index = 0; index < args.length; index += 1) {
+    const arg = args[index];
+    if (arg === "--stdin" && !stdinSeen) {
+      stdinSeen = true;
+      continue;
+    }
+    if (arg === "--format" && !formatSeen) {
+      if (args[index + 1] !== "json") return { error: "--format requires json" };
+      formatSeen = true;
+      index += 1;
+      continue;
+    }
+    if (arg === "--root" && !rootSeen) {
+      const value = args[index + 1];
+      if (!value || value.startsWith("--")) return { error: "--root requires a path" };
+      root = value;
+      rootSeen = true;
+      index += 1;
+      continue;
+    }
+    return { error: `unknown or duplicate option: ${arg}` };
+  }
+  return root === undefined ? {} : { root };
+}
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === "object" && !Array.isArray(value);
 }
@@ -35,11 +66,12 @@ async function main(): Promise<void> {
   }
 
   if (command === "capabilities") {
-    if (args.length !== 2 || !hasFlag(args, "--format") || !hasFlag(args, "json")) {
+    const flags = parseFlags(args);
+    if (flags.error || args.length !== 2 || !hasFlag(args, "--format") || !hasFlag(args, "json")) {
       writeUsage("capabilities requires --format json");
       return;
     }
-    process.stdout.write(`${JSON.stringify(capabilities())}\n`);
+    process.stdout.write(serializeCapabilities(capabilities()));
     return;
   }
 
@@ -48,21 +80,10 @@ async function main(): Promise<void> {
     return;
   }
 
-  const formatIndex = args.indexOf("--format");
-  const stdinEnabled = hasFlag(args, "--stdin");
-  if (!stdinEnabled || formatIndex < 0 || args[formatIndex + 1] !== "json") {
+  const flags = parseFlags(args);
+  if (flags.error || !hasFlag(args, "--stdin") || !hasFlag(args, "--format")) {
     writeUsage("parse requires --stdin --format json");
     return;
-  }
-
-  const rootIndex = args.indexOf("--root");
-  let root: string | undefined;
-  if (rootIndex >= 0) {
-    root = args[rootIndex + 1];
-    if (!root || root.startsWith("--")) {
-      writeUsage("--root requires a path");
-      return;
-    }
   }
 
   const input = await readStdin();
@@ -74,8 +95,8 @@ async function main(): Promise<void> {
     return;
   }
 
-  if (rootIndex >= 0) {
-    const rootValue = root;
+  if (flags.root !== undefined) {
+    const rootValue = flags.root;
     if (!rootValue) {
       writeUsage("--root requires a path");
       return;
@@ -90,7 +111,7 @@ async function main(): Promise<void> {
   }
 
   const result = parse(request);
-  process.stdout.write(`${JSON.stringify(result)}\n`);
+  process.stdout.write(serializeResult(result));
   process.exitCode = result.status === "error" ? 1 : 0;
 }
 

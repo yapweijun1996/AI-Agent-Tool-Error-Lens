@@ -4,7 +4,7 @@ import type {
   ParseResult,
   Producer,
 } from "../contract/agent-error-lens-v1.types.js";
-import { deduplicateDiagnostics, summarize } from "./core/diagnostics.js";
+import { deduplicateDiagnostics, sortProducers, sortToolIssues, sortWarnings, summarize } from "./core/diagnostics.js";
 import { parseTextArtifact } from "./core/adapters.js";
 import { LIMITS, createBudget, orderedReasons } from "./core/limits.js";
 import { normalizeArtifact } from "./core/normalize.js";
@@ -85,12 +85,12 @@ export function parse(request: unknown): ParseResult {
     status: reasonList.length > 0 || toolIssues.length > 0 ? "partial" : "complete",
     ...(producerOutcome ? { producerOutcome } : {}),
     data: {
-      producers: [...producers.values()],
+      producers: sortProducers([...producers.values()], artifactOrder),
       diagnostics: canonicalDiagnostics,
       summary: summarize(canonicalDiagnostics, producers.size),
     },
-    toolIssues,
-    warnings,
+    toolIssues: sortToolIssues(toolIssues, artifactOrder),
+    warnings: sortWarnings(warnings, artifactOrder),
     truncation: {
       truncated: reasonList.length > 0,
       reasons: reasonList,

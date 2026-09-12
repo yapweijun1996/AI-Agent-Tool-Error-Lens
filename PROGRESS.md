@@ -1,7 +1,7 @@
 # Agent Error Lens Progress
 
 Snapshot date: 2026-09-13
-Lifecycle: Pre-implementation MVP / Producer Coverage
+Lifecycle: Pre-implementation MVP / Interface Quality
 Working branch: `main`
 Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
@@ -9,15 +9,15 @@ Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
 The repository began this pass with only `.gitattributes` and one initial commit. There were no project-level `AGENTS.md`, nested rules, `CLAUDE.md`, `CONTRIBUTING.md`, README, CHANGELOG, ADRs, docs, source, entry points, configuration, package/build files, dependencies, tests, scripts, CI, release workflows, tags, stashes, or uncommitted work.
 
-The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, and approved V0.1 producer adapters added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, and producer coverage are complete; canonical quality/release proof is incomplete.
+The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 21-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, and canonical CLI/library output layer added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, and source-level interface quality are complete; full quality/release proof is incomplete.
 
 ## Delivery axes
 
 | Axis | Current state | Strongest evidence |
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
-| Implemented | Contract, package scaffold, fixture baseline, bounded core, and V0.1 producer adapters; canonical quality remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, validation/normalization/path/redaction/structured core, and approved adapters exist |
-| Verified | Contract/scaffold/bounded-core/producer matrix verified; release-quality matrix incomplete | `npm test`, 21-case materialized schema validation, bounded-core/adapter tests, packed consumer import, and packed CLI smoke pass |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, and canonical output/interfaces; full quality proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 21-case inventory, normalization/path/redaction/structured core, adapters, serializer, and CLI exist |
+| Verified | Contract/scaffold/bounded-core/producer/interface matrix verified; full source/package quality matrix incomplete | `npm test`, 21-case materialized schema validation, 18 core/adapter/interface tests, repeated-process parity, packed consumer import, and packed CLI smoke pass |
 | Released | 0 releases | No manifest version, tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -30,12 +30,12 @@ The V0.1 roadmap defines 32 explicit acceptance items:
 - M1 Package skeleton: 5/5;
 - M2 Normalization foundation: 5/5;
 - M3 Producer coverage: 5/5;
-- M4 Interfaces/quality: 0/6;
+- M4 Interfaces/quality: 4/6;
 - M5 Release proof: 0/6.
 
-Total: **20/32 = 62.5%**.
+Total: **24/32 = 75.0%**.
 
-The twenty completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, and M3 producer-coverage acceptance items. The approved V0.1 adapter matrix is implemented and verified; canonical quality gates, CI, and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
+The twenty-four completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first four M4 interface/fixture acceptance items. Canonical source behavior is implemented and verified; capability audits, cross-platform CI, and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
 
 ## Verification performed in this pass
 
@@ -55,15 +55,16 @@ The twenty completed items are the M0 contract/governance, M1 package-scaffold, 
 | Bounded normalization core | Pass | 10 Node tests cover validation, budgets, ANSI/CRLF raw mapping, paths, redaction, generic structured parsing, and canonical envelope order |
 | Runtime result contract | Pass | Temporary Ajv draft-2020-12 validation accepts a real generic-structured library result |
 | Packed package boundary | Pass | `npm run pack:check`, clean consumer import, and packed CLI capabilities smoke pass |
-| Markdown whitespace/structure/status consistency | Pass | No diff whitespace errors; balanced code fences; prompt is 1,931 characters; lifecycle axes agree |
+| Markdown whitespace/structure/status consistency | Pass | No diff whitespace errors; balanced code fences; prompt remains under 2,000 characters; lifecycle axes agree |
 | Producer adapter build/fixture matrix | Pass | 14 Node tests cover TypeScript, Vitest, ESLint, generic-text, mixed/nested attribution, failure bounds, security, determinism, and agent-facing evidence |
 | Full fixture result schema | Pass | Temporary Ajv draft-2020-12 validation accepts all 21 materialized corpus results |
+| Canonical output/interface matrix | Pass | 18 Node tests cover stable ordering, deduplication/evidence union, NFC/key order, repeated-process bytes, CLI/library parity, and exits 0/1/2 |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
 | CI/release/registry | Unverified | No workflow, version, tag, release, or registry artifact exists |
 
 ## Contract-hardening result
 
-T-001 through T-005 are complete at their stated boundaries. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, and CLI exits are explicit. The approved V0.1 producer matrix and materialized fixture results are verified; canonical interface quality, CI, license selection, and final package ownership remain release gates.
+T-001 through T-006 are complete at their stated boundaries. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, redaction replacement, path containment, secondary budgets, ESM-only Node target, explicit serialization, and CLI exits are implemented and verified. The approved V0.1 producer matrix, materialized fixture results, and source-level interface quality are verified; capability audit, CI, license selection, and final package ownership remain release gates.
 
 ## Risks
 
@@ -72,11 +73,11 @@ T-001 through T-005 are complete at their stated boundaries. The JSON Schema is 
 3. Redaction may leak through IDs, evidence, issues, or snapshots, or may hide benign metrics.
 4. Mixed producers may be collapsed into a false single identity.
 5. Generic heuristics may appear more certain than their evidence supports.
-6. Nondeterministic ordering or work-budget termination may break byte stability.
-7. Unsupported input and complete M4 truncation/resource semantics may still expose gaps beyond the approved adapter matrix.
+6. Nondeterministic work-budget termination or untested record classes may still break byte stability outside the covered matrix.
+7. Complete M4 security/resource/no-capability evidence and cross-platform behavior remain unverified.
 8. Package, platform, or release compatibility may be claimed before artifact-level proof.
 9. Local and company KB lifecycle status may continue to diverge.
-10. Fixture assertions may drift from the frozen contract until the canonical interface and full M4 matrix are completed.
+10. Fixture assertions may drift from the frozen contract until the remaining M4 capability audit is completed.
 
 ## Blockers and unresolved items
 
@@ -84,4 +85,4 @@ There is no hard blocker to package implementation. Runtime enforcement, package
 
 ## Resume point
 
-Start T-006. Complete canonical output and interface quality: stable IDs/dedup evidence union, deterministic serialization, summaries/status/truncation semantics, CLI/library parity, and exact process exits. Preserve the rule that generic heuristics never become `confirmed`.
+Start T-007. Complete source and package verification: full security/resource/no-capability audit, exact-HEAD package inspection, cross-platform CI, and agent-facing E2E. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.

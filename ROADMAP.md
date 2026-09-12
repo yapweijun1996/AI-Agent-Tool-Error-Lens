@@ -1,7 +1,7 @@
 # Agent Error Lens Roadmap
 
 Roadmap status: Draft / Dependency-aware
-Lifecycle: Pre-implementation MVP / Producer Coverage
+Lifecycle: Pre-implementation MVP / Interface Quality
 Last reviewed: 2026-09-13
 
 ## Roadmap rules
@@ -74,16 +74,16 @@ State: Complete for the approved V0.1 adapter matrix; 5/5 acceptance items compl
 
 Depends on: M3.
 
-- [ ] Implement stable IDs, deduplication, evidence union, ordering, and canonical serialization.
-- [ ] Implement summaries, stats, warnings, issues, status, and truncation semantics.
-- [ ] Implement CLI/library parity and real process exit-code tests.
-- [ ] Pass the complete producer, structural, failure, and determinism fixture matrix.
+- [x] Implement stable IDs, deduplication, evidence union, ordering, and canonical serialization.
+- [x] Implement summaries, stats, warnings, issues, status, and truncation semantics.
+- [x] Implement CLI/library parity and real process exit-code tests.
+- [x] Pass the complete producer, structural, failure, and determinism fixture matrix.
 - [ ] Pass security, path, resource-limit, and no-network/no-subprocess checks.
 - [ ] Pass the approved Node/OS CI matrix and agent-facing E2E tests.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
-State: Planned; 0/6 complete.
+State: 4/6 complete for source-level canonical interfaces and fixture behavior; security/resource capability audit and cross-platform CI remain T-007 work.
 
 ## M5 — Package and release proof
 
@@ -108,9 +108,9 @@ State: Planned; 0/6 complete.
 | M1 package skeleton | 5 | 5 | 100% |
 | M2 normalization foundation | 5 | 5 | 100% |
 | M3 producer coverage | 5 | 5 | 100% |
-| M4 interfaces/quality | 0 | 6 | 0% |
+| M4 interfaces/quality | 4 | 6 | 66.7% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 20 | 32 | 62.5% |
+| V0.1 roadmap | 24 | 32 | 75.0% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

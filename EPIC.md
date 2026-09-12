@@ -28,7 +28,7 @@ Acceptance:
 - unresolved public decisions are closed or explicitly deferred;
 - architecture review confirms no reasoning/execution responsibility leaked into the package.
 
-State: Implemented contract artifacts; contract verification passed; bounded-core/package capability and approved producer coverage are implemented and verified, while canonical quality and release remain incomplete.
+State: Contract artifacts and boundary decisions implemented and verified; downstream core, producer, and interface work is tracked in E1-E4, while full quality and release remain incomplete.
 
 ## E1 — Bounded input and normalization core
 
@@ -94,7 +94,7 @@ Acceptance:
 - secret fixtures do not leak through output, IDs, warnings, snapshots, or errors;
 - truncation and uncertainty cannot appear complete or confirmed.
 
-State: Planned; not implemented, verified, or released.
+State: Implemented and verified for stable IDs, deterministic deduplication/evidence union, ordering, summaries, statuses, truncation, and canonical serialization; full quality proof and release remain incomplete.
 
 ## E4 — Library, CLI, and package
 
@@ -115,7 +115,7 @@ Acceptance:
 - clean consumers can import the packed library and run the packed CLI;
 - package metadata and contents match the approved contract.
 
-State: Package scaffold implemented; scaffold checks verified; V0.1 parser/interface behavior is not complete or released.
+State: Library/CLI interface behavior is implemented and verified against the shared core; full package/cross-platform proof and release remain incomplete.
 
 ## E5 — Verification and release evidence
 

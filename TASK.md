@@ -14,7 +14,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-003 | P0 | Done | Scaffold npm library/CLI package | T-001 | Manifest, build, typecheck, lint, schema/type drift check, shared entry points, test harness, and dependency baseline pass | `npm test`; `npm run pack:check`; clean consumer import; packed CLI smoke |
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 21 materialized fixture results schema-valid; adapter fixture assertions pass |
-| T-006 | P0 | Planned | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | Repeated-process and parity evidence required |
+| T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
 | T-007 | P0 | Planned | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Exact-HEAD evidence required |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
 | T-009 | P1 | Planned | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | KB readback required |
@@ -108,9 +108,27 @@ T-001 closed the executable parser/package defaults. The following decisions are
 - license choice remains intentionally deferred to T-008 because it is a legal/release decision;
 - final npm name ownership and availability remain a T-008 release check; registry lookup on 2026-09-13 returned 404 for `agent-error-lens`.
 
+## T-006 — Completed canonical output and interfaces
+
+Goal: make the existing parser result canonical at the library and CLI boundaries without adding producer or reasoning scope.
+
+Work:
+
+1. Add an explicit serializer with schema-defined object key order, NFC strings, compact JSON, LF, and one trailing newline.
+2. Make producer, issue, warning, diagnostic, and evidence ordering explicit and locale-independent; preserve deterministic deduplication and evidence union.
+3. Tighten CLI option handling so unknown and duplicate options are usage failures while valid parsing continues to share the library core.
+4. Preserve the distinction between producer outcome and Error Lens process status: complete/partial results exit 0, parser errors exit 1, usage errors exit 2.
+
+Verification:
+
+- `npm test` passes contract/schema drift, fixture inventory, strict typecheck, lint, build, and 18 Node tests;
+- interface tests cover duplicate identity/evidence union, NFC/key order/trailing newline, repeated-process byte equality, CLI/library byte parity, producer failure isolation, partial/error exits, and usage errors;
+- representative producer, structural, failure, security, determinism, and agent-facing fixture assertions remain green;
+- exact materialized fixture outputs remain schema-valid under temporary Ajv draft-2020-12 validation.
+
 ## Known gaps and defects
 
-- No canonical serializer module/expanded interface quality gate, README, CHANGELOG, ADR, CI, release workflow, or released artifact exists; the approved V0.1 producer adapter matrix is implemented but release-quality proof is incomplete.
+- Full M4 security/resource/no-capability audit, README, CHANGELOG, ADR, CI, release workflow, and released artifact do not exist; source-level canonical output and interface behavior are implemented but release-quality proof is incomplete.
 - The company KB status dated 2026-09-07 says design has not started; the fresher project report says Contract Hardening. T-009 must reconcile this without rewriting history. Project-KB writeback was attempted on 2026-09-13 through both available KB-MCP routes and returned `KB_NOT_FOUND` with `write_committed:false`; no external status claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.
