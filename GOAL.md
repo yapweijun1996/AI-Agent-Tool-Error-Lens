@@ -102,4 +102,4 @@ Current evidence order is:
 4. project KB `agent-error-lens` (`76b1c4bc-b21f-4906-b063-155c5450472b`);
 5. company AI-Agent-Tools roadmap KB.
 
-The company roadmap record still says `queued` and `design_status=not_started` as of 2026-09-07. The newer project report placed local work in Contract Hardening, and the repository now contains a locally verified frozen contract. This is a status-synchronization gap, not parser or package implementation evidence.
+The canonical company ecosystem roadmap remains `queued` as of the 2026-09-07 record, while its standalone tool-status record was synchronized in place on 2026-09-13 to reflect `design_status=draft`, `development_status=in_progress`, `verification_status=partial`, `release_status=unreleased`, and `evidence_status=partial`. The repository’s local evidence does not authorize changing ecosystem roadmap order or state.

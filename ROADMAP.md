@@ -116,7 +116,7 @@ This percentage measures explicit roadmap acceptance items, not code volume or e
 
 ## Ecosystem sequencing
 
-The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. Local implementation and verification have progressed through safety/package gates; company status should be synchronized before external roadmap state is reported as active.
+The company AI-Agent-Tools roadmap records Agent Error Lens at position 5 after Agent Test Scope at position 4. That sequence is an ecosystem planning dependency, not a runtime dependency. The canonical company tool-status record was synchronized in place on 2026-09-13; its ecosystem `roadmap_state` remains `queued`, so local implementation must not be reported as ecosystem-active until the roadmap owner changes that state.
 
 ## Deferred V0.2+ candidates
 

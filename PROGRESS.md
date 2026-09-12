@@ -9,7 +9,7 @@ Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
 The repository began this pass with only `.gitattributes` and one initial commit. There were no project-level `AGENTS.md`, nested rules, `CLAUDE.md`, `CONTRIBUTING.md`, README, CHANGELOG, ADRs, docs, source, entry points, configuration, package/build files, dependencies, tests, scripts, CI, release workflows, tags, stashes, or uncommitted work.
 
-The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 23-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, bounded UTF-8 CLI input, local security/resource/package gates, and Windows-portable verification commands added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with `queued`, design/development/verification/release `not_started`, and evidence `partial`; that external status has not yet been synchronized. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification before the current remediation; release proof remains incomplete.
+The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 23-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, bounded UTF-8 CLI input, local security/resource/package gates, and Windows-portable verification commands added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with ecosystem `queued`; its canonical tool-status record was synchronized in place on 2026-09-13 to `design=draft`, `development=in_progress`, `verification=partial`, `release=unreleased`, and `evidence=partial`. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification before the current remediation; release proof remains incomplete.
 
 ## Delivery axes
 
@@ -44,7 +44,7 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Repository inventory and rule search | Pass | Only `.gitattributes` existed; no scoped repository instructions were found |
 | Git status/history/branches/tags/stash inspection | Pass | Final audit is clean on `main`; local implementation commits exist, with no tags or stashes |
 | KB project report and MVP specification readback | Pass | Product intent and draft contracts were available |
-| Company roadmap status retrieval | Pass | Ecosystem status and position were available |
+| Company status synchronization | Pass | Existing canonical status item `51a18a7f-4b7a-4b7c-957f-75980ee7e640` was updated in place with company sharing and read back; ecosystem item `5e5c8c5e-c3e9-460d-a985-3165e0b83031` was also read back and remains `queued` |
 | Engineering reuse gate | Pass | Reuse context was available; no prior implementation was accepted as completion proof |
 | Eight-file existence and cross-reference audit | Pass | 8 non-empty files; 32 roadmap items; 10 unique task IDs |
 | Contract schema/examples | Pass | JSON Schema parses; positive and negative request/result examples are checked by `contract/verify-contract.mjs` and Ajv draft-2020-12 |
@@ -79,12 +79,12 @@ T-001 through T-006 are complete at their stated boundaries, and T-007 local saf
 6. Nondeterministic work-budget termination or untested record classes may still break byte stability outside the covered matrix.
 7. The observed remote Node/OS run failed on Windows; the local remediation still needs an exact-HEAD CI rerun.
 8. Package, platform, or release compatibility may be claimed before artifact-level proof.
-9. Local and company KB lifecycle status may continue to diverge.
+9. Local implementation is advanced while the canonical ecosystem roadmap remains `queued`; this is intentional until the roadmap owner changes that planning state.
 10. Fixture assertions may drift from the frozen contract until the corrected remote matrix is completed.
 
 ## Blockers and unresolved items
 
-There is no hard blocker to package implementation. The current local remediation is verified, but corrected exact-HEAD remote CI is not available without a push or CI rerun. License selection and final package ownership remain unresolved release gates; Node/module support is a selected target but not yet verified across the approved matrix. T-009 project-KB synchronization is externally blocked for now: both available KB-MCP write routes returned `KB_NOT_FOUND` with `write_committed:false` for the supplied project UUID on 2026-09-13.
+There is no hard blocker to package implementation. The current local remediation is verified, but corrected exact-HEAD remote CI is not available without a push or CI rerun. License selection and final package ownership remain unresolved release gates; Node/module support is a selected target but not yet verified across the approved matrix. T-009 company status synchronization is complete; the ecosystem roadmap remains queued by its canonical SSOT and was not changed by this pass.
 
 ## Resume point
 
