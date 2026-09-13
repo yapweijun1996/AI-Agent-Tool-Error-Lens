@@ -15,7 +15,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 23 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
-| T-007 | P0 | Done | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks, Node 20.11/22/24 Alpine clean-install matrix, agent-facing CLI E2E, and exact-HEAD remote run `34729887204` pass |
+| T-007 | P0 | Done | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks, Node 20.11/22/24 Alpine clean-install matrix, agent-facing CLI E2E, and exact-HEAD remote run `34731128500` pass |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | MIT selected; `LICENSE`, package metadata, and contract metadata updated; external release evidence remains required |
 | T-009 | P1 | Done | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | Existing company status item `51a18a7f-4b7a-4b7c-957f-75980ee7e640` updated in place with company sharing; status and ecosystem item `5e5c8c5e-c3e9-460d-a985-3165e0b83031` read back |
 
@@ -187,7 +187,7 @@ Verification:
 - already sanitized quoted and unquoted marker forms remain byte-stable on a second parse;
 - historical remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available;
-- exact-HEAD remote run `34729887204` at SHA `25fb154a07e61aa4158eec1b1e0309b3dfc7ec92` passed all 9 Node/OS jobs across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including the verification suite and package-boundary inspection: https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens/actions/runs/34729887204.
+- exact-HEAD remote run `34731128500` at SHA `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passed all 9 Node/OS jobs across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including the verification suite and MIT-aware package-boundary inspection: https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens/actions/runs/34731128500.
 
 ## Known gaps and defects
 

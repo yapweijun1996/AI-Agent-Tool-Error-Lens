@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation is implemented and exact-HEAD run `34729887204` passes all 9 Node/OS jobs. Release workflows and artifact publication remain unverified.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are implemented and exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passes all 9 Node/OS jobs. Release workflows and artifact publication remain unverified.
 
 ## Architectural boundary
 
@@ -93,7 +93,7 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts`, `src/core/text.ts`, and `src/core/diagnostic-factory.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines, with final fail-closed diagnostic field validation. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, while corrected exact-HEAD implementation commit `25fb154` passes the approved Node/OS matrix; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, while corrected exact-HEAD implementation commit `8a89871` passes the approved Node/OS matrix; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 

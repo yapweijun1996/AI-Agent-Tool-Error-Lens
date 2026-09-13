@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and capability/resource/package plus agent-facing CLI handoff gates are complete as T-007. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation is verified by exact-HEAD run `34729887204`, which passes all 9 Node/OS jobs. Release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and capability/resource/package plus agent-facing CLI handoff gates are complete as T-007. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are verified by exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b`, which passes all 9 Node/OS jobs. Release gates remain pending.
 
 ## 1. V0.1 scope
 

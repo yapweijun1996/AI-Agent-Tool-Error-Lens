@@ -83,7 +83,7 @@ Depends on: M3.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
-State: 6/6 complete. Exact-HEAD run `34729887204` passes the approved Node/OS matrix across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including verification and package-boundary checks.
+State: 6/6 complete. Exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passes the approved Node/OS matrix across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including verification and package-boundary checks.
 
 ## M5 — Package and release proof
 
