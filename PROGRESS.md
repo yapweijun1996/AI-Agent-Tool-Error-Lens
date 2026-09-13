@@ -63,7 +63,7 @@ The twenty-nine completed items are the M0 contract/governance, M1 package-scaff
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities; archived-workspace offline `npm ci` with `npm_config_engine_strict=true` and the full suite also pass in network-isolated Node 20.11.0/22/24 Linux containers |
 | Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact; structured invalid Unicode/coordinate inputs fail closed |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
-| CI/release/registry | Pre-release preparation pass / release pending | Exact-HEAD run `34731128500` passes all 9 Node/OS jobs and package-boundary checks; the 73-file dry-run package inspection and release workflow checks pass locally; npm ownership, authorized tag/release, registry artifact, integrity, and `gitHead` readback do not yet exist |
+| CI/release/registry | Pre-release preparation pass / release pending | Exact-HEAD run `34731128500` passes all 9 Node/OS jobs and package-boundary checks; the 73-file dry-run package inspection and release workflow checks pass locally; remote `main` contains `f69167b` and the release workflow, but GitHub `npm-release` environment and branch protection are not configured; npm ownership, authorized tag/release, registry artifact, integrity, and `gitHead` readback do not yet exist |
 
 ## Contract-hardening result
 
@@ -87,7 +87,7 @@ T-001 through T-007 are complete at their stated boundaries. The JSON Schema is 
 
 ## Blockers and unresolved items
 
-There is no hard blocker to package implementation or source verification. T-007 is complete after exact-HEAD run `34731128500`; T-008 release preparation is implemented and locally verified. npm ownership, first-publish bootstrap, trusted-publisher configuration, authorized version/tag/release, registry integrity, and `gitHead` readback remain unresolved release gates; the ecosystem roadmap remains queued by its canonical SSOT and was not changed by this pass.
+There is no hard blocker to package implementation or source verification. T-007 is complete after exact-HEAD run `34731128500`; T-008 release preparation is implemented and locally verified. The remote workflow is present at `f69167b`, while the GitHub `npm-release` environment, branch/tag protection, npm ownership, first-publish bootstrap, trusted-publisher configuration, authorized version/tag/release, registry integrity, and `gitHead` readback remain unresolved release gates; the ecosystem roadmap remains queued by its canonical SSOT and was not changed by this pass.
 
 ## Resume point
 

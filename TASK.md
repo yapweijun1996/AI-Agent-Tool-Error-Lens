@@ -205,11 +205,12 @@ Work completed:
 Verification:
 
 - npm registry lookup for `agent-error-lens` returned 404; `npm owner ls agent-error-lens` also returned 404; `npm whoami` returned 401, so npm ownership is not proven;
+- read-only GitHub checks confirm `main` points at `f69167b` and the remote `release.yml` matches the local workflow; the `npm-release` environment and `main` branch protection are not configured, and no tags or GitHub releases exist;
 - `npm run build` passes;
 - `npm run check:package` passes with 73 files at the private boundary;
 - `npm pack --dry-run --json --ignore-scripts` contains the required release files and returns stable `shasum`/`integrity` across repeated runs;
 - release workflow markers and documentation checks pass locally;
-- tag, release, registry artifact, registry integrity, `gitHead`, and publication remain unverified.
+- tag, release, registry artifact, registry integrity, `gitHead`, and publication remain unverified; external environment and npm trusted-publisher setup still require the release operator.
 
 ## Known gaps and defects
 

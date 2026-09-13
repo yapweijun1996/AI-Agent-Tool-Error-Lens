@@ -28,7 +28,7 @@ If a published version is defective, do not rewrite or silently delete the artif
 
 ## Evidence and references
 
-- Repository metadata and current package state were inspected locally on 2026-09-13.
+- Repository metadata and current package state were inspected locally on 2026-09-13. The remote `main` branch now contains the prepared release workflow at commit `f69167b`; read-only GitHub checks found no `npm-release` environment, no `main` branch protection, and no tags or releases.
 - `npm view agent-error-lens ...` and `npm owner ls agent-error-lens` returned 404; `npm whoami` returned 401.
 - npm package metadata and `private` behavior: <https://docs.npmjs.com/files/package.json/>.
 - npm trusted publishers and GitHub OIDC configuration: <https://docs.npmjs.com/trusted-publishers/>.

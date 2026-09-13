@@ -11,6 +11,7 @@ Status: preparation only. This runbook does not authorize or perform a release.
 - Current guard: `private: true`
 - Registry state checked on 2026-09-13: package lookup returned HTTP 404
 - npm authentication checked on 2026-09-13: local `npm whoami` returned HTTP 401
+- GitHub release boundary checked on 2026-09-13: remote `main` contains `f69167b` and `release.yml`; the `npm-release` environment and `main` branch protection do not yet exist; no tags or GitHub releases exist
 - Released state: no
 
 The package must remain private until the release operator proves npm ownership, chooses the release commit, and receives explicit release approval.
