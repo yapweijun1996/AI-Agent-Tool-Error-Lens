@@ -79,7 +79,7 @@ Depends on: M3.
 - [x] Implement CLI/library parity and real process exit-code tests.
 - [x] Pass the complete producer, structural, failure, and determinism fixture matrix.
 - [x] Pass security, path, resource-limit, and no-network/no-subprocess checks.
-- [ ] Pass the approved Node/OS CI matrix and agent-facing E2E tests.
+- [x] Pass the approved Node/OS CI matrix and agent-facing E2E tests.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
@@ -89,7 +89,7 @@ State: 6/6 complete. Exact-HEAD run `34729887204` passes the approved Node/OS ma
 
 Depends on: M4.
 
-- [ ] Finalize README, CHANGELOG, license, compatibility, and release/rollback instructions.
+- [ ] Finalize README, CHANGELOG, compatibility, license notice, and release/rollback instructions.
 - [ ] Inspect the npm tarball allowlist, declarations, exports, bin, source maps, and integrity.
 - [ ] Pass clean-install consumer import and packed CLI smoke tests.
 - [ ] Pass exact-HEAD release CI with no unexplained failures.

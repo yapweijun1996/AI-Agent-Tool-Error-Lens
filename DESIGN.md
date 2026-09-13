@@ -76,7 +76,7 @@ The package exposes:
 - `agent-error-lens parse` in the CLI;
 - `agent-error-lens capabilities` in the CLI.
 
-`explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; final ownership and license selection remain release gates. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is checked by the package `check:contract` command.
+`explain` and public `normalize` are deferred. CLI and library must call the same core operations. The V0.1 compatibility target is now ESM-only on Node.js `>=20.11.0 <25`, with zero runtime dependencies as the default. CommonJS support is not implied. The target npm name is `agent-error-lens`; MIT is the selected license, while final ownership remains a release gate. The JSON Schema at `contract/agent-error-lens-v1.schema.json` owns the public shape, while `contract/agent-error-lens-v1.types.ts` is checked by the package `check:contract` command.
 
 ## Verified implementation map
 
@@ -93,7 +93,7 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts`, `src/core/text.ts`, and `src/core/diagnostic-factory.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines, with final fail-closed diagnostic field validation. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, so cross-platform support remains an evidence gap until the remediation is exercised by CI; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, while corrected exact-HEAD implementation commit `25fb154` passes the approved Node/OS matrix; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 
@@ -184,7 +184,7 @@ The CLI keeps stdout machine-readable. Human-readable usage and fatal CLI diagno
 
 ## Package, build, and release design
 
-The repository now has a private ESM package scaffold with zero runtime dependencies; build tooling uses development dependencies. The scaffold exports the shared entry point, maps the CLI executable, and includes only `dist` plus the frozen schema in its current files allowlist. Planned release gates include:
+The repository now has a private MIT-licensed ESM package scaffold with zero runtime dependencies; build tooling uses development dependencies. The scaffold exports the shared entry point, maps the CLI executable, and includes only `LICENSE`, `dist`, plus the frozen schema in its current files allowlist. Planned release gates include:
 
 - typecheck, unit, fixture, determinism, security, resource-limit, parity, and cross-platform checks;
 - package tarball inspection;
@@ -192,7 +192,7 @@ The repository now has a private ESM package scaffold with zero runtime dependen
 - manifest/version/export/type/bin verification;
 - exact-HEAD CI, tag, release, registry version, integrity, and `gitHead` readback.
 
-No compatibility range, package contents, or release claim is valid until those artifacts exist and are verified.
+The compatibility range and package contents are now verified; no release claim is valid until the remaining release artifacts and registry readback exist and are verified.
 
 ## Ecosystem integration
 

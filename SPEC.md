@@ -305,9 +305,9 @@ CLI requirements:
 - producer failure MUST NOT be copied to the Error Lens process exit code;
 - `--stdin` MUST NOT execute text that resembles a command;
 - `--root` MAY populate a missing `options.root`; a conflicting valid root is a usage error, while malformed existing request options MUST remain visible to library validation;
-- platform support remains unclaimed until the Node.js range and corrected CI matrix are approved and verified. A prior matrix run failed on Windows before the current portable command remediation.
+- platform support is verified for the declared Node.js range by the corrected cross-platform CI matrix; a prior matrix run failed on Windows before the current portable command remediation.
 
-The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; support remains an implementation/release claim only after the corrected corresponding CI matrix passes. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. License selection is intentionally deferred until release preparation and is a release blocker, not a parser contract default.
+The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; the declared support range is verified by the corrected corresponding CI matrix. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. The selected license is MIT and is represented by the repository `LICENSE` file, package metadata, lockfile metadata, and the authoritative contract metadata. Publication remains gated by ownership and release authorization.
 
 ## 13. Capabilities operation
 
@@ -339,7 +339,7 @@ Before release the package MUST define and verify:
 
 The target is zero runtime dependencies. Any exception requires an explicit reviewed decision and supply-chain analysis.
 
-The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `agent-error-lens`, zero runtime dependencies, and an explicit license decision before any publish/tag/release operation. CommonJS support is not implied. The pre-release scaffold uses `private: true` and `license: "UNLICENSED"` as accidental-publish guards; those fields MUST be reviewed before any release.
+The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `agent-error-lens`, zero runtime dependencies, and MIT licensing. CommonJS support is not implied. The pre-release scaffold remains `private: true` as an accidental-publish guard; package ownership, version, and release authorization MUST be reviewed before any release.
 
 ## 15. Verification matrix
 

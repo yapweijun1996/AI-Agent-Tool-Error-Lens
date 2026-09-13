@@ -155,7 +155,7 @@
     },
     "package": {
       "name": "agent-error-lens",
-      "license": "TBD-before-release",
+      "license": "MIT",
       "packageContents": "allowlist-before-release"
     }
   },

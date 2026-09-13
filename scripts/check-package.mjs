@@ -30,10 +30,12 @@ try {
 
 const files = metadata[0]?.files?.map((entry) => entry.path).sort() ?? [];
 const allowed = (path) => path === "package.json"
+  || path === "LICENSE"
   || path === "contract/agent-error-lens-v1.schema.json"
   || path.startsWith("dist/");
 const required = [
   "package.json",
+  "LICENSE",
   "contract/agent-error-lens-v1.schema.json",
   "dist/src/index.js",
   "dist/src/index.d.ts",
@@ -55,8 +57,8 @@ function runNode(args, options = {}) {
   return spawnSync(process.execPath, args, { encoding: "utf8", ...options });
 }
 
-if (!packageJson.private || packageJson.type !== "module" || packageJson.engines?.node !== ">=20.11.0 <25") {
-  console.error("package metadata does not match the frozen private ESM Node contract");
+if (!packageJson.private || packageJson.type !== "module" || packageJson.license !== "MIT" || packageJson.engines?.node !== ">=20.11.0 <25") {
+  console.error("package metadata does not match the frozen private MIT ESM Node contract");
   process.exit(1);
 }
 if (Object.keys(packageJson.dependencies ?? {}).length !== 0) {

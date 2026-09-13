@@ -115,7 +115,7 @@ Acceptance:
 - clean consumers can import the packed library and run the packed CLI;
 - package metadata and contents match the approved contract.
 
-State: Library/CLI interface behavior is implemented and verified against the shared core; full package/cross-platform proof and release remain incomplete.
+State: Library/CLI interface behavior, packed consumer/CLI checks, and cross-platform proof are implemented and verified against the shared core; release remains incomplete.
 
 ## E5 — Verification and release evidence
 
