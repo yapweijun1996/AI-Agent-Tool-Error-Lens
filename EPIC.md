@@ -136,7 +136,7 @@ Acceptance:
 - version, tag, release, and registry evidence agree;
 - `PROGRESS.md` separately records Implemented, Verified, and Released state.
 
-State: Complete for V0.1 verification. Local static, unit, fixture, determinism, security, resource, parity, package, and agent-facing E2E evidence is implemented and verified. Exact-HEAD run `34731128500` passes all 9 Node/OS jobs and package-boundary checks, including the MIT license package boundary; release documentation, tag, registry, integrity, and `gitHead` evidence remain unverified and unreleased.
+State: In progress for release evidence. V0.1 source verification and the first three release-preparation acceptance items are implemented and verified: README/CHANGELOG/ADR/runbook/workflow, package metadata, 73-file tarball inspection with stable dry-run integrity, and packed consumer/CLI smoke. Exact-HEAD run `34731128500` passes all 9 Node/OS jobs; authorized tag, release CI, npm ownership, registry artifact, registry integrity, and `gitHead` evidence remain unverified and unreleased.
 
 ## Dependency order
 

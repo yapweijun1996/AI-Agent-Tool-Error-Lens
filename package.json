@@ -5,6 +5,15 @@
   "description": "Deterministic, local-first diagnostic parsing for AI coding agents.",
   "type": "module",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens.git"
+  },
+  "homepage": "https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
   "engines": {
     "node": ">=20.11.0 <25"
   },
@@ -19,6 +28,8 @@
     "agent-error-lens": "./dist/src/cli.js"
   },
   "files": [
+    "README.md",
+    "CHANGELOG.md",
     "dist",
     "contract/agent-error-lens-v1.schema.json"
   ],

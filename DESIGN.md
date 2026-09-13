@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are implemented and exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passes all 9 Node/OS jobs. Release workflows and artifact publication remain unverified.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, Windows-portable verification commands, release documentation, and a manual release workflow. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are implemented and exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passes all 9 Node/OS jobs. Artifact publication and registry readback remain unverified.
 
 ## Architectural boundary
 
@@ -93,7 +93,7 @@ The current repository implementation is intentionally narrower than the target 
 | `src/core/adapters.ts`, `src/core/text.ts`, and `src/core/diagnostic-factory.ts` | Apply fixed-priority TypeScript, Vitest, ESLint, and conservative generic-text extraction over bounded normalized lines, with final fail-closed diagnostic field validation. |
 | `src/core/diagnostics.ts`, `src/core/result.ts`, and `src/core/serialize.ts` | Own counters/order helpers, canonical diagnostic identity/deduplication, summaries, sanitized producer outcome, envelope construction, and schema-defined serialized bytes. |
 
-Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, and a real packed-consumer/CLI smoke audit now exist. The prior remote execution is a recorded failure, while corrected exact-HEAD implementation commit `8a89871` passes the approved Node/OS matrix; release modules remain a T-008 gap. This table is based on source and test behavior, not directory names alone.
+Cross-platform CI configuration, Windows-portable test/package commands, local agent-facing E2E, a real packed-consumer/CLI smoke audit, release documentation, package metadata, and a manual release workflow now exist. The prior remote execution is a recorded failure, while corrected exact-HEAD implementation commit `8a89871` passes the approved Node/OS matrix; external release evidence remains a T-008 gap. This table is based on source and test behavior, not directory names alone.
 
 ## State, persistence, and source of truth
 
@@ -184,15 +184,17 @@ The CLI keeps stdout machine-readable. Human-readable usage and fatal CLI diagno
 
 ## Package, build, and release design
 
-The repository now has a private MIT-licensed ESM package scaffold with zero runtime dependencies; build tooling uses development dependencies. The scaffold exports the shared entry point, maps the CLI executable, and includes only `LICENSE`, `dist`, plus the frozen schema in its current files allowlist. Planned release gates include:
+The repository now has a private MIT-licensed ESM package scaffold with zero runtime dependencies; build tooling uses development dependencies. The scaffold exports the shared entry point, maps the CLI executable, and includes `README.md`, `CHANGELOG.md`, `LICENSE`, `dist`, plus the frozen schema in its current files allowlist. The normal package audit requires the private boundary; the manual release workflow sets an explicit release-mode audit only after a tag contains `private: false`. Release gates include:
 
 - typecheck, unit, fixture, determinism, security, resource-limit, parity, and cross-platform checks;
 - package tarball inspection;
 - clean consumer import and CLI smoke tests from the packed artifact;
 - manifest/version/export/type/bin verification;
+- exact repository and public npm registry/access metadata;
+- manual tag-bound workflow, protected `npm-release` environment, and npm trusted-publisher configuration;
 - exact-HEAD CI, tag, release, registry version, integrity, and `gitHead` readback.
 
-The compatibility range and package contents are now verified; no release claim is valid until the remaining release artifacts and registry readback exist and are verified.
+The compatibility range, package contents, pre-release docs, and release workflow are now verified locally; no release claim is valid until the authorized release commit, registry artifact, and readback exist and are verified.
 
 ## Ecosystem integration
 

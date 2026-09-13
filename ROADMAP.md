@@ -89,16 +89,16 @@ State: 6/6 complete. Exact-HEAD run `34731128500` on commit `8a898718cee93c6046f
 
 Depends on: M4.
 
-- [ ] Finalize README, CHANGELOG, compatibility, license notice, and release/rollback instructions.
-- [ ] Inspect the npm tarball allowlist, declarations, exports, bin, source maps, and integrity.
-- [ ] Pass clean-install consumer import and packed CLI smoke tests.
+- [x] Finalize README, CHANGELOG, compatibility, license notice, and release/rollback instructions.
+- [x] Inspect the npm tarball allowlist, declarations, exports, bin, source maps, and integrity.
+- [x] Pass clean-install consumer import and packed CLI smoke tests.
 - [ ] Pass exact-HEAD release CI with no unexplained failures.
 - [ ] Create an authorized SemVer tag and release only after all gates pass.
 - [ ] Read back registry version, dist integrity, `gitHead`, tag, and release agreement.
 
 Exit gate: the exact verified artifact is independently confirmed as released.
 
-State: Planned; 0/6 complete.
+State: In progress; 3/6 complete. Release documentation, package metadata, package inspection, and packed-consumer checks are verified locally. Exact release CI, authorized tag/release, npm ownership, registry artifact, integrity, and `gitHead` readback remain pending.
 
 ## Explicit progress
 
@@ -109,8 +109,8 @@ State: Planned; 0/6 complete.
 | M2 normalization foundation | 5 | 5 | 100% |
 | M3 producer coverage | 5 | 5 | 100% |
 | M4 interfaces/quality | 6 | 6 | 100% |
-| M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 26 | 32 | 81.3% |
+| M5 release proof | 3 | 6 | 50% |
+| V0.1 roadmap | 29 | 32 | 90.6% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

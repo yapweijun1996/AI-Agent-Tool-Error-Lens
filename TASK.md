@@ -16,7 +16,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 23 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
 | T-007 | P0 | Done | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks, Node 20.11/22/24 Alpine clean-install matrix, agent-facing CLI E2E, and exact-HEAD remote run `34731128500` pass |
-| T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | MIT selected; `LICENSE`, package metadata, and contract metadata updated; external release evidence remains required |
+| T-008 | P1 | In progress | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | README, CHANGELOG, ADR, release runbook/workflow, npm metadata, and 73-file package inspection are implemented and locally verified; npm ownership, tag, release, registry, and `gitHead` evidence remain required |
 | T-009 | P1 | Done | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | Existing company status item `51a18a7f-4b7a-4b7c-957f-75980ee7e640` updated in place with company sharing; status and ecosystem item `5e5c8c5e-c3e9-460d-a985-3165e0b83031` read back |
 
 ## T-001 — Completed contract-hardening task
@@ -189,13 +189,35 @@ Verification:
 - the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available;
 - exact-HEAD remote run `34731128500` at SHA `8a898718cee93c6046f4ec1d59bd7352cd73af8b` passed all 9 Node/OS jobs across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including the verification suite and MIT-aware package-boundary inspection: https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens/actions/runs/34731128500.
 
+## T-008 — In progress: release preparation
+
+Goal: prepare a controlled first npm release without weakening the private-package accidental-publish guard or claiming external release evidence that has not been observed.
+
+Work completed:
+
+1. Add a root README with installation context, library/CLI usage, contract, limits, security boundary, exit semantics, and unreleased status.
+2. Add a changelog policy that keeps the current work under `Unreleased` until registry and release readback agree.
+3. Add ADR-0001 and a release runbook covering npm ownership, trusted publishing, tag/version identity, artifact readback, rollback, and credential handling.
+4. Add a manual tag-bound GitHub Actions release workflow. It requires an existing `v<package.version>` tag, exact checked-out commit identity, `private: false`, the full suite, and a protected `npm-release` environment before npm publication.
+5. Add exact repository and public npm registry/access metadata while retaining `private: true` on the current development line.
+6. Extend the package audit to include README, CHANGELOG, declarations, source maps, exports/bin/package metadata, packed consumer import, CLI smoke, and stable dry-run tarball integrity.
+
+Verification:
+
+- npm registry lookup for `agent-error-lens` returned 404; `npm owner ls agent-error-lens` also returned 404; `npm whoami` returned 401, so npm ownership is not proven;
+- `npm run build` passes;
+- `npm run check:package` passes with 73 files at the private boundary;
+- `npm pack --dry-run --json --ignore-scripts` contains the required release files and returns stable `shasum`/`integrity` across repeated runs;
+- release workflow markers and documentation checks pass locally;
+- tag, release, registry artifact, registry integrity, `gitHead`, and publication remain unverified.
+
 ## Known gaps and defects
 
-- README, CHANGELOG, ADR, release workflow, and released artifact remain absent or unverified; source/package gates, agent-facing CLI E2E, and corrected remote CI are complete.
+- README, CHANGELOG, ADR, release runbook, and release workflow are now implemented; the released artifact and external release readback remain absent.
 - The historical company status dated 2026-09-07 remains evidence of its prior state, while the canonical company status item was synchronized in place on 2026-09-13 with `roadmap_state=queued`, `design_status=draft`, `development_status=complete`, `verification_status=verified`, `release_status=unreleased`, and `evidence_status=verified`. The current update references the exact-HEAD CI evidence and the final local implementation/contract commit; the ecosystem SSOT remains queued and no release claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
 - Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; bounded-core, approved-adapter, and complete M4 resource-limit enforcement are verified locally and in the exact-HEAD CI matrix.
-- Node.js compatibility, module format, MIT license, and package allowlist are verified across the approved CI matrix; npm registry ownership remains a release gate.
+- Node.js compatibility, module format, MIT license, package allowlist, release metadata, and pre-release package inspection are verified locally and the approved source/package matrix is verified in CI; npm ownership remains a release gate because the registry lookup is 404 and the npm session is unauthenticated.
 - No browser/UI audit is applicable because this project has no user interface or running product.
 
 ## Definition of Done for any implementation task

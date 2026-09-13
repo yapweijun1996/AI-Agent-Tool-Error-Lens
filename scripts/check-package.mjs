@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
+const releaseMode = process.env.AGENT_ERROR_LENS_RELEASE === "1";
 const npmExecPath = process.env.npm_execpath;
 const npmCommand = process.platform === "win32" ? "npm.cmd" : "npm";
 const command = npmExecPath ? process.execPath : npmCommand;
@@ -29,17 +30,26 @@ try {
 }
 
 const files = metadata[0]?.files?.map((entry) => entry.path).sort() ?? [];
+const packageMetadata = metadata[0];
 const allowed = (path) => path === "package.json"
+  || path === "README.md"
+  || path === "CHANGELOG.md"
   || path === "LICENSE"
   || path === "contract/agent-error-lens-v1.schema.json"
   || path.startsWith("dist/");
 const required = [
   "package.json",
+  "README.md",
+  "CHANGELOG.md",
   "LICENSE",
   "contract/agent-error-lens-v1.schema.json",
   "dist/src/index.js",
   "dist/src/index.d.ts",
+  "dist/src/index.js.map",
+  "dist/src/index.d.ts.map",
   "dist/src/cli.js",
+  "dist/src/cli.d.ts",
+  "dist/src/cli.js.map",
   "dist/src/core/serialize.js",
 ];
 
@@ -57,12 +67,32 @@ function runNode(args, options = {}) {
   return spawnSync(process.execPath, args, { encoding: "utf8", ...options });
 }
 
-if (!packageJson.private || packageJson.type !== "module" || packageJson.license !== "MIT" || packageJson.engines?.node !== ">=20.11.0 <25") {
-  console.error("package metadata does not match the frozen private MIT ESM Node contract");
+const expectedPrivate = !releaseMode;
+if (packageJson.private !== expectedPrivate
+  || packageJson.type !== "module"
+  || packageJson.license !== "MIT"
+  || packageJson.engines?.node !== ">=20.11.0 <25"
+  || packageJson.repository?.type !== "git"
+  || packageJson.repository?.url !== "https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens.git"
+  || packageJson.publishConfig?.registry !== "https://registry.npmjs.org/"
+  || packageJson.publishConfig?.access !== "public") {
+  console.error(`package metadata does not match the frozen ${releaseMode ? "release-ready" : "private"} MIT ESM Node contract`);
   process.exit(1);
 }
 if (Object.keys(packageJson.dependencies ?? {}).length !== 0) {
   console.error("runtime dependencies are not empty");
+  process.exit(1);
+}
+if (packageJson.exports?.["."]?.types !== "./dist/src/index.d.ts"
+  || packageJson.exports?.["."]?.import !== "./dist/src/index.js"
+  || packageJson.exports?.["./contract"] !== "./contract/agent-error-lens-v1.schema.json"
+  || packageJson.bin?.["agent-error-lens"] !== "./dist/src/cli.js") {
+  console.error("package exports or bin mappings do not match the frozen package contract");
+  process.exit(1);
+}
+if (!/^sha512-[A-Za-z0-9+/]+=*$/u.test(packageMetadata?.integrity ?? "")
+  || !/^[0-9a-f]{40}$/u.test(packageMetadata?.shasum ?? "")) {
+  console.error("npm pack dry-run did not return stable integrity metadata");
   process.exit(1);
 }
 if (files.some((path) => !allowed(path)) || required.some((path) => !files.includes(path))) {
@@ -139,4 +169,4 @@ try {
   ]);
 }
 
-if (packedConsumerPassed) console.log(`package allowlist and packed consumer audit: passed (${files.length} files)`);
+if (packedConsumerPassed) console.log(`package allowlist and packed consumer audit: passed (${files.length} files; ${releaseMode ? "release-ready" : "private"} boundary)`);

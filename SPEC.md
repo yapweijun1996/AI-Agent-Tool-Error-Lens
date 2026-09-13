@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and capability/resource/package plus agent-facing CLI handoff gates are complete as T-007. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are verified by exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b`, which passes all 9 Node/OS jobs. Release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, capability/resource/package plus agent-facing CLI handoff gates are complete as T-007, and release preparation is in progress as T-008. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation and MIT package boundary are verified by exact-HEAD run `34731128500` on commit `8a898718cee93c6046f4ec1d59bd7352cd73af8b`, which passes all 9 Node/OS jobs. External release gates remain pending.
 
 ## 1. V0.1 scope
 
@@ -307,7 +307,7 @@ CLI requirements:
 - `--root` MAY populate a missing `options.root`; a conflicting valid root is a usage error, while malformed existing request options MUST remain visible to library validation;
 - platform support is verified for the declared Node.js range by the corrected cross-platform CI matrix; a prior matrix run failed on Windows before the current portable command remediation.
 
-The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; the declared support range is verified by the corrected corresponding CI matrix. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, but final name ownership and release availability remain T-008 checks. The runtime dependency target is zero. The selected license is MIT and is represented by the repository `LICENSE` file, package metadata, lockfile metadata, and the authoritative contract metadata. Publication remains gated by ownership and release authorization.
+The frozen package target is ESM-only with Node.js `>=20.11.0 <25`; the declared support range is verified by the corrected corresponding CI matrix. The target package name is `agent-error-lens`; a registry lookup on 2026-09-13 returned HTTP 404, `npm owner ls` returned HTTP 404, and the local `npm whoami` check returned HTTP 401, so ownership is not proven. The runtime dependency target is zero. The selected license is MIT and is represented by the repository `LICENSE` file, package metadata, lockfile metadata, and the authoritative contract metadata. The manifest declares the exact GitHub repository URL and public npm registry/access. Publication remains gated by ownership and release authorization.
 
 ## 13. Capabilities operation
 
@@ -336,6 +336,7 @@ Before release the package MUST define and verify:
 - package file allowlist and source-map policy;
 - license and third-party notices;
 - SemVer compatibility rules for schema and API changes.
+- release documentation, rollback guidance, and a manual tag-bound publication workflow.
 
 The target is zero runtime dependencies. Any exception requires an explicit reviewed decision and supply-chain analysis.
 
@@ -356,9 +357,9 @@ The package contract is therefore: ESM-only, Node `>=20.11.0 <25`, target name `
 | Build/package | build, tarball inspection, clean install, import and CLI smoke |
 | Cross-platform | approved Node/OS matrix after compatibility decision |
 | Agent-facing E2E | failure output to usable location/evidence without fabricated fields |
-| Release | exact-HEAD CI, version, tag, release, registry integrity and `gitHead` readback |
+| Release | exact-HEAD release workflow, version/tag identity, GitHub release, registry integrity, and `gitHead` readback |
 
-Source tests alone do not prove package or release behavior.
+Source tests alone do not prove package or release behavior. The current pre-release package inspection is verified locally, but no tag, GitHub release, npm artifact, registry integrity, or `gitHead` readback exists.
 
 ## 16. Acceptance
 
