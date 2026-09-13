@@ -6,7 +6,7 @@ Last reviewed: 2026-09-13
 
 ## Evidence status
 
-This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows jobs: PowerShell glob expansion broke Node 20 test discovery, and npm 22/24 package dry-run invocation failed. The local remediation is implemented and verified locally; remote rerun and release workflows remain unverified.
+This document describes the target architecture approved by the project report and the now-frozen V0.1 contract. The repository has a private package scaffold, contract artifacts, shared entry points, a no-dependency contract verifier, a 23-case fixture inventory, bounded normalization and producer adapters, a canonical CLI/library output layer, local capability/resource/package gates, a local agent-facing CLI handoff test, and Windows-portable verification commands. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation is implemented and exact-HEAD run `34729887204` passes all 9 Node/OS jobs. Release workflows and artifact publication remain unverified.
 
 ## Architectural boundary
 

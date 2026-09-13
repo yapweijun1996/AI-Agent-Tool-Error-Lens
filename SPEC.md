@@ -1,12 +1,12 @@
 # Agent Error Lens V0.1 Specification
 
-Specification status: Contract Frozen / Verification In Progress / Release Pending
+Specification status: Contract Frozen / Verification Complete / Release Pending
 Target release: Unreleased `0.1.0`
 Last reviewed: 2026-09-13
 
 Normative terms `MUST`, `MUST NOT`, `SHOULD`, and `MAY` describe the intended V0.1 contract. Nothing in this document is a complete implementation or release claim.
 
-The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and local capability/resource/package plus agent-facing CLI handoff gates are verified as T-007 work. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification: PowerShell did not expand the test glob on Node 20, and the npm package dry-run command failed on Node 22/24. The local command remediation is verified; the corrected exact-HEAD matrix and release gates remain pending.
+The bounded normalization subset is implemented and verified as T-004, the approved TypeScript/Vitest/ESLint/generic-text adapter matrix is implemented and verified as T-005, canonical output/interface behavior is implemented and verified as T-006, and capability/resource/package plus agent-facing CLI handoff gates are complete as T-007. Historical run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` exposed Windows command portability defects; the remediation is verified by exact-HEAD run `34729887204`, which passes all 9 Node/OS jobs. Release gates remain pending.
 
 ## 1. V0.1 scope
 

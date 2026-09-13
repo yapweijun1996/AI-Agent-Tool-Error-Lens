@@ -9,15 +9,15 @@ Pre-documentation baseline: `babcd7ea2f7d59b45eb1938e733410378906b8b4`
 
 The repository began this pass with only `.gitattributes` and one initial commit. There were no project-level `AGENTS.md`, nested rules, `CLAUDE.md`, `CONTRIBUTING.md`, README, CHANGELOG, ADRs, docs, source, entry points, configuration, package/build files, dependencies, tests, scripts, CI, release workflows, tags, stashes, or uncommitted work.
 
-The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 23-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, bounded UTF-8 CLI input, local security/resource/package gates, and Windows-portable verification commands added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with ecosystem `queued`; its canonical tool-status record was synchronized in place on 2026-09-13 to `design=draft`, `development=in_progress`, `verification=partial`, `release=unreleased`, and `evidence=partial`. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, and local verification are complete. Remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows verification before the current remediation; release proof remains incomplete.
+The project KB contains a Draft Standard Project Report and an earlier MVP specification. The repository now contains the contract artifacts, private package scaffold, reviewed 23-case fixture inventory, bounded normalization core, approved V0.1 producer adapters, canonical CLI/library output layer, bounded UTF-8 CLI input, local security/resource/package gates, and Windows-portable verification commands added in this pass. The company AI-Agent-Tools KB lists Agent Error Lens as roadmap position 5 with ecosystem `queued`; its canonical tool-status record was synchronized in place on 2026-09-13 to `design=draft`, `development=complete`, `verification=verified`, `release=unreleased`, and `evidence=verified`. Local contract hardening, package scaffolding, fixture-baseline work, bounded-core implementation, producer coverage, source-level interface quality, local verification, and corrected exact-HEAD remote CI are complete. Release proof remains incomplete.
 
 ## Delivery axes
 
 | Axis | Current state | Strongest evidence |
 | --- | --- | --- |
 | Planned | In progress | Frozen Core SSOT, package scaffold, contract schema, types, examples, fixture inventory, and project KB design material |
-| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, Windows CI-script remediation, and bounded UTF-8 CLI input; remote proof remains incomplete | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 23-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, CLI, bounded stdin reader, and portable test/package commands exist |
-| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix verified; the observed remote matrix failed on Windows before remediation, and release matrix remains incomplete | `npm test`, archived-workspace offline `npm ci` plus full network-isolated Node 20.11.0/22/24 Linux-container runs, including `npm_config_engine_strict=true`, `npm run pack:check`, `npm audit --omit=dev`, 23-case materialized schema validation, 29 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, bounded UTF-8 stdin, strict runtime stream validation, shared error-result byte bounds, structured Unicode/safe-coordinate checks, provider-token/Authorization-scheme/composite-key/environment-key redaction checks including prefixed quoted environment keys, quoted, unquoted, and JSON-style Authorization forms, idempotent redaction with preserved JSON delimiters, same-artifact mixed producer attribution, incomplete ANSI sequence fail-closed mapping, post-redaction contract bounds, code-point string-bound checks, Vitest multi-failure/title attribution, ESLint slash-rule attribution, and CLI root-injection fail-closed behavior pass locally; the pinned parser toolchain is engine-compatible with Node 20.11.0, but the matrix still does not replace GitHub Windows/macOS evidence or the full approved matrix; remote rerun is pending |
+| Implemented | Contract, package scaffold, fixture baseline, bounded core, V0.1 producer adapters, canonical output/interfaces, local verification gates, Windows CI-script remediation, bounded UTF-8 CLI input, and cross-platform verification workflow | Manifest, build/test tooling, shared entry points, contract schema/projection/examples, verifier, 23-case inventory, normalization/path/redaction/structured core, adapters, serializer, capability/resource/package checks, CLI, bounded stdin reader, portable test/package commands, and CI workflow exist |
+| Verified | Contract/scaffold/bounded-core/producer/interface/local-boundary matrix and exact-HEAD cross-platform CI are verified; release matrix remains incomplete | `npm test`, archived-workspace offline `npm ci` plus full network-isolated Node 20.11.0/22/24 Linux-container runs, including `npm_config_engine_strict=true`, `npm run pack:check`, `npm audit --omit=dev`, 23-case materialized schema validation, 29 core/adapter/interface/resource/E2E tests, repeated-process parity, package allowlist, packed consumer import, packed CLI smoke, bounded UTF-8 stdin, strict runtime stream validation, shared error-result byte bounds, structured Unicode/safe-coordinate checks, provider-token/Authorization-scheme/composite-key/environment-key redaction checks including prefixed quoted environment keys, quoted, unquoted, and JSON-style Authorization forms, idempotent redaction with preserved JSON delimiters, same-artifact mixed producer attribution, incomplete ANSI sequence fail-closed mapping, post-redaction contract bounds, code-point string-bound checks, Vitest multi-failure/title attribution, ESLint slash-rule attribution, CLI root-injection fail-closed behavior, and exact-HEAD GitHub Actions run `34729887204` across 9 Node/OS jobs pass; the ESLint deprecation annotation is non-blocking |
 | Released | 0 releases | Manifest remains private/unreleased at `0.1.0`; no authorized tag, release, registry artifact, or integrity readback exists |
 
 Documentation created in this pass is repository work, not product implementation.
@@ -30,12 +30,12 @@ The V0.1 roadmap defines 32 explicit acceptance items:
 - M1 Package skeleton: 5/5;
 - M2 Normalization foundation: 5/5;
 - M3 Producer coverage: 5/5;
-- M4 Interfaces/quality: 5/6;
+- M4 Interfaces/quality: 6/6;
 - M5 Release proof: 0/6.
 
-Total: **25/32 = 78.1%**.
+Total: **26/32 = 81.3%**.
 
-The twenty-five completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and first five M4 interface/quality acceptance items. Canonical source behavior, local safety/package boundaries, structured-record safety, and agent-facing handoff are implemented and verified; remote CI and release progress remain incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
+The twenty-six completed items are the M0 contract/governance, M1 package-scaffold, M2 bounded-core, M3 producer-coverage, and all M4 interface/quality acceptance items. Canonical source behavior, local safety/package boundaries, structured-record safety, agent-facing handoff, and exact-HEAD cross-platform CI are implemented and verified; release progress remains incomplete. The percentage measures acceptance items, not effort, code volume, or confidence.
 
 ## Verification performed in this pass
 
@@ -63,11 +63,11 @@ The twenty-five completed items are the M0 contract/governance, M1 package-scaff
 | Runtime dependency audit | Pass | `npm ls --omit=dev --depth=0` reports no runtime dependencies and `npm audit --omit=dev --audit-level=high` reports 0 vulnerabilities; archived-workspace offline `npm ci` with `npm_config_engine_strict=true` and the full suite also pass in network-isolated Node 20.11.0/22/24 Linux containers |
 | Agent-facing CLI E2E | Pass | CLI output is consumed by a downstream locator and its evidence span resolves against the original artifact; structured invalid Unicode/coordinate inputs fail closed |
 | Browser/UI/accessibility/runtime | Not applicable | No UI or running product exists |
-| CI/release/registry | Failed / pending rerun | Remote run `34709741735` passed Linux/macOS jobs but failed Windows verification at the previous SHA; local remediation passes, but corrected exact-HEAD CI, tag, release, registry artifact, and integrity readback do not yet exist |
+| CI/release/registry | CI pass / release pending | Exact-HEAD run `34729887204` passes all 9 Node/OS jobs and package-boundary checks; authorized tag, release, registry artifact, and integrity readback do not yet exist |
 
 ## Contract-hardening result
 
-T-001 through T-006 are complete at their stated boundaries, and T-007 local safety/package/agent-E2E work is passing. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, fatal UTF-8 CLI decoding, bounded stdin transport, bounded provider-token redaction, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, portable test/package commands, and the CLI-to-locator evidence handoff are implemented and locally verified. Remote CI has an observed Windows failure at the previous SHA; the remediation is not remotely verified. License selection and final package ownership remain release gates.
+T-001 through T-007 are complete at their stated boundaries. The JSON Schema is authoritative; the TypeScript projection is checked, not an independent source of truth. Full SHA-256 IDs, deterministic ordering, raw UTF-16 evidence offsets, strict input shape, fatal UTF-8 CLI decoding, bounded stdin transport, bounded provider-token redaction, path containment, secondary budgets, ESM-only Node target, explicit serialization, CLI exits, capability audit, package allowlist, portable test/package commands, and the CLI-to-locator evidence handoff are implemented and verified locally and by exact-HEAD cross-platform CI run `34729887204`. The historical Windows failure was corrected; license selection and final package ownership remain release gates.
 
 ## Risks
 
@@ -77,16 +77,16 @@ T-001 through T-006 are complete at their stated boundaries, and T-007 local saf
 4. Mixed producers may be collapsed into a false single identity.
 5. Generic heuristics may appear more certain than their evidence supports.
 6. Nondeterministic work-budget termination or untested record classes may still break byte stability outside the covered matrix.
-7. The observed remote Node/OS run failed on Windows; the local remediation still needs an exact-HEAD CI rerun.
+7. The GitHub Actions workflow emits a non-blocking Node.js 20 deprecation annotation for its action dependencies; the project runtime support matrix remains verified.
 8. Package, platform, or release compatibility may be claimed before artifact-level proof.
 9. Local implementation is advanced while the canonical ecosystem roadmap remains `queued`; this is intentional until the roadmap owner changes that planning state.
-10. Fixture assertions may drift from the frozen contract until the corrected remote matrix is completed.
+10. Fixture assertions and the frozen contract are covered by the completed local and exact-HEAD CI matrix; future producer additions still require new fixtures.
 11. The current ESLint 9 development dependency emits a deprecation warning during clean install; a future toolchain refresh is still a maintenance/release concern, not a runtime dependency or parser contract change.
 
 ## Blockers and unresolved items
 
-There is no hard blocker to package implementation. The current local remediation is verified, but corrected exact-HEAD remote CI is not available without a push or CI rerun. License selection and final package ownership remain unresolved release gates; Node/module support is a selected target but not yet verified across the approved matrix. T-009 company status synchronization is complete; the ecosystem roadmap remains queued by its canonical SSOT and was not changed by this pass.
+There is no hard blocker to package implementation or source verification. T-007 is complete after exact-HEAD run `34729887204`. License selection, final package ownership, authorized version/tag/release, and registry integrity readback remain unresolved T-008 release gates; the ecosystem roadmap remains queued by its canonical SSOT and was not changed by this pass.
 
 ## Resume point
 
-Continue T-007. Rerun the corrected exact-HEAD Node/OS matrix when external CI execution is authorized, then perform the final docs/package/release-readiness audit. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.
+Continue with T-008: resolve license and npm ownership, prepare release documentation and rollback guidance, then perform authorized artifact/tag/registry verification. Preserve the rule that generic heuristics never become `confirmed` and that release remains gated by evidence.

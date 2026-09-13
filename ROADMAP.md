@@ -83,7 +83,7 @@ Depends on: M3.
 
 Exit gate: source behavior is implemented and verified at exact HEAD.
 
-State: 5/6 complete for source-level canonical interfaces, local capability/resource/package behavior, and agent-facing E2E. Remote run `34709741735` passed Linux/macOS jobs but failed Windows verification before the current portable command remediation; the corrected Node/OS matrix remains unverified.
+State: 6/6 complete. Exact-HEAD run `34729887204` passes the approved Node/OS matrix across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including verification and package-boundary checks.
 
 ## M5 — Package and release proof
 
@@ -108,9 +108,9 @@ State: Planned; 0/6 complete.
 | M1 package skeleton | 5 | 5 | 100% |
 | M2 normalization foundation | 5 | 5 | 100% |
 | M3 producer coverage | 5 | 5 | 100% |
-| M4 interfaces/quality | 5 | 6 | 83.3% |
+| M4 interfaces/quality | 6 | 6 | 100% |
 | M5 release proof | 0 | 6 | 0% |
-| V0.1 roadmap | 25 | 32 | 78.1% |
+| V0.1 roadmap | 26 | 32 | 81.3% |
 
 This percentage measures explicit roadmap acceptance items, not code volume or elapsed effort.
 

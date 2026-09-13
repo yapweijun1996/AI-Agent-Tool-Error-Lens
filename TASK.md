@@ -15,7 +15,7 @@ Statuses: `Ready`, `In progress`, `Blocked`, `Done`. A task is `Done` only when 
 | T-004 | P0 | Done | Implement bounded normalization core | T-002, T-003 | Validation, budgets, ANSI/newline mapping, paths, redaction, and generic structured parsing pass fixtures | `npm test`; bounded-core tests; packed CLI/library structured smoke |
 | T-005 | P0 | Done | Implement V0.1 producer adapters | T-004 | TypeScript, Vitest, ESLint, generic fallback, and mixed producer cases pass positive and negative fixtures | `npm test`; 23 materialized fixture results schema-valid; adapter fixture assertions pass |
 | T-006 | P0 | Done | Implement canonical output and interfaces | T-004, T-005 | IDs, dedup, ordering, serialization, summaries, statuses, CLI/library parity, and real exit codes pass | `npm test`; 18 tests; repeated-process byte parity; producer-outcome/CLI exit evidence |
-| T-007 | P0 | In progress | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks, Node 20.11/22/24 Alpine clean-install matrix, and agent-facing CLI E2E pass; remote run `34709741735` failed Windows verification at prior SHA and awaits rerun after remediation |
+| T-007 | P0 | Done | Complete source and package verification | T-006 | Full matrix, cross-platform CI, tarball inspection, clean consumer import, packed CLI, and agent E2E pass | Local capability/resource/package checks, Node 20.11/22/24 Alpine clean-install matrix, agent-facing CLI E2E, and exact-HEAD remote run `34729887204` pass |
 | T-008 | P1 | Planned | Prepare and verify first release | T-007 | Authorized version/tag/release/registry state agree and integrity plus `gitHead` readback pass | External release evidence required |
 | T-009 | P1 | Done | Synchronize project and company KB status | T-000, T-001 | One canonical status record reflects current design state without claiming implementation | Existing company status item `51a18a7f-4b7a-4b7c-957f-75980ee7e640` updated in place with company sharing; status and ecosystem item `5e5c8c5e-c3e9-460d-a985-3165e0b83031` read back |
 
@@ -126,7 +126,7 @@ Verification:
 - representative producer, structural, failure, security, determinism, and agent-facing fixture assertions remain green;
 - exact materialized fixture outputs remain schema-valid under temporary Ajv draft-2020-12 validation.
 
-## T-007 — In progress source and package verification
+## T-007 — Completed source and package verification
 
 Goal: close local security, resource, capability, and package-boundary evidence before relying on remote CI or release evidence.
 
@@ -185,16 +185,17 @@ Verification:
 - quoted environment keys such as `AWS_SECRET_ACCESS_KEY` are redacted even when the sensitive key segment has a prefix;
 - repeated redaction passes preserve `[REDACTED]` markers and JSON closing delimiters without duplicating or truncating content;
 - already sanitized quoted and unquoted marker forms remain byte-stable on a second parse;
-- remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed all Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
-- the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available; this is locally verified but not yet rerun on CI.
+- historical remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` passed Linux/macOS jobs but failed Windows jobs: Node 20 could not resolve `test/*.test.mjs` under PowerShell, while Node 22/24 reported `npm pack dry-run failed`;
+- the remediation changes `npm test` to `node --test` and invokes the lifecycle npm CLI through `npm_execpath` when available;
+- exact-HEAD remote run `34729887204` at SHA `25fb154a07e61aa4158eec1b1e0309b3dfc7ec92` passed all 9 Node/OS jobs across Node 20.11.0, 22, and 24 on Ubuntu, macOS, and Windows, including the verification suite and package-boundary inspection: https://github.com/yapweijun1996/AI-Agent-Tool-Error-Lens/actions/runs/34729887204.
 
 ## Known gaps and defects
 
-- README, CHANGELOG, ADR, release workflow, corrected remote CI execution, and released artifact remain absent or unverified; local source/package gates and agent-facing CLI E2E are implemented and passing.
-- The historical company status dated 2026-09-07 remains evidence of its prior state, while the canonical company status item was synchronized in place on 2026-09-13 with `roadmap_state=queued`, `design_status=draft`, `development_status=in_progress`, `verification_status=partial`, `release_status=unreleased`, and `evidence_status=partial`. The current update references repository commit `fcc0725288246fb59c2ba4bb09d9e98f9d02a120`; the ecosystem SSOT remains queued and no release claim was made.
+- README, CHANGELOG, ADR, release workflow, and released artifact remain absent or unverified; source/package gates, agent-facing CLI E2E, and corrected remote CI are complete.
+- The historical company status dated 2026-09-07 remains evidence of its prior state, while the canonical company status item was synchronized in place on 2026-09-13 with `roadmap_state=queued`, `design_status=draft`, `development_status=complete`, `verification_status=verified`, `release_status=unreleased`, and `evidence_status=verified`. The current update references the exact-HEAD CI evidence and the final documentation commit; the ecosystem SSOT remains queued and no release claim was made.
 - The earlier KB MVP envelope used a second top-level `diagnostics` collection. The current project report resolves this to `toolIssues`; implementation must follow the frozen Core SSOT.
-- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; current bounded-core and approved-adapter enforcement is implemented, while the complete M4 resource-limit matrix remains unverified.
-- Node.js compatibility and module format are selected as a target but remain unverified until the corrected package CI matrix passes; package allowlist, license, and npm registry ownership remain release gates.
+- Existing fixed and secondary deterministic work budgets are frozen in the schema metadata and SPEC; bounded-core, approved-adapter, and complete M4 resource-limit enforcement are verified locally and in the exact-HEAD CI matrix.
+- Node.js compatibility and module format are verified across the approved CI matrix; package allowlist, license, and npm registry ownership remain release gates.
 - No browser/UI audit is applicable because this project has no user interface or running product.
 
 ## Definition of Done for any implementation task

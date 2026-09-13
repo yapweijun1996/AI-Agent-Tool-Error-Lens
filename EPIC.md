@@ -94,7 +94,7 @@ Acceptance:
 - secret fixtures do not leak through output, IDs, warnings, snapshots, or errors;
 - truncation and uncertainty cannot appear complete or confirmed.
 
-State: Implemented and verified for stable IDs, deterministic deduplication/evidence union, ordering, summaries, statuses, truncation, and canonical serialization; full quality proof and release remain incomplete.
+State: Implemented and verified for stable IDs, deterministic deduplication/evidence union, ordering, summaries, statuses, truncation, canonical serialization, and the approved cross-platform quality matrix; release remains incomplete.
 
 ## E4 — Library, CLI, and package
 
@@ -136,7 +136,7 @@ Acceptance:
 - version, tag, release, and registry evidence agree;
 - `PROGRESS.md` separately records Implemented, Verified, and Released state.
 
-State: In progress. Local static, unit, fixture, determinism, security, resource, parity, package, and agent-facing E2E evidence is implemented and verified. The cross-platform workflow exists, but remote run `34709741735` at SHA `582c6901eea0e7131853e7af0837686184bbd53d` failed on Windows before the current portable test/package remediation; exact-HEAD rerun, release documentation, tag, registry, integrity, and `gitHead` evidence remain unverified and unreleased.
+State: Complete for V0.1 verification. Local static, unit, fixture, determinism, security, resource, parity, package, and agent-facing E2E evidence is implemented and verified. Exact-HEAD run `34729887204` passes all 9 Node/OS jobs and package-boundary checks; release documentation, tag, registry, integrity, and `gitHead` evidence remain unverified and unreleased.
 
 ## Dependency order
 
