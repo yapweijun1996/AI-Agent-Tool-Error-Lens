@@ -26,6 +26,18 @@ Generic text never receives `confirmed` confidence without producer-specific evi
 
 CommonJS support is not implied.
 
+## Global installation for Codex CLI
+
+Install the published CLI from any directory:
+
+```sh
+npm install --global agent-error-lens@latest
+agent-error-lens capabilities --format json
+```
+
+The package exposes the `agent-error-lens` command globally. For a repository
+checkout, run `npm ci`, `npm run build`, and invoke `node dist/src/cli.js`.
+
 ## Library usage
 
 ```ts
